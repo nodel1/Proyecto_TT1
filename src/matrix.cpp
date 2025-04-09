@@ -111,25 +111,26 @@ Matrix& Matrix::operator / (Matrix &m) {
     return *m_aux;
 }
 
-Matrix& Matrix::operator = ( Matrix &m) {
-    // Crear una nueva matriz auxiliar con las dimensiones de m
-    Matrix *m_aux = new Matrix(m.n_row, m.n_column);
+Matrix& Matrix::operator = (Matrix &m) {
+    if (this == &m)
+        return *this;
 
-    // Copiar los datos de m a la matriz auxiliar
-    for (int i = 1; i <= m.n_row; i++) {
-        for (int j = 1; j <= m.n_column; j++) {
-            (*m_aux)(i, j) = m(i, j);
+    if (this->n_row != m.n_row || this->n_column != m.n_column) {
+        this->n_row = m.n_row;
+        this->n_column = m.n_column;
+
+        this->data = new double*[n_row];
+        for (int i = 0; i < n_row; ++i)
+            this->data[i] = new double[n_column];
+    }
+
+    for (int i = 1; i <= this->n_row; i++) {
+        for (int j = 1; j <= this->n_column; j++) {
+            (*this)(i, j) = m(i, j);
         }
     }
 
-
-
-    // Transferir la propiedad de m_aux a this
-    this->n_row = m_aux->n_row;
-    this->n_column = m_aux->n_column;
-
-
-    return *m_aux;
+    return *this;
 }
 
 ostream& operator << (ostream &o, Matrix &m) {
