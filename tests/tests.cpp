@@ -22,7 +22,7 @@ int m_equals(Matrix A, Matrix B, double p) {
     return 1;
 }
 
-// Test para Matrix(row, column) - Ya implícito en todos los tests
+// Test para Matrix(row, column)
 int m_constructor_01() {
     Matrix A(2, 3);
     A(1,1) = 1; A(1,2) = 2; A(1,3) = 3;
@@ -36,7 +36,7 @@ int m_constructor_01() {
     return 0;
 }
 
-// Test para operator () (row, column) - Ya implícito en todos los tests
+// Test para operator () (row, column)
 int m_access_01() {
     Matrix A(2, 2);
     A(1,1) = 1; A(1,2) = 2;
@@ -158,8 +158,6 @@ int m_assign_01() {
     _assert(m_equals(B, expected, 1e-10));
     return 0;
 }
-
-// Test para operator << (Matrix) - No necesita test explícito, se usa implícitamente
 
 // Test para zeros(row, column)
 int m_zeros_01() {
