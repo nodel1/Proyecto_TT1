@@ -15,8 +15,8 @@
  *  @bug No known bugs
  */
 
-#include "Mjday_TDB.hpp"
-#include "SAT_Const.hpp"
+#include "..\include\Mjday_TDB.hpp"
+#include "..\include\SAT_Const.hpp"
 
 using namespace std;
 

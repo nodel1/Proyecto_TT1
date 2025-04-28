@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "Mjday.hpp"
+#include "..\include\Mjday.hpp"
 
 using namespace std;
 

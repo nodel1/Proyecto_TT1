@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "accel_point_mass.hpp"
+#include "..\include\AccelPointMass.hpp"
 #include <cmath>
 
 Matrix& AccelPointMass(Matrix& r, Matrix& s, double GM) {

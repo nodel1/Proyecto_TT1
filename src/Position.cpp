@@ -15,8 +15,8 @@
  *  @bug No known bugs
  */
 
-#include "Position.hpp"
-#include "SAT_Const.hpp"
+#include "..\include\Position.hpp"
+#include "..\include\SAT_Const.hpp"
 
 using namespace std;
 

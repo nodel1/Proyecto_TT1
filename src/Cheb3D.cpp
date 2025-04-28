@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "cheb3d.hpp"
+#include "..\include\Cheb3d.hpp"
 #include <stdexcept>
 
 Matrix& Cheb3D(double t, int N, double Ta, double Tb, Matrix& Cx, Matrix& Cy, Matrix& Cz) {

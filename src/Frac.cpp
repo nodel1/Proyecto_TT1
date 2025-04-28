@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "frac.hpp"
+#include "..\include\Frac.hpp"
 #include <cmath>
 
 double Frac(double x) {

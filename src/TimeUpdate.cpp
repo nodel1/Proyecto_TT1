@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "TimeUpdate.hpp"
+#include "..\include\TimeUpdate.hpp"
 
 using namespace std;
 

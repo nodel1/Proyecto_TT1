@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "Mean_Obliquity.hpp"
+#include "..\include\MeanObliquity.hpp"
 #include "SAT_Const.hpp"
 
 double MeanObliquity(double Mjd_TT) {

@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "R_y.hpp"
+#include "..\include\R_y.hpp"
 
 using namespace std;
 

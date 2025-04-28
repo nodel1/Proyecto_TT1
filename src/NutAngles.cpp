@@ -15,8 +15,8 @@
  *  @bug No known bugs
  */
 
-#include "NutAngles.hpp"
-#include "SAT_Const.hpp"
+#include "..\include\NutAngles.hpp"
+#include "..\include\SAT_Const.hpp"
 
 using namespace std;
 

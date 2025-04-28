@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "ecc_anom.hpp"
+#include "..\include\EccAnom.hpp"
 
 using namespace std;
 

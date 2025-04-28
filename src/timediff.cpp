@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "timediff.hpp"
+#include "..\include\timediff.hpp"
 
 using namespace std;
 

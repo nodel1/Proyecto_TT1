@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "R_z.hpp"
+#include "..\include\R_z.hpp"
 
 using namespace std;
 

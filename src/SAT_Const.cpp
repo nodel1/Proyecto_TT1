@@ -15,7 +15,7 @@
  *  @bug No known bugs
  */
 
-#include "SAT_Const.hpp"
+#include "..\include\SAT_Const.hpp"
 
 // Mathematical constants
 const double Const::pi2 = 2.0 * M_PI;
