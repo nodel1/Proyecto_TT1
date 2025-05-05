@@ -8,16 +8,18 @@
 //
 // Created: 2025/04/23
 //
-/** @file ecc_anom.cpp
+/** @file EccAnom.cpp
  *  @brief Eccentric anomaly computation for elliptic orbits
  *
  *  @author Noel Del Rio Gonzalez
  *  @bug No known bugs
  */
 
+#include <cmath>
+#include <numbers>
+#include <stdexcept>
+#include <limits>
 #include "..\include\EccAnom.hpp"
-
-using namespace std;
 
 double EccAnom(double M, double e) {
     const int maxit = 15;
@@ -25,20 +27,19 @@ double EccAnom(double M, double e) {
     double E, f;
 
     // Starting value
-    M = fmod(M, 2.0 * M_PI);
-    E = (e < 0.8) ? M : M_PI;
+    M = std::fmod(M, 2.0 * pi);
+    E = (e < 0.8) ? M : std::numbers::pi;
 
     // Initial calculation
-    f = E - e * sin(E) - M;
-    E = E - f / (1.0 - e * cos(E));
+    f = E - e * std::sin(E) - M;
+    E = E - f / (1.0 - e * std::cos(E));
 
     // Iteration
-    while (abs(f) > 1e2 * numeric_limits<double>::epsilon()) {
-        f = E - e * sin(E) - M;
-        E = E - f / (1.0 - e * cos(E));
+    while (std::abs(f) > 1e2 * std::numeric_limits<double>::epsilon()) {
+        f = E - e * std::sin(E) - M;
+        E = E - f / (1.0 - e * std::cos(E));
         if (++i > maxit) {
-            cout << "EccAnom: convergence problems after " << maxit << " iterations\n";
-            exit(EXIT_FAILURE);
+            throw std::runtime_error("EccAnom: convergence problems after " + std::to_string(maxit) + " iterations");
         }
     }
 

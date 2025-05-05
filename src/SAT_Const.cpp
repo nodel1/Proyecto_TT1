@@ -15,13 +15,15 @@
  *  @bug No known bugs
  */
 
+#include <numbers>
 #include "..\include\SAT_Const.hpp"
 
 // Mathematical constants
-const double Const::pi2 = 2.0 * M_PI;
-const double Const::Rad = M_PI / 180.0;
-const double Const::Deg = 180.0 / M_PI;
-const double Const::Arcs = 3600.0 * 180.0 / M_PI;
+    constexpr double pi = std::numbers::pi;                    
+    constexpr double pi2 = 2.0 * pi;                           
+    constexpr double Rad = pi / 180.0;                         
+    constexpr double Deg = 180.0 / pi;                         
+    constexpr double Arcs = 3600.0 * 180.0 / pi;               
 
 // General
 const double Const::MJD_J2000 = 51544.5;

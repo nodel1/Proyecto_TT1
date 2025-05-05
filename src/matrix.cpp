@@ -51,6 +51,13 @@ double& Matrix::operator () (const int row, const int column) {
     return this->data[row - 1][column - 1];
 }
 
+double Matrix::operator()(const int row, const int column) const {
+    if (row <= 0 || row > n_row || column <= 0 || column > n_column) {
+        throw runtime_error("Matrix get: error in row/column");
+    }
+    return data[row - 1][column - 1];
+}
+
 Matrix& Matrix::operator + (Matrix &m) {
     if (this->n_row != m.n_row || this->n_column != m.n_column) {
         cout << "Matrix sum: error in n_row/n_column\n";

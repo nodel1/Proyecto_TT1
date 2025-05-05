@@ -15,8 +15,10 @@
  *  @bug No known bugs
  */
  
-#include <cstdio>
-#include <cstdlib>
+#ifndef _ECCANOM_
+#define _ECCANOM_
+ 
+#include "..\include\SAT_Const.hpp"
 #include <cmath>
 #include <iostream>
 

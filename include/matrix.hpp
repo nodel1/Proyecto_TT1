@@ -36,6 +36,7 @@ public:
     
     // Member operators
 	double& operator () (const int row, const int column);
+	double operator()(const int row, const int column) const;
     double& operator () (const int n);
     Matrix& operator + (Matrix &m);
     Matrix& operator - (Matrix &m);
