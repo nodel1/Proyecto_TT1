@@ -8,7 +8,7 @@
 //
 // Created: 2025/04/23
 //
-/** @file sat_const.hpp
+/** @file SAT_Const.hpp
  *  @brief Definition of astronomical and mathematical constants
  *
  *  @author Noel Del Rio Gonzalez
@@ -18,27 +18,28 @@
 #ifndef _SAT_CONST_
 #define _SAT_CONST_
 
-#include <cmath>
+#include <numbers>
 
 class Const {
 public:
     // Mathematical constants
-    static const double pi2;       // 2pi
-    static const double Rad;       // Radians per degree
-    static const double Deg;       // Degrees per radian
-    static const double Arcs;      // Arcseconds per radian
+    static const double pi;         // π
+    static const double pi2;        // 2π
+    static const double Rad;        // Radians per degree
+    static const double Deg;        // Degrees per radian
+    static const double Arcs;       // Arcseconds per radian
 
     // General
-    static const double MJD_J2000; // Modified Julian Date of J2000
-    static const double T_B1950;   // Epoch B1950
-    static const double c_light;   // Speed of light [m/s]; DE430
-    static const double AU;        // Astronomical unit [m]; DE430
+    static const double MJD_J2000;  // Modified Julian Date of J2000
+    static const double T_B1950;    // Epoch B1950
+    static const double c_light;    // Speed of light [m/s]; DE430
+    static const double AU;         // Astronomical unit [m]; DE430
 
     // Physical parameters of the Earth, Sun, and Moon
-    static const double R_Earth;   // Earth's radius [m]; DE430
-    static const double f_Earth;   // Flattening; WGS-84
-    static const double R_Sun;     // Sun's radius [m]; DE430
-    static const double R_Moon;    // Moon's radius [m]; DE430
+    static const double R_Earth;    // Earth's radius [m]; DE430
+    static const double f_Earth;    // Flattening; WGS-84
+    static const double R_Sun;      // Sun's radius [m]; DE430
+    static const double R_Moon;     // Moon's radius [m]; DE430
 
     // Earth rotation
     static const double omega_Earth; // [rad/s]; WGS-84

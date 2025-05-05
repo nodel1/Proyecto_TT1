@@ -8,22 +8,22 @@
 //
 // Created: 2025/04/23
 //
-/** @file sat_const.cpp
+/** @file SAT_Const.cpp
  *  @brief Implementation of astronomical and mathematical constants
  *
- *  @author Noel360
+ *  @author Noel Del Rio Gonzalez
  *  @bug No known bugs
  */
 
-#include <numbers>
 #include "..\include\SAT_Const.hpp"
+#include <numbers>
 
 // Mathematical constants
-    constexpr double pi = std::numbers::pi;                    
-    constexpr double pi2 = 2.0 * pi;                           
-    constexpr double Rad = pi / 180.0;                         
-    constexpr double Deg = 180.0 / pi;                         
-    constexpr double Arcs = 3600.0 * 180.0 / pi;               
+const double Const::pi = std::numbers::pi;
+const double Const::pi2 = 2.0 * Const::pi;
+const double Const::Rad = Const::pi / 180.0;
+const double Const::Deg = 180.0 / Const::pi;
+const double Const::Arcs = 3600.0 * 180.0 / Const::pi;
 
 // General
 const double Const::MJD_J2000 = 51544.5;
@@ -38,7 +38,7 @@ const double Const::R_Sun = 696000e3;
 const double Const::R_Moon = 1738e3;
 
 // Earth rotation
-const double Const::omega_Earth = (15.04106717866910 / 3600.0) * (M_PI / 180.0);
+const double Const::omega_Earth = (15.04106717866910 / 3600.0) * Const::Rad;
 
 // Gravitational coefficients
 const double Const::GM_Earth = 398600.435436e9;
@@ -55,3 +55,4 @@ const double Const::GM_Pluto = 977.0000000000009e9;
 
 // Solar radiation pressure
 const double Const::P_Sol = 1367.0 / Const::c_light;
+
