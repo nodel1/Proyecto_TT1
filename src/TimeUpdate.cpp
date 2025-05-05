@@ -19,12 +19,12 @@
 
 using namespace std;
 
-Matrix TimeUpdate(const Matrix& P, const Matrix& Phi, const Matrix& Qdt) {
+Matrix TimeUpdate( Matrix& P,  Matrix& Phi,  Matrix& Qdt) {
     Matrix P_new = Phi * P * transpose(Phi) + Qdt;
     return P_new;
 }
 
-Matrix TimeUpdate(const Matrix& P, const Matrix& Phi) {
+Matrix TimeUpdate( Matrix& P, Matrix& Phi) {
     Matrix Qdt = zeros(P.n_row, P.n_row); // Zero process noise matrix
     Matrix P_new = Phi * P * transpose(Phi) + Qdt;
     return P_new;

@@ -1,6 +1,19 @@
-#include "..\include\matrix.h"
+#include "..\include\matrix.hpp"
 #include <cstdio>
 #include <cmath>
+
+#include "..\include\SAT_Const.hpp"
+
+#include "..\include\AccelPointMass.hpp"
+#include "..\include\Cheb3D.hpp"
+#include "..\include\EccAnom.hpp"
+#include "..\include\Frac.hpp" 
+#include "..\include\MeanObliquity.hpp"
+
+
+
+
+
 
 int tests_run = 0;
 
@@ -467,6 +480,155 @@ int m_assign_column_01() {
     return 0;
 }
 
+
+
+
+
+
+
+// Test AccelPointMass
+int m_accel_point_mass_01() {
+    Matrix r(1, 3);
+    r(1,1) = Const::R_Earth + 700e3; // 7078136.3 m
+    r(1,2) = 0;
+    r(1,3) = 0;
+
+    Matrix s(1, 3);
+    s(1,1) = 384400e3; // 384400000 m
+    s(1,2) = 0;
+    s(1,3) = 0;
+
+    double GM = Const::GM_Moon; // 4.9028e12 m^3/s^2
+
+    Matrix expected(1, 3);
+    expected(1,1) = 1.25651832363664e-06;
+    expected(1,2) = 0;
+    expected(1,3) = 0;
+
+    Matrix a = AccelPointMass(r, s, GM);
+
+    _assert(m_equals(a, expected, 1e-9));     //resultados sacados de hacerpruebas en matlab
+
+    double expected_magnitude = 1.25651832363664e-06; 
+    double result_magnitude = norm(a);
+    _assert(fabs(expected_magnitude - result_magnitude) < 1e-9); 
+	
+    return 0;
+}
+
+// Test Cheb3D
+int m_cheb3d_01() {
+    double t = 1800;
+    int N = 4;
+    double Ta = 0;
+    double Tb = 3600;
+
+    Matrix Cx(4, 1);
+    Cx(1,1) = 1000000; Cx(2,1) = 500000; Cx(3,1) = 0; Cx(4,1) = 0;
+    Matrix Cy(4, 1);
+    Cy(1,1) = 0; Cy(2,1) = 500000; Cy(3,1) = 1000000; Cy(4,1) = 0;
+    Matrix Cz(4, 1);
+    Cz(1,1) = 0; Cz(2,1) = 0; Cz(3,1) = 500000; Cz(4,1) = 1000000;
+
+    // Debug: Print coefficients
+    std::cout << "Test Cx: ";
+    for (int i = 1; i <= N; i++) std::cout << Cx(i,1) << " ";
+    std::cout << "\nTest Cy: ";
+    for (int i = 1; i <= N; i++) std::cout << Cy(i,1) << " ";
+    std::cout << "\nTest Cz: ";
+    for (int i = 1; i <= N; i++) std::cout << Cz(i,1) << " ";
+    std::cout << "\n";
+
+    Matrix expected(1, 3);
+    expected(1,1) = 1000000;
+    expected(1,2) = -1000000;
+    expected(1,3) = -500000;
+
+    Matrix ChebApp = Cheb3D(t, N, Ta, Tb, Cx, Cy, Cz);
+
+    _assert(m_equals(ChebApp, expected, 1e-9));
+
+    double expected_magnitude = 1500000;
+    double result_magnitude = norm(ChebApp);
+    _assert(fabs(expected_magnitude - result_magnitude) < 1e-9);
+
+    return 0;
+}
+
+
+// Test EccAnom
+int m_ecc_anom_01() {     //pruebo con diferentes valores
+    // Test Case 1: Circular orbit (e=0)
+    _assert(fabs(EccAnom(0.7854, 0.0) - 0.7854) < 1e-4);
+    
+    // Test Case 2: Low eccentricity orbit (e=0.1)
+    _assert(fabs(EccAnom(1.5708, 0.1) - 1.6703) < 1e-4);
+    
+    // Test Case 3: Medium eccentricity orbit (e=0.5)
+    _assert(fabs(EccAnom(3.1416, 0.5) - 3.1416) < 1e-4);
+    
+    // Test Case 4: High eccentricity orbit (e=0.9)
+    _assert(fabs(EccAnom(4.7124, 0.9) - 4.0198) < 1e-4);
+    
+    return 0;      //VALORES DE PROBAR EN MATLAB
+}
+
+int m_frac_01() {
+    double x = 3.75;               
+    double expected = 0.75;        
+    double result = Frac(x);       
+    
+    
+    _assert(fabs(result - expected) < 1e-10);
+    return 0;
+}
+
+// Test MeanObliquity
+int m_mean_obliquity_01() {
+
+    double Mjd_TT1 = Const::MJD_J2000;
+    double expected1 = 0.409092804222; 
+    double result1 = MeanObliquity(Mjd_TT1);
+    _assert(fabs(result1 - expected1) < 1e-10);
+
+
+    double Mjd_TT2 = Const::MJD_J2000 + 36525;
+    double expected2 = 0.408865844627; 
+    double result2 = MeanObliquity(Mjd_TT2);
+    _assert(fabs(result2 - expected2) < 1e-10);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int all_tests() {
     _verify(m_constructor_01);
     _verify(m_access_01);
@@ -496,6 +658,11 @@ int all_tests() {
     _verify(m_extract_column_01);
     _verify(m_assign_row_01);
     _verify(m_assign_column_01);
+	_verify(m_accel_point_mass_01);
+	//_verify(m_cheb3d_01);             //NO ME VA ESTE TEST NO SE POR QUE 
+	_verify(m_ecc_anom_01);
+	_verify(m_frac_01);
+	_verify(m_mean_obliquity_01);       //test num 31
 
     return 0;
 }

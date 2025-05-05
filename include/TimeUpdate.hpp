@@ -37,7 +37,7 @@ using namespace std;
  * @param[in] Qdt Process noise matrix
  * @return Matrix Updated covariance matrix
  */
-Matrix TimeUpdate(const Matrix& P, const Matrix& Phi, const Matrix& Qdt);
+Matrix TimeUpdate( Matrix& P,  Matrix& Phi, Matrix& Qdt);
 
 //--------------------------------------------------
 // TimeUpdate (Matrix P, Matrix Phi)
@@ -49,6 +49,6 @@ Matrix TimeUpdate(const Matrix& P, const Matrix& Phi, const Matrix& Qdt);
  * @param[in] Phi State transition matrix
  * @return Matrix Updated covariance matrix
  */
-Matrix TimeUpdate(const Matrix& P, const Matrix& Phi);
+Matrix TimeUpdate( Matrix& P, Matrix& Phi);
 
 #endif

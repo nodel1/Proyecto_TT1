@@ -16,7 +16,7 @@
  */
 
 #include "..\include\MeanObliquity.hpp"
-#include "SAT_Const.hpp"
+#include "..\include\SAT_Const.hpp"
 
 double MeanObliquity(double Mjd_TT) {
     // Centuries since J2000
