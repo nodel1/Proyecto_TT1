@@ -9,6 +9,13 @@
 #include "..\include\EccAnom.hpp"
 #include "..\include\Frac.hpp" 
 #include "..\include\MeanObliquity.hpp"
+#include "..\include\Mjday.hpp"
+#include "..\include\Mjday_TDB.hpp"
+#include "..\include\Position.hpp"
+#include "..\include\R_x.hpp"
+#include "..\include\R_y.hpp"
+#include "..\include\R_z.hpp"
+
 
 
 
@@ -600,14 +607,77 @@ int m_mean_obliquity_01() {
     return 0;
 }
 
+//test MJDay
+int m_mjday_01() {
+    double result = Mjday(2025, 1, 1, 0, 0, 0.0);
+    double expected = 60676.0;
+    _assert(fabs(result - expected) < 1e-9);
+    return 0;
+}
+
+//test Mjday_TDB
+int m_mjday_tdb_01() {
+    double result = Mjday_TDB(60355.0);
+    double expected = 60355.000000012;
+    _assert(fabs(result - expected) < 1e-9);
+    return 0;
+}
+
+//test position
+int m_position_01() {
+
+    Matrix r = Position(0.0, 0.0, 0.0);
 
 
+    Matrix expected(3, 1);
+    expected(1, 1) = 6378136.3;
+    expected(2, 1) = 0.0;
+    expected(3, 1) = 0.0;
+
+    _assert(m_equals(r, expected, 1e-6));  // Precisión tolerada
+    return 0;
+}
+
+//test R_x
+int m_r_x_01() {
+    Matrix rotmat = R_x(Const::pi / 4.0);
+
+    Matrix expected(3, 3);
+    expected(1,1) = 1.0; expected(1,2) = 0.0; expected(1,3) = 0.0;
+    expected(2,1) = 0.0; expected(2,2) = 0.7071067811865475; expected(2,3) = 0.7071067811865475;
+    expected(3,1) = 0.0; expected(3,2) = -0.7071067811865475; expected(3,3) = 0.7071067811865475;
+
+    _assert(m_equals(rotmat, expected, 1e-6));
+    return 0;
+}
+
+// Test para R_y
+int m_r_y_01() {
+    Matrix result = R_y(Const::pi / 4.0);
+
+    Matrix expected(3, 3);
+    expected(1,1) = 0.707106781186548; expected(1,2) = 0.0; expected(1,3) = -0.707106781186548;
+    expected(2,1) = 0.0;               expected(2,2) = 1.0; expected(2,3) = 0.0;
+    expected(3,1) = 0.707106781186548; expected(3,2) = 0.0; expected(3,3) = 0.707106781186548;
+
+    _assert(m_equals(result, expected, 1e-12));
+    return 0;
+}
+
+// Test para R_z
+int m_r_z_01() {
+    Matrix result = R_z(Const::pi / 4.0);
+
+    Matrix expected(3, 3);
+    expected(1, 1) = 0.707106781186548; expected(1, 2) = 0.707106781186548; expected(1, 3) = 0.0;
+    expected(2, 1) = -0.707106781186548; expected(2, 2) = 0.707106781186548; expected(2, 3) = 0.0;
+    expected(3, 1) = 0.0; expected(3, 2) = 0.0; expected(3, 3) = 1.0;
 
 
+    _assert(m_equals(result, expected, 1e-9));
 
-
-
-
+    return 0;
+}
 
 
 
@@ -663,7 +733,16 @@ int all_tests() {
 	_verify(m_ecc_anom_01);
 	_verify(m_frac_01);
 	_verify(m_mean_obliquity_01);       //test num 31
-
+	_verify(m_mjday_01);
+	_verify(m_mjday_tdb_01);   //33
+	_verify(m_position_01);      //34     ME VAN MAL LO DE 
+	_verify(m_r_x_01);                     
+	_verify(m_r_y_01);
+	_verify(m_r_z_01);
+	
+	
+	
+	
     return 0;
 }
 

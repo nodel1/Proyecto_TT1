@@ -22,6 +22,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
+#include "matrix.hpp"
 
 using namespace std;
 
@@ -34,8 +35,8 @@ using namespace std;
  * @param[in] lon Longitude [rad]
  * @param[in] lat Geodetic latitude [rad]
  * @param[in] h Altitude [m]
- * @param[out] r Position vector [m] (array of 3 doubles: x, y, z)
  */
-void Position(double lon, double lat, double h, double r[3]);
+ 
+Matrix Position(double lon,double  lat, double h);
 
 #endif
