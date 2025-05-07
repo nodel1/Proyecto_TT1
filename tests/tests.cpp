@@ -495,11 +495,6 @@ int m_assign_column_01() {
 }
 
 
-
-
-
-
-
 // Test AccelPointMass
 int m_accel_point_mass_01() {
     Matrix r(1, 3);
@@ -750,15 +745,6 @@ int m_timeupdate_01() {
 
 
 
-
-
-
-
-
-
-
-
-
 int all_tests() {
     _verify(m_constructor_01);
     _verify(m_access_01);
@@ -789,13 +775,13 @@ int all_tests() {
     _verify(m_assign_row_01);
     _verify(m_assign_column_01);
 	_verify(m_accel_point_mass_01);
-	_verify(m_cheb3d_01);             //NO ME VA ESTE TEST NO SE POR QUE
+	_verify(m_cheb3d_01);             
 	_verify(m_ecc_anom_01);
 	_verify(m_frac_01);
 	_verify(m_mean_obliquity_01);       //test num 31
 	_verify(m_mjday_01);
 	_verify(m_mjday_tdb_01);   //33
-	_verify(m_position_01);      //34     ME VAN MAL LO DE
+	_verify(m_position_01);      //34    
 	_verify(m_r_x_01);
 	_verify(m_r_y_01);
 	_verify(m_r_z_01);           //37
@@ -806,7 +792,7 @@ int all_tests() {
 	_verify(m_iers_01);
 	_verify(m_legendre_01);          //42
 	_verify(m_nutangles_01);
-	_verify(m_timeupdate_01);
+	_verify(m_timeupdate_01);         //44+1
 
     return 0;
 }
