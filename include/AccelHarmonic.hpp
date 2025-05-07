@@ -19,6 +19,9 @@
 #define ACCELHARMONIC_HPP
 
 #include "matrix.hpp"
+#include "Legendre.hpp"
+#include "global.hpp"
+#include <cmath>
 
 //--------------------------------------------------
 // AccelHarmonic (Matrix& r, Matrix& E, int n_max, int m_max)
@@ -34,10 +37,5 @@
  *
  */
 Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max);
-
-
-
-// Declaración de la función Legendre
-void Legendre(int n_max, int m_max, double latgc, Matrix& pnm, Matrix& dpnm);
 
 #endif // ACCELHARMONIC_HPP

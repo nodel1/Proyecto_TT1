@@ -142,25 +142,25 @@ Matrix& Matrix::operator / (Matrix &m) {
     return *m_aux;
 }
 
-Matrix& Matrix::operator = (Matrix &m) {
-    if (this == &m)
-        return *this;
+Matrix& Matrix::operator=(const Matrix &m) {
 
-    if (this->n_row != m.n_row || this->n_column != m.n_column) {
-        this->n_row = m.n_row;
-        this->n_column = m.n_column;
-
-        this->data = new double*[n_row];
-        for (int i = 0; i < n_row; ++i)
-            this->data[i] = new double[n_column];
+    if (data != NULL) {
+        for (int i = 0; i < n_row; i++) {
+            free(data[i]);
+        }
+        free(data);
     }
 
-    for (int i = 1; i <= this->n_row; i++) {
-        for (int j = 1; j <= this->n_column; j++) {
-            (*this)(i, j) = m(i, j);
+    n_row = m.n_row;
+    n_column = m.n_column;
+
+    data = (double**)malloc(n_row * sizeof(double*));
+    for (int i = 0; i < n_row; i++) {
+        data[i] = (double*)malloc(n_column * sizeof(double));
+        for (int j = 0; j < n_column; j++) {
+            data[i][j] = m.data[i][j];
         }
     }
-
     return *this;
 }
 

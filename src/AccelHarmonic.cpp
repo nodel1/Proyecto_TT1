@@ -17,6 +17,7 @@
 
 #include "..\include\AccelHarmonic.hpp"
 #include "..\include\SAT_Const.hpp"
+#include "..\include\global.hpp"
 #include <cmath>
 
 
@@ -35,7 +36,7 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
 
     // Calcular funciones de Legendre
     Matrix pnm(n_max + 1, m_max + 1);
-    Matrix dpnm(n_max + 1, m_max + 1);
+    Matrix dpnm(n_max + 1, m_max + 1);        //REVISAR ESTO 
     Legendre(n_max, m_max, latgc, pnm, dpnm);
 
     // Inicializar acumuladores
