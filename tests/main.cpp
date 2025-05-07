@@ -1,9 +1,17 @@
+#include "..\include\global.hpp"
 #include "..\include\matrix.hpp"
 #include <iostream>
 
 using namespace std;
 
 int main() {
+	
+	eop19620101(4);   //c =214123
+	cout <<"eopdata\n" << eopdata << "\n";
+	
+	
+	
+	
     Matrix M1(3, 2);
 	M1(1,1) = 5;
 	
