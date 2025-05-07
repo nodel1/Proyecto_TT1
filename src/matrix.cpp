@@ -99,68 +99,23 @@ Matrix& Matrix::operator - (Matrix &m) {
     return *m_aux;
 }
 
-Matrix& Matrix::operator*(Matrix &m) {
-    // 1. Verificar dimensiones
-    cout << "Debug: Iniciando multiplicación de matrices\n";
-    cout << "Debug: Dimensiones de A (this): " << this->n_row << "x" << this->n_column << endl;
-    cout << "Debug: Dimensiones de B (m): " << m.n_row << "x" << m.n_column << endl;
-
+Matrix& Matrix::operator * (Matrix &m) {
     if (this->n_column != m.n_row) {
         cout << "Matrix multiplication: dimension mismatch\n";
         exit(EXIT_FAILURE);
     }
 
-    // 2. Imprimir contenido de las matrices
-    cout << "Debug: Matriz A (this):\n";
-    for (int i = 1; i <= this->n_row; i++) {
-        for (int j = 1; j <= this->n_column; j++) {
-            cout << (*this)(i, j) << "\t";
-        }
-        cout << endl;
-    }
-
-    cout << "Debug: Matriz B (m):\n";
-    for (int i = 1; i <= m.n_row; i++) {
-        for (int j = 1; j <= m.n_column; j++) {
-            cout << m(i, j) << "\t";
-        }
-        cout << endl;
-    }
-
-    // Crear matriz auxiliar
     Matrix *m_aux = new Matrix(this->n_row, m.n_column);
-    cout << "Debug: Creada matriz auxiliar m_aux de " << this->n_row << "x" << m.n_column << endl;
 
-    // 3. Realizar multiplicación con depuración
     for (int i = 1; i <= this->n_row; i++) {
         for (int j = 1; j <= m.n_column; j++) {
             double sum = 0.0;
-            cout << "Debug: Calculando elemento R(" << i << "," << j << "):\n";
             for (int k = 1; k <= this->n_column; k++) {
-                double a_ik = (*this)(i, k);
-                double b_kj = m(k, j);
-                double product = a_ik * b_kj;
-                cout << "Debug:  k=" << k << ", A(" << i << "," << k << ")=" << a_ik
-                     << ", B(" << k << "," << j << ")=" << b_kj
-                     << ", Producto=" << product << endl;
-                sum += product;
-                cout << "Debug:  Suma parcial=" << sum << endl;
+                sum += (*this)(i, k) * m(k, j);
             }
             (*m_aux)(i, j) = sum;
-            cout << "Debug: R(" << i << "," << j << ")=" << sum << endl;
         }
     }
-
-    // 4. Imprimir matriz resultante
-    cout << "Debug: Matriz resultante R (m_aux):\n";
-    for (int i = 1; i <= m_aux->n_row; i++) {
-        for (int j = 1; j <= m_aux->n_column; j++) {
-            cout << (*m_aux)(i, j) << "\t";
-        }
-        cout << endl;
-    }
-
-    cout << "Debug: Finalizando multiplicación de matrices\n";
 
     return *m_aux;
 }
