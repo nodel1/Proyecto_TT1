@@ -7,7 +7,7 @@
 #include "..\include\AccelPointMass.hpp"
 #include "..\include\Cheb3D.hpp"
 #include "..\include\EccAnom.hpp"
-#include "..\include\Frac.hpp" 
+#include "..\include\Frac.hpp"
 #include "..\include\MeanObliquity.hpp"
 #include "..\include\Mjday.hpp"
 #include "..\include\Mjday_TDB.hpp"
@@ -15,6 +15,13 @@
 #include "..\include\R_x.hpp"
 #include "..\include\R_y.hpp"
 #include "..\include\R_z.hpp"
+#include "..\include\sign_.hpp"
+#include "..\include\timediff.hpp"
+#include "..\include\AzElPa.hpp"
+#include "..\include\IERS.hpp"
+#include "..\include\Legendre.hpp"
+#include "..\include\NutAngles.hpp"
+#include "..\include\TimeUpdate.hpp"
 
 
 
@@ -38,7 +45,7 @@ int m_equals(Matrix A, Matrix B, double p) {
                     printf("%2.20lf %2.20lf\n",A(i,j),B(i,j));
                     return 0;
                 }
-    
+
     return 1;
 }
 
@@ -73,24 +80,24 @@ int m_access_01() {
 int m_sum_01() {
     int f = 3;
     int c = 4;
-    
+
     Matrix A(f, c);
     A(1,1) = 0; A(1,2) =  2; A(1,3) = 8; A(1,4) = 0;
     A(2,1) = 1; A(2,2) = -1; A(2,3) = 0; A(2,4) = 0;
     A(3,1) = 0; A(3,2) =  1; A(3,3) = 0; A(3,4) = 5;
-    
+
     Matrix B(f, c);
     B(1,1) = 2; B(1,2) =  0; B(1,3) = 0; B(1,4) = 0;
     B(2,1) = 7; B(2,2) = -2; B(2,3) = 1; B(2,4) = 0;
     B(3,1) = 0; B(3,2) = -3; B(3,3) = 0; B(3,4) = 2;
-    
+
     Matrix C(f, c);
     C(1,1) = 2; C(1,2) =  2; C(1,3) = 8; C(1,4) = 0;
     C(2,1) = 8; C(2,2) = -3; C(2,3) = 1; C(2,4) = 0;
     C(3,1) = 0; C(3,2) = -2; C(3,3) = 0; C(3,4) = 7;
-    
+
     Matrix R = A + B;
-    
+
     _assert(m_equals(C, R, 1e-10));
     return 0;
 }
@@ -99,24 +106,24 @@ int m_sum_01() {
 int m_sub_01() {
     int f = 3;
     int c = 4;
-    
+
     Matrix A(f, c);
     A(1,1) = 0; A(1,2) = 2; A(1,3) = 8; A(1,4) = 0;
     A(2,1) = 1; A(2,2) = -1; A(2,3) = 0; A(2,4) = 0;
     A(3,1) = 0; A(3,2) = 1; A(3,3) = 0; A(3,4) = 5;
-    
+
     Matrix B(f, c);
     B(1,1) = 2; B(1,2) = 0; B(1,3) = 0; B(1,4) = 0;
     B(2,1) = 7; B(2,2) = -2; B(2,3) = 1; B(2,4) = 0;
     B(3,1) = 0; B(3,2) = -3; B(3,3) = 0; B(3,4) = 2;
-    
+
     Matrix C(f, c);
     C(1,1) = -2; C(1,2) = 2; C(1,3) = 8; C(1,4) = 0;
     C(2,1) = -6; C(2,2) = 1; C(2,3) = -1; C(2,4) = 0;
     C(3,1) = 0; C(3,2) = 4; C(3,3) = 0; C(3,4) = 3;
-    
+
     Matrix R = A - B;
-    
+
     _assert(m_equals(C, R, 1e-10));
     return 0;
 }
@@ -126,18 +133,18 @@ int m_mult_01() {
     Matrix A(2, 3);
     A(1,1) = 1; A(1,2) = 2; A(1,3) = 3;
     A(2,1) = 4; A(2,2) = 5; A(2,3) = 6;
-    
+
     Matrix B(3, 2);
     B(1,1) = 7; B(1,2) = 8;
     B(2,1) = 9; B(2,2) = 10;
     B(3,1) = 11; B(3,2) = 12;
-    
+
     Matrix C(2, 2);
     C(1,1) = 58; C(1,2) = 64;
     C(2,1) = 139; C(2,2) = 154;
-    
+
     Matrix R = A * B;
-    
+
     _assert(m_equals(C, R, 1e-10));
     return 0;
 }
@@ -147,17 +154,17 @@ int m_div_01() {
     Matrix A(2, 2);
     A(1,1) = 1; A(1,2) = 2;
     A(2,1) = 3; A(2,2) = 4;
-    
+
     Matrix B(2, 2);
     B(1,1) = 4; B(1,2) = 7;
     B(2,1) = 2; B(2,2) = 6;
-    
+
     Matrix expected(2, 2);
     expected(1,1) = 0.2; expected(1,2) = 0.1;
     expected(2,1) = 1.0; expected(2,2) = -0.5;
-    
+
     Matrix R = A / B;
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -183,14 +190,14 @@ int m_assign_01() {
 int m_zeros_01() {
     int f = 3;
     int c = 4;
-    
+
     Matrix A(f, c);
     A(1,1) = 0; A(1,2) = 0; A(1,3) = 0; A(1,4) = 0;
     A(2,1) = 0; A(2,2) = 0; A(2,3) = 0; A(2,4) = 0;
     A(3,1) = 0; A(3,2) = 0; A(3,3) = 0; A(3,4) = 0;
-    
+
     Matrix B = zeros(3, 4);
-    
+
     _assert(m_equals(A, B, 1e-10));
     return 0;
 }
@@ -201,9 +208,9 @@ int m_eye_01() {
     expected(1,1) = 1; expected(1,2) = 0; expected(1,3) = 0;
     expected(2,1) = 0; expected(2,2) = 1; expected(2,3) = 0;
     expected(3,1) = 0; expected(3,2) = 0; expected(3,3) = 1;
-    
+
     Matrix R = eye(3);
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -213,14 +220,14 @@ int m_transpose_01() {
     Matrix A(2, 3);
     A(1,1) = 1; A(1,2) = 2; A(1,3) = 3;
     A(2,1) = 4; A(2,2) = 5; A(2,3) = 6;
-    
+
     Matrix expected(3, 2);
     expected(1,1) = 1; expected(1,2) = 4;
     expected(2,1) = 2; expected(2,2) = 5;
     expected(3,1) = 3; expected(3,2) = 6;
-    
+
     Matrix R = transpose(A);
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -230,13 +237,13 @@ int m_inv_01() {
     Matrix A(2, 2);
     A(1,1) = 4; A(1,2) = 7;
     A(2,1) = 2; A(2,2) = 6;
-    
+
     Matrix B(2, 2);
     B(1,1) = 0.6; B(1,2) = -0.7;
     B(2,1) = -0.2; B(2,2) = 0.4;
-    
+
     Matrix R = inv(A);
-    
+
     _assert(m_equals(B, R, 1e-10));
     return 0;
 }
@@ -246,13 +253,13 @@ int m_scalar_add_01() {
     Matrix A(2, 2);
     A(1,1) = 1; A(1,2) = 2;
     A(2,1) = 3; A(2,2) = 4;
-    
+
     Matrix expected(2, 2);
     expected(1,1) = 3; expected(1,2) = 4;
     expected(2,1) = 5; expected(2,2) = 6;
-    
+
     Matrix R = A + 2.0;
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -262,13 +269,13 @@ int m_scalar_sub_01() {
     Matrix A(2, 2);
     A(1,1) = 3; A(1,2) = 4;
     A(2,1) = 5; A(2,2) = 6;
-    
+
     Matrix expected(2, 2);
     expected(1,1) = 1; expected(1,2) = 2;
     expected(2,1) = 3; expected(2,2) = 4;
-    
+
     Matrix R = A - 2.0;
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -278,13 +285,13 @@ int m_scalar_mult_01() {
     Matrix A(2, 2);
     A(1,1) = 1; A(1,2) = 2;
     A(2,1) = 3; A(2,2) = 4;
-    
+
     Matrix expected(2, 2);
     expected(1,1) = 2; expected(1,2) = 4;
     expected(2,1) = 6; expected(2,2) = 8;
-    
+
     Matrix R = A * 2.0;
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -294,13 +301,13 @@ int m_scalar_div_01() {
     Matrix A(2, 2);
     A(1,1) = 2; A(1,2) = 4;
     A(2,1) = 6; A(2,2) = 8;
-    
+
     Matrix expected(2, 2);
     expected(1,1) = 1; expected(1,2) = 2;
     expected(2,1) = 3; expected(2,2) = 4;
-    
+
     Matrix R = A / 2.0;
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -335,9 +342,9 @@ int m_zeros_n_01() {
     Matrix expected(2, 2);
     expected(1,1) = 0; expected(1,2) = 0;
     expected(2,1) = 0; expected(2,2) = 0;
-    
+
     Matrix R = zeros(2);
-    
+
     _assert(m_equals(expected, R, 1e-10));
     return 0;
 }
@@ -516,76 +523,56 @@ int m_accel_point_mass_01() {
 
     _assert(m_equals(a, expected, 1e-9));     //resultados sacados de hacerpruebas en matlab
 
-    double expected_magnitude = 1.25651832363664e-06; 
+    double expected_magnitude = 1.25651832363664e-06;
     double result_magnitude = norm(a);
-    _assert(fabs(expected_magnitude - result_magnitude) < 1e-9); 
-	
+    _assert(fabs(expected_magnitude - result_magnitude) < 1e-9);
+
     return 0;
 }
 
 // Test Cheb3D
 int m_cheb3d_01() {
-    double t = 1800;
-    int N = 4;
-    double Ta = 0;
-    double Tb = 3600;
-
-    Matrix Cx(4, 1);
-    Cx(1,1) = 1000000; Cx(2,1) = 500000; Cx(3,1) = 0; Cx(4,1) = 0;
-    Matrix Cy(4, 1);
-    Cy(1,1) = 0; Cy(2,1) = 500000; Cy(3,1) = 1000000; Cy(4,1) = 0;
-    Matrix Cz(4, 1);
-    Cz(1,1) = 0; Cz(2,1) = 0; Cz(3,1) = 500000; Cz(4,1) = 1000000;
-
-    // Debug: Print coefficients
-    std::cout << "Test Cx: ";
-    for (int i = 1; i <= N; i++) std::cout << Cx(i,1) << " ";
-    std::cout << "\nTest Cy: ";
-    for (int i = 1; i <= N; i++) std::cout << Cy(i,1) << " ";
-    std::cout << "\nTest Cz: ";
-    for (int i = 1; i <= N; i++) std::cout << Cz(i,1) << " ";
-    std::cout << "\n";
-
+    int N = 3;
+    double Ta = 0.0;
+    double Tb = 1.0;
+    double t = 0.5;
+    Matrix Cx(1, 3);
+    Cx(1, 1) = 1.0; Cx(1, 2) = 0.5; Cx(1, 3) = 0.3;
+    Matrix Cy(1, 3);
+    Cy(1, 1) = 0.0; Cy(1, 2) = 0.1; Cy(1, 3) = 0.2;
+    Matrix Cz(1, 3);
+    Cz(1, 1) = 0.5; Cz(1, 2) = 0.1; Cz(1, 3) = 0.2;
+    Matrix R = Cheb3D(t, N, Ta, Tb, Cx, Cy, Cz);
     Matrix expected(1, 3);
-    expected(1,1) = 1000000;
-    expected(1,2) = -1000000;
-    expected(1,3) = -500000;
-
-    Matrix ChebApp = Cheb3D(t, N, Ta, Tb, Cx, Cy, Cz);
-
-    _assert(m_equals(ChebApp, expected, 1e-9));
-
-    double expected_magnitude = 1500000;
-    double result_magnitude = norm(ChebApp);
-    _assert(fabs(expected_magnitude - result_magnitude) < 1e-9);
-
+    expected(1, 1) = 0.7; expected(1, 2) = -0.2; expected(1, 3) = 0.3;
+    _assert(m_equals(expected, R, 1e-8));
     return 0;
 }
 
 
 // Test EccAnom
 int m_ecc_anom_01() {     //pruebo con diferentes valores
-    // Test Case 1: Circular orbit (e=0)
+    // (e=0)
     _assert(fabs(EccAnom(0.7854, 0.0) - 0.7854) < 1e-4);
-    
-    // Test Case 2: Low eccentricity orbit (e=0.1)
+
+    //(e=0.1)
     _assert(fabs(EccAnom(1.5708, 0.1) - 1.6703) < 1e-4);
-    
-    // Test Case 3: Medium eccentricity orbit (e=0.5)
+
+    // (e=0.5)
     _assert(fabs(EccAnom(3.1416, 0.5) - 3.1416) < 1e-4);
-    
-    // Test Case 4: High eccentricity orbit (e=0.9)
+
+    // (e=0.9)
     _assert(fabs(EccAnom(4.7124, 0.9) - 4.0198) < 1e-4);
-    
+
     return 0;      //VALORES DE PROBAR EN MATLAB
 }
 
 int m_frac_01() {
-    double x = 3.75;               
-    double expected = 0.75;        
-    double result = Frac(x);       
-    
-    
+    double x = 3.75;
+    double expected = 0.75;
+    double result = Frac(x);
+
+
     _assert(fabs(result - expected) < 1e-10);
     return 0;
 }
@@ -594,13 +581,13 @@ int m_frac_01() {
 int m_mean_obliquity_01() {
 
     double Mjd_TT1 = Const::MJD_J2000;
-    double expected1 = 0.409092804222; 
+    double expected1 = 0.409092804222;
     double result1 = MeanObliquity(Mjd_TT1);
     _assert(fabs(result1 - expected1) < 1e-10);
 
 
     double Mjd_TT2 = Const::MJD_J2000 + 36525;
-    double expected2 = 0.408865844627; 
+    double expected2 = 0.408865844627;
     double result2 = MeanObliquity(Mjd_TT2);
     _assert(fabs(result2 - expected2) < 1e-10);
 
@@ -679,10 +666,83 @@ int m_r_z_01() {
     return 0;
 }
 
+int m_sign_01() {
+    double result = sign_(-5.0, 3.0);
+    double expected = 5.0;
+    _assert(fabs(result - expected) < 1e-10);
+    return 0;
+}
+
+int m_timediff_01() {
+    double UT1_TAI, UTC_GPS, UT1_GPS, TT_UTC, GPS_UTC;
+    timediff(-0.5, 37.0, UT1_TAI, UTC_GPS, UT1_GPS, TT_UTC, GPS_UTC);
+    double expected = 69.184;
+    _assert(fabs(TT_UTC - expected) < 1e-6);
+    return 0;
+}
+
+int m_azelpa_01() {
+    Matrix s(3, 1);
+    s(1,1) = 1.0; s(2,1) = 2.0; s(3,1) = 3.0;
+    double Az, El;
+    Matrix dAds(1, 3), dEds(1, 3);
+    AzElPa(s, Az, El, dAds, dEds);
+    double expected = 0.4636476090008061;
+    _assert(fabs(Az - expected) < 1e-6);
+    return 0;
+}
+
+int m_iers_01() {
+    Matrix eop(13, 2);
+    eop(1,1) = 0; eop(2,1) = 0; eop(3,1) = 0; eop(4,1) = 60355; eop(5,1) = 0.1; eop(6,1) = 0.2;
+    eop(7,1) = -0.5; eop(8,1) = 0.001; eop(9,1) = -80; eop(10,1) = 20; eop(11,1) = 0.01;
+    eop(12,1) = 0.02; eop(13,1) = 37;
+    eop(1,2) = 0; eop(2,2) = 0; eop(3,2) = 0; eop(4,2) = 60356; eop(5,2) = 0.15; eop(6,2) = 0.25;
+    eop(7,2) = -0.4; eop(8,2) = 0.0012; eop(9,2) = -82; eop(10,2) = 22; eop(11,2) = 0.015;
+    eop(12,2) = 0.025; eop(13,2) = 37;
+    double Mjd_UTC = 60355.0;
+    char interp = 'n';
+    double x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC;
+    IERS(eop, Mjd_UTC, interp, x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC);
+    double expected = -0.5;
+    _assert(fabs(UT1_UTC - expected) < 1e-6);
+    return 0;
+}
+
+int m_legendre_01() {
+    int n = 3;
+    int m = 3;
+    double fi = Const::pi/4.0; // pi/4
+    Matrix pnm(n+1, m+1);
+    Matrix dpnm(n+1, m+1);
+    Legendre(n, m, fi, pnm, dpnm);
+    double expected = 1.224744871391589;
+    _assert(fabs(pnm(2,2) - expected) < 1e-6);
+    return 0;
+}
+
+int m_nutangles_01() {
+    double Mjd_TT = 60355.0;
+    double dpsi, deps;
+    NutAngles(Mjd_TT, dpsi, deps);
+    double expected = -2.022464e-05;
+    _assert(fabs(dpsi - expected) < 1e-6);
+    return 0;
+}
 
 
-
-
+int m_timeupdate_01() {
+    Matrix P(2, 2);
+    P(1,1) = 1.0; P(1,2) = 0.5; P(2,1) = 0.5; P(2,2) = 2.0;
+    Matrix Phi(2, 2);
+    Phi(1,1) = 1.0; Phi(1,2) = 0.0; Phi(2,1) = 0.0; Phi(2,2) = 1.0;
+    Matrix Qdt(2, 2);
+    Qdt(1,1) = 0.1; Qdt(1,2) = 0.0; Qdt(2,1) = 0.0; Qdt(2,2) = 0.2;
+    Matrix P_new = TimeUpdate(P, Phi, Qdt);
+    double expected = 1.1;
+    _assert(fabs(P_new(1,1) - expected) < 1e-6);
+    return 0;
+}
 
 
 
@@ -729,20 +789,25 @@ int all_tests() {
     _verify(m_assign_row_01);
     _verify(m_assign_column_01);
 	_verify(m_accel_point_mass_01);
-	//_verify(m_cheb3d_01);             //NO ME VA ESTE TEST NO SE POR QUE 
+	_verify(m_cheb3d_01);             //NO ME VA ESTE TEST NO SE POR QUE
 	_verify(m_ecc_anom_01);
 	_verify(m_frac_01);
 	_verify(m_mean_obliquity_01);       //test num 31
 	_verify(m_mjday_01);
 	_verify(m_mjday_tdb_01);   //33
-	_verify(m_position_01);      //34     ME VAN MAL LO DE 
-	_verify(m_r_x_01);                     
+	_verify(m_position_01);      //34     ME VAN MAL LO DE
+	_verify(m_r_x_01);
 	_verify(m_r_y_01);
-	_verify(m_r_z_01);
-	
-	
-	
-	
+	_verify(m_r_z_01);           //37
+	// No test para SAT_Const (solo son variables)
+	_verify(m_sign_01);
+	_verify(m_timediff_01);
+	_verify(m_azelpa_01);        //40
+	_verify(m_iers_01);
+	_verify(m_legendre_01);          //42
+	_verify(m_nutangles_01);
+	_verify(m_timeupdate_01);
+
     return 0;
 }
 

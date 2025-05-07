@@ -36,8 +36,7 @@ using namespace std;
  * @param[in] n Maximum degree of Legendre functions
  * @param[in] m Maximum order of Legendre functions
  * @param[in] fi Angle [rad]
- * @return pair<Matrix, Matrix> Pair of matrices: pnm (Legendre functions), dpnm (derivatives)
  */
-pair<Matrix, Matrix> Legendre(int n, int m, double fi);
+void Legendre(int n, int m, double fi, Matrix& pnm, Matrix& dpnm);
 
 #endif

@@ -36,10 +36,9 @@
  * @param[in] Cz Coefficients for z-coordinate (Nx1 matrix)
  * @return Matrix& Approximated vector (1x3 matrix)
  * 
- * @throws std::runtime_error if time is out of range
- * @note Uses Clenshaw algorithm for efficient evaluation
  */
  
-Matrix Cheb3D(double t, int N, double Ta, double Tb, Matrix& Cx, Matrix& Cy, Matrix& Cz);
+     Matrix Cheb3D(double t, int N, double Ta, double Tb, Matrix& Cx, Matrix& Cy, Matrix& Cz);
+
 
 #endif // CHEB3D_HPP

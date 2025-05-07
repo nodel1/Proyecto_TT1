@@ -20,28 +20,28 @@
 using namespace std;
 
 void AzElPa(const Matrix& s, double& Az, double& El, Matrix& dAds, Matrix& dEds) {
-    const double pi2 = Const::pi2; 
+    const double pi2 = Const::pi2;
 
     // Calculate rho (horizontal distance in East-North plane)
-    double rho = sqrt(s(0,0) * s(0,0) + s(1,0) * s(1,0));
+    double rho = std::sqrt(s(1,1) * s(1,1) + s(2,1) * s(2,1));
 
     // Angles
-    Az = atan2(s(0,0), s(1,0));
+    Az = std::atan2(s(1,1), s(2,1));
     if (Az < 0.0) {
         Az += pi2;
     }
-    El = atan(s(2,0) / rho);
+    El = std::atan(s(3,1) / rho);
 
     // Partials
     dAds = zeros(1, 3); // Initialize 1x3 matrix with zeros
-    dAds(0,0) = s(1,0) / (rho * rho);
-    dAds(0,1) = -s(0,0) / (rho * rho);
-    dAds(0,2) = 0.0;
+    dAds(1,1) = s(2,1) / (rho * rho);
+    dAds(1,2) = -s(1,1) / (rho * rho);
+    dAds(1,3) = 0.0;
 
     dEds = zeros(1, 3); // Initialize 1x3 matrix with zeros
     Matrix s_non_const = s; // Create non-const copy for dot
     double denom = dot(s_non_const, s_non_const);
-    dEds(0,0) = -s(0,0) * s(2,0) / rho / denom;
-    dEds(0,1) = -s(1,0) * s(2,0) / rho / denom;
-    dEds(0,2) = rho / denom;
+    dEds(1,1) = -s(1,1) * s(3,1) / rho / denom;
+    dEds(1,2) = -s(2,1) * s(3,1) / rho / denom;
+    dEds(1,3) = rho / denom;
 }
