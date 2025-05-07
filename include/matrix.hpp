@@ -45,7 +45,7 @@ public:
     Matrix& operator - (Matrix &m);
     Matrix& operator * (Matrix &m);
     Matrix& operator / (Matrix &m);
-    Matrix& operator = (const Matrix &m);
+    Matrix& operator = ( Matrix &m);
     Matrix& operator * (double scalar);
     Matrix& operator / (double scalar);
     Matrix& operator + (double scalar);
