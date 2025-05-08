@@ -22,6 +22,12 @@
 #include "..\include\Legendre.hpp"
 #include "..\include\NutAngles.hpp"
 #include "..\include\TimeUpdate.hpp"
+#include "..\include\LTC.hpp"
+#include "..\include\NutMatrix.hpp"
+#include "..\include\PoleMatrix.hpp"
+#include "..\include\PrecMatrix.hpp"
+#include "..\include\gmst.hpp"
+#include "..\include\AccelHarmonic.hpp"
 
 
 
@@ -739,6 +745,45 @@ int m_timeupdate_01() {
     return 0;
 }
 
+int m_accel_harmonic_01() {
+
+    Matrix r(3, 1);
+    r(1, 1) = 7000e3;  // 7000 km = 7,000,000 m
+    r(2, 1) = 0.0;
+    r(3, 1) = 0.0;
+
+
+    Matrix E = eye(3);
+
+
+    int n_max = 2;
+    int m_max = 2;
+
+
+    Matrix R = AccelHarmonic(r, E, n_max, m_max);
+
+
+    Matrix expected(3, 1);
+    expected(1, 1) = -8.14576607065686;      // m/s²
+    expected(2, 1) = -3.66267894892037e-05;  // m/s²
+    expected(3, 1) = -5.84508413583961e-09;  // m/s²
+
+
+    _assert(m_equals(expected, R, 1e-10));
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -793,6 +838,7 @@ int all_tests() {
 	_verify(m_legendre_01);          //42
 	_verify(m_nutangles_01);
 	_verify(m_timeupdate_01);         //44+1
+	_verify(m_accel_harmonic_01);
 
     return 0;
 }
