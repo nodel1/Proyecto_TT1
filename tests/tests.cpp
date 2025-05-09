@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "..\include\SAT_Const.hpp"
+#include "..\include\global.hpp"
 
 #include "..\include\AccelPointMass.hpp"
 #include "..\include\Cheb3D.hpp"
@@ -694,17 +695,10 @@ int m_azelpa_01() {
 }
 
 int m_iers_01() {
-    Matrix eop(13, 2);
-    eop(1,1) = 0; eop(2,1) = 0; eop(3,1) = 0; eop(4,1) = 60355; eop(5,1) = 0.1; eop(6,1) = 0.2;
-    eop(7,1) = -0.5; eop(8,1) = 0.001; eop(9,1) = -80; eop(10,1) = 20; eop(11,1) = 0.01;
-    eop(12,1) = 0.02; eop(13,1) = 37;
-    eop(1,2) = 0; eop(2,2) = 0; eop(3,2) = 0; eop(4,2) = 60356; eop(5,2) = 0.15; eop(6,2) = 0.25;
-    eop(7,2) = -0.4; eop(8,2) = 0.0012; eop(9,2) = -82; eop(10,2) = 22; eop(11,2) = 0.015;
-    eop(12,2) = 0.025; eop(13,2) = 37;
     double Mjd_UTC = 60355.0;
     char interp = 'n';
     double x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC;
-    IERS(eop, Mjd_UTC, interp, x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC);
+    IERS(Mjd_UTC, interp, x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC); //CAMBIAR EOPDATA
     double expected = -0.5;
     _assert(fabs(UT1_UTC - expected) < 1e-6);
     return 0;
@@ -746,6 +740,9 @@ int m_timeupdate_01() {
 }
 
 int m_accel_harmonic_01() {
+	eop19620101(21413);
+	GGM03S(181);
+	DE430Coeff(2285, 1020);
 
     Matrix r(3, 1);
     r(1, 1) = 7000e3;  // 7000 km = 7,000,000 m
