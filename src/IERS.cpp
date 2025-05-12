@@ -19,66 +19,93 @@
 
 using namespace std;
 
-// Helper function to find the first index where eop(4,j) == mjd
-int find_index(const Matrix& eop, double mjd) {
-    for (int j = 1; j <= eop.n_column; j++) {
-        if (static_cast<int>(eop(4,j)) == mjd) {
-            return j;
-        }
-    }
-    cout << "Error: MJD " << mjd << " not found in eop data" << endl;
-    exit(EXIT_FAILURE);
-    return -1; // Unreachable, but included for completeness
-}
-
-void IERS(const Matrix& eop, double Mjd_UTC, char interp, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC) {
-    double mjd = floor(Mjd_UTC);
-    int i = find_index(eop, mjd);
+void IERS(double Mjd_UTC, char interp, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC) {
+    double x_pole;
+    double y_pole;
+    double UT1_UTC;
+    double LOD;
+    double dpsi;
+    double deps;
+    double dx_pole;
+    double dy_pole;
+    double TAI_UTC;
+    Matrix& eop = eopdata;
 
     if (interp == 'l') {
-        // Linear interpolation
-        Matrix preeop(13, 1);
-        Matrix nexteop(13, 1);
-        for (int k = 1; k <= 13; k++) {
-            preeop(k,1) = eop(k,i);
-            nexteop(k,1) = eop(k,i+1);
+        double mjd = floor(Mjd_UTC);
+        int i = -1;
+
+        for (int col = 0; col < eop.n_column; col++) {
+            if (mjd == eop(3, col)) {
+                i = col;
+                break;
+            }
+        }
+        if (i == -1) {
+            cout << "IERS: MJD not found in eop data.\n";
+            exit(EXIT_FAILURE);
+        }
+
+        Matrix preeop = zeros(13, 1);
+        Matrix nexteop = zeros(13, 1);
+        for (int k = 0; k < 13; k++) {
+            preeop(k, 0) = eop(k, i);
+            nexteop(k, 0) = eop(k, i + 1);
         }
 
         double mfme = 1440.0 * (Mjd_UTC - mjd);
         double fixf = mfme / 1440.0;
 
         // Setting of IERS Earth rotation parameters
-        x_pole = preeop(5,1) + (nexteop(5,1) - preeop(5,1)) * fixf;
-        y_pole = preeop(6,1) + (nexteop(6,1) - preeop(6,1)) * fixf;
-        UT1_UTC = preeop(7,1) + (nexteop(7,1) - preeop(7,1)) * fixf;
-        LOD = preeop(8,1) + (nexteop(8,1) - preeop(8,1)) * fixf;
-        dpsi = preeop(9,1) + (nexteop(9,1) - preeop(9,1)) * fixf;
-        deps = preeop(10,1) + (nexteop(10,1) - preeop(10,1)) * fixf;
-        dx_pole = preeop(11,1) + (nexteop(11,1) - preeop(11,1)) * fixf;
-        dy_pole = preeop(12,1) + (nexteop(12,1) - preeop(12,1)) * fixf;
-        TAI_UTC = preeop(13,1);
+        // (UT1-UTC [s], TAI-UTC [s], x ["], y ["])
+        x_pole = preeop(4, 0) + (nexteop(4, 0) - preeop(4, 0)) * fixf;
+        y_pole = preeop(5, 0) + (nexteop(5, 0) - preeop(5, 0)) * fixf;
+        UT1_UTC = preeop(6, 0) + (nexteop(6, 0) - preeop(6, 0)) * fixf;
+        LOD = preeop(7, 0) + (nexteop(7, 0) - preeop(7, 0)) * fixf;
+        dpsi = preeop(8, 0) + (nexteop(8, 0) - preeop(8, 0)) * fixf;
+        deps = preeop(9, 0) + (nexteop(9, 0) - preeop(9, 0)) * fixf;
+        dx_pole = preeop(10, 0) + (nexteop(10, 0) - preeop(10, 0)) * fixf;
+        dy_pole = preeop(11, 0) + (nexteop(11, 0) - preeop(11, 0)) * fixf;
+        TAI_UTC = preeop(12, 0);
 
-        // Convert to radians
-        x_pole /= Const::Arcs;
-        y_pole /= Const::Arcs;
+        x_pole /= Const::Arcs;  // Pole coordinate [rad]
+        y_pole /= Const::Arcs;  // Pole coordinate [rad]
         dpsi /= Const::Arcs;
         deps /= Const::Arcs;
-        dx_pole /= Const::Arcs;
-        dy_pole /= Const::Arcs;
+        dx_pole /= Const::Arcs; // Pole coordinate [rad]
+        dy_pole /= Const::Arcs; // Pole coordinate [rad]
+    } else if (interp == 'n') {
+        double mjd = floor(Mjd_UTC);
+        int i = -1;
+
+        for (int col = 0; col < eop.n_column; col++) {
+            if (mjd == eop(3, col)) {
+                i = col;
+                break;
+            }
+        }
+        if (i == -1) {
+            cout << "IERS: MJD not found in eop data.\n";
+            exit(EXIT_FAILURE);
+        }
+
+        // Setting of IERS Earth rotation parameters
+        // (UT1-UTC [s], TAI-UTC [s], x ["], y ["])
+        x_pole = eop(4, i) / Const::Arcs;  // Pole coordinate [rad]
+        y_pole = eop(5, i) / Const::Arcs;  // Pole coordinate [rad]
+        UT1_UTC = eop(6, i);               // UT1-UTC time difference [s]
+        LOD = eop(7, i);                   // Length of day [s]
+        dpsi = eop(8, i) / Const::Arcs;
+        deps = eop(9, i) / Const::Arcs;
+        dx_pole = eop(10, i) / Const::Arcs; // Pole coordinate [rad]
+        dy_pole = eop(11, i) / Const::Arcs; // Pole coordinate [rad]
+        TAI_UTC = eop(12, i);               // TAI-UTC time difference [s]
     } else {
-        // No interpolation
-        x_pole = eop(5,i) / Const::Arcs;
-        y_pole = eop(6,i) / Const::Arcs;
-        UT1_UTC = eop(7,i);
-        LOD = eop(8,i);
-        dpsi = eop(9,i)/ Const::Arcs; 
-        deps = eop(10,i)/ Const::Arcs; 
-        dx_pole = eop(11,i) / Const::Arcs;
-        dy_pole = eop(12,i) / Const::Arcs;
-        TAI_UTC = eop(13,i);
+        cout << "IERS: Invalid interpolation method '" << interp << "'\n";
+        exit(EXIT_FAILURE);
     }
 }
 
-void IERS(const Matrix& eop, double Mjd_UTC, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC) {
-    IERS(eop, Mjd_UTC, 'n', x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC);
+void IERS(double Mjd_UTC, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC) {
+    IERS(Mjd_UTC, 'n', x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC);
 }

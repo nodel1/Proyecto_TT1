@@ -24,48 +24,47 @@
 #include <iostream>
 #include "matrix.hpp"
 #include "SAT_Const.hpp"
+#include "global.hpp"
 
 using namespace std;
 
 //--------------------------------------------------
-// IERS (const Matrix& eop, double Mjd_UTC, char interp, double& x_pole, ...)
+// IERS (with interpolation)
 //--------------------------------------------------
 /**
- * @brief Manages IERS time and polar motion data with specified interpolation
+ * @brief Computes IERS Earth rotation parameters with optional interpolation
  *
- * @param[in] eop Earth orientation parameters matrix (at least 13 rows)
- * @param[in] Mjd_UTC Modified Julian Date in UTC
+ * @param[in] Mjd_UTC Modified Julian Date in UTC [days]
  * @param[in] interp Interpolation method ('l' for linear, 'n' for none)
- * @param[out] x_pole Polar coordinate x [rad]
- * @param[out] y_pole Polar coordinate y [rad]
+ * @param[out] x_pole Pole coordinate [rad]
+ * @param[out] y_pole Pole coordinate [rad]
  * @param[out] UT1_UTC UT1-UTC time difference [s]
  * @param[out] LOD Length of day [s]
- * @param[out] dpsi Nutation correction in longitude [rad]
- * @param[out] deps Nutation correction in obliquity [rad]
- * @param[out] dx_pole Polar coordinate correction x [rad]
- * @param[out] dy_pole Polar coordinate correction y [rad]
+ * @param[out] dpsi Nutation correction [rad]
+ * @param[out] deps Nutation correction [rad]
+ * @param[out] dx_pole Pole coordinate correction [rad]
+ * @param[out] dy_pole Pole coordinate correction [rad]
  * @param[out] TAI_UTC TAI-UTC time difference [s]
  */
-void IERS(const Matrix& eop, double Mjd_UTC, char interp, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC);
+void IERS(double Mjd_UTC, char interp, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC);
 
 //--------------------------------------------------
-// IERS (const Matrix& eop, double Mjd_UTC, double& x_pole, ...)
+// IERS (no interpolation)
 //--------------------------------------------------
 /**
- * @brief Manages IERS time and polar motion data without interpolation
+ * @brief Computes IERS Earth rotation parameters without interpolation
  *
- * @param[in] eop Earth orientation parameters matrix (at least 13 rows)
- * @param[in] Mjd_UTC Modified Julian Date in UTC
- * @param[out] x_pole Polar coordinate x [rad]
- * @param[out] y_pole Polar coordinate y [rad]
+ * @param[in] Mjd_UTC Modified Julian Date in UTC [days]
+ * @param[out] x_pole Pole coordinate [rad]
+ * @param[out] y_pole Pole coordinate [rad]
  * @param[out] UT1_UTC UT1-UTC time difference [s]
  * @param[out] LOD Length of day [s]
- * @param[out] dpsi Nutation correction in longitude [rad]
- * @param[out] deps Nutation correction in obliquity [rad]
- * @param[out] dx_pole Polar coordinate correction x [rad]
- * @param[out] dy_pole Polar coordinate correction y [rad]
+ * @param[out] dpsi Nutation correction [rad]
+ * @param[out] deps Nutation correction [rad]
+ * @param[out] dx_pole Pole coordinate correction [rad]
+ * @param[out] dy_pole Pole coordinate correction [rad]
  * @param[out] TAI_UTC TAI-UTC time difference [s]
  */
-void IERS(const Matrix& eop, double Mjd_UTC, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC);
+void IERS(double Mjd_UTC, double& x_pole, double& y_pole, double& UT1_UTC, double& LOD, double& dpsi, double& deps, double& dx_pole, double& dy_pole, double& TAI_UTC);
 
 #endif
