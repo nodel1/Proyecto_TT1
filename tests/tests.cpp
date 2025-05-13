@@ -29,9 +29,11 @@
 #include "..\include\PrecMatrix.hpp"
 #include "..\include\gmst.hpp"
 #include "..\include\AccelHarmonic.hpp"
+#include "..\include\EqnEquinox.hpp"
+#include "..\include\JPL_Eph_DE430.hpp"
 
 
-
+using namespace std;
 
 
 
@@ -695,12 +697,38 @@ int m_azelpa_01() {
 }
 
 int m_iers_01() {
-    double Mjd_UTC = 60355.0;
-    char interp = 'n';
+	
+    double Mjd_UTC = 49746.1163541665;      //tengo que cambiar por variable
+    char interp = 'l';
+
+
     double x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC;
-    IERS(Mjd_UTC, interp, x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC); //CAMBIAR EOPDATA
-    double expected = -0.5;
-    _assert(fabs(UT1_UTC - expected) < 1e-6);
+
+    // Llamar a IERS
+    IERS(Mjd_UTC, interp, x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC);
+
+
+    double expected_x_pole = -5.59378724204105e-07;  // rad
+    double expected_y_pole = 2.33559834147171e-06;  // rad
+    double expected_UT1_UTC = 0.325747632958789;    // s
+    double expected_LOD = 0.0027269897187419;       // s
+    double expected_dpsi = -1.16882953161739e-07;   // rad
+    double expected_deps = -2.47835061986699e-08;   // rad
+    double expected_dx_pole = -8.43027359620098e-10; // rad
+    double expected_dy_pole = -1.56811369104134e-09; // rad
+    double expected_TAI_UTC = 29.0;                 // s
+
+
+    _assert(fabs(expected_x_pole - x_pole) < 1e-15);
+    _assert(fabs(expected_y_pole - y_pole) < 1e-15);
+    _assert(fabs(expected_UT1_UTC - UT1_UTC) < 1e-10);
+    _assert(fabs(expected_LOD - LOD) < 1e-10);
+    _assert(fabs(expected_dpsi - dpsi) < 1e-15);
+    _assert(fabs(expected_deps - deps) < 1e-15);
+    _assert(fabs(expected_dx_pole - dx_pole) < 1e-20);
+    _assert(fabs(expected_dy_pole - dy_pole) < 1e-15);
+    _assert(fabs(expected_TAI_UTC - TAI_UTC) < 1e-10);
+
     return 0;
 }
 
@@ -771,8 +799,165 @@ int m_accel_harmonic_01() {
 }
 
 
+// Test para EqnEquinox
+int m_eqn_equinox_01() {
+    // Inicializar datos globales si es necesario
+    eop19620101(21413); // Asegurar que eopdata esté inicializado
+
+    // Definir Mjd_TT
+    double Mjd_TT = 49746.1163541665;
+
+    // Calcular EqE
+    double EqE = EqnEquinox(Mjd_TT);
+
+    // Valor esperado de MATLAB
+    double expected_EqE = 5.716767215940e-05; // rad
+
+    // Verificar con tolerancia
+    _assert(fabs(EqE - expected_EqE) < 1e-10);
+
+    return 0;
+}
 
 
+
+// Test for JPL_Eph_DE430
+int m_jpl_eph_de430_01() {
+    // Initialize global PC matrix
+    DE430Coeff(1, 1020); // Initialize PC with 1 row, 1020 columns
+    PC(1, 1) = 2451545.0; // JD_start
+    PC(1, 2) = 2451577.0; // JD_end
+
+    // Earth coefficients (231:308)
+    for (int i = 0; i < 13; ++i) {
+        PC(1, 231 + i) = i + 1; // Cx_Earth, subinterval 1
+        PC(1, 244 + i) = 14 + i; // Cy_Earth
+        PC(1, 257 + i) = 27 + i; // Cz_Earth
+        PC(1, 270 + i) = 40 + i; // Cx_Earth, subinterval 2
+        PC(1, 283 + i) = 53 + i; // Cy_Earth
+        PC(1, 296 + i) = 66 + i; // Cz_Earth
+    }
+
+    // Sun coefficients (753:818)
+    for (int i = 0; i < 11; ++i) {
+        PC(1, 753 + i) = i + 1; // Cx_Sun, subinterval 1
+        PC(1, 764 + i) = 12 + i; // Cy_Sun
+        PC(1, 775 + i) = 23 + i; // Cz_Sun
+        PC(1, 786 + i) = 34 + i; // Cx_Sun, subinterval 2
+        PC(1, 797 + i) = 45 + i; // Cy_Sun
+        PC(1, 808 + i) = 56 + i; // Cz_Sun
+    }
+
+    // Moon coefficients (441:752, 8 subintervals)
+    for (int s = 0; s < 8; ++s) {
+        int base = 441 + s * 39;
+        for (int i = 0; i < 13; ++i) {
+            PC(1, base + i) = i + 1; // Cx_Moon
+            PC(1, base + 13 + i) = 14 + i; // Cy_Moon
+            PC(1, base + 26 + i) = 27 + i; // Cz_Moon
+        }
+    }
+
+    // Mercury coefficients (3:45, subinterval 1 only)
+    for (int i = 0; i < 14; ++i) {
+        PC(1, 3 + i) = i + 1; // Cx_Mercury
+        PC(1, 17 + i) = 15 + i; // Cy_Mercury
+        PC(1, 31 + i) = 29 + i; // Cz_Mercury
+    }
+
+    // Test Mjd_TDB values
+    double Mjd_TDB_values[] = {51544.5, 51560.5, 51548.5};
+    for (int idx = 0; idx < 3; ++idx) {
+        double Mjd_TDB = Mjd_TDB_values[idx];
+
+        // Initialize output matrices
+        Matrix r_Mercury(3, 1), r_Venus(3, 1), r_Earth(3, 1), r_Mars(3, 1),
+               r_Jupiter(3, 1), r_Saturn(3, 1), r_Uranus(3, 1), r_Neptune(3, 1),
+               r_Pluto(3, 1), r_Moon(3, 1), r_Sun(3, 1);
+
+        // Call JPL_Eph_DE430
+        JPL_Eph_DE430(Mjd_TDB, r_Mercury, r_Venus, r_Earth, r_Mars, r_Jupiter,
+                      r_Saturn, r_Uranus, r_Neptune, r_Pluto, r_Moon, r_Sun);
+
+        // Expected values
+        Matrix exp_r_Moon(3, 1), exp_r_Earth(3, 1), exp_r_Sun(3, 1), exp_r_Mercury(3, 1),
+               exp_r_Venus(3, 1), exp_r_Mars(3, 1), exp_r_Jupiter(3, 1), exp_r_Saturn(3, 1),
+               exp_r_Uranus(3, 1), exp_r_Neptune(3, 1), exp_r_Pluto(3, 1);
+        double EMRAT1 = 1.0 / (1.0 + 81.30056907419062);
+        if (idx == 0 || idx == 2) { // dt=0 or dt=4
+            exp_r_Moon(1, 1) = 1000; exp_r_Moon(2, 1) = 14000; exp_r_Moon(3, 1) = 27000;
+            exp_r_Earth = exp_r_Moon - exp_r_Moon * EMRAT1;
+            exp_r_Sun(1, 1) = 1000 - exp_r_Earth(1, 1);
+            exp_r_Sun(2, 1) = 12000 - exp_r_Earth(2, 1);
+            exp_r_Sun(3, 1) = 23000 - exp_r_Earth(3, 1);
+            exp_r_Mercury(1, 1) = 1000 - exp_r_Earth(1, 1);
+            exp_r_Mercury(2, 1) = 15000 - exp_r_Earth(2, 1);
+            exp_r_Mercury(3, 1) = 29000 - exp_r_Earth(3, 1);
+            // Others are zero
+        } else { // dt=16
+            exp_r_Moon(1, 1) = 1000; exp_r_Moon(2, 1) = 14000; exp_r_Moon(3, 1) = 27000;
+            exp_r_Earth(1, 1) = 40000; exp_r_Earth(2, 1) = 53000; exp_r_Earth(3, 1) = 66000;
+            exp_r_Earth = exp_r_Earth - exp_r_Moon * EMRAT1;
+            exp_r_Sun(1, 1) = 34000 - exp_r_Earth(1, 1);
+            exp_r_Sun(2, 1) = 45000 - exp_r_Earth(2, 1);
+            exp_r_Sun(3, 1) = 56000 - exp_r_Earth(3, 1);
+            exp_r_Mercury(1, 1) = 0 - exp_r_Earth(1, 1);
+            exp_r_Mercury(2, 1) = 0 - exp_r_Earth(2, 1);
+            exp_r_Mercury(3, 1) = 0 - exp_r_Earth(3, 1);
+            // Others are zero
+        }
+		
+			        std::cout << "AQUI LLEGAStest";
+
+        // Verify results with print statements
+        printf("Mjd_TDB = %.1f\n", Mjd_TDB);
+        printf("r_Moon: [%.6f, %.6f, %.6f]\n", r_Moon(1, 1), r_Moon(2, 1), r_Moon(3, 1));
+        printf("exp_r_Moon: [%.6f, %.6f, %.6f]\n", exp_r_Moon(1, 1), exp_r_Moon(2, 1), exp_r_Moon(3, 1));
+        _assert(m_equals(r_Moon, exp_r_Moon, 1e-6));
+
+        printf("r_Earth: [%.6f, %.6f, %.6f]\n", r_Earth(1, 1), r_Earth(2, 1), r_Earth(3, 1));
+        printf("exp_r_Earth: [%.6f, %.6f, %.6f]\n", exp_r_Earth(1, 1), exp_r_Earth(2, 1), exp_r_Earth(3, 1));
+        _assert(m_equals(r_Earth, exp_r_Earth, 1e-6));
+
+        printf("r_Sun: [%.6f, %.6f, %.6f]\n", r_Sun(1, 1), r_Sun(2, 1), r_Sun(3, 1));
+        printf("exp_r_Sun: [%.6f, %.6f, %.6f]\n", exp_r_Sun(1, 1), exp_r_Sun(2, 1), exp_r_Sun(3, 1));
+        _assert(m_equals(r_Sun, exp_r_Sun, 1e-6));
+
+        printf("r_Mercury: [%.6f, %.6f, %.6f]\n", r_Mercury(1, 1), r_Mercury(2, 1), r_Mercury(3, 1));
+        printf("exp_r_Mercury: [%.6f, %.6f, %.6f]\n", exp_r_Mercury(1, 1), exp_r_Mercury(2, 1), exp_r_Mercury(3, 1));
+        _assert(m_equals(r_Mercury, exp_r_Mercury, 1e-6));
+
+        printf("r_Venus: [%.6f, %.6f, %.6f]\n", r_Venus(1, 1), r_Venus(2, 1), r_Venus(3, 1));
+        printf("exp_r_Venus: [%.6f, %.6f, %.6f]\n", exp_r_Venus(1, 1), exp_r_Venus(2, 1), exp_r_Venus(3, 1));
+        _assert(m_equals(r_Venus, exp_r_Venus, 1e-6));
+
+        printf("r_Mars: [%.6f, %.6f, %.6f]\n", r_Mars(1, 1), r_Mars(2, 1), r_Mars(3, 1));
+        printf("exp_r_Mars: [%.6f, %.6f, %.6f]\n", exp_r_Mars(1, 1), exp_r_Mars(2, 1), exp_r_Mars(3, 1));
+        _assert(m_equals(r_Mars, exp_r_Mars, 1e-6));
+
+        printf("r_Jupiter: [%.6f, %.6f, %.6f]\n", r_Jupiter(1, 1), r_Jupiter(2, 1), r_Jupiter(3, 1));
+        printf("exp_r_Jupiter: [%.6f, %.6f, %.6f]\n", exp_r_Jupiter(1, 1), exp_r_Jupiter(2, 1), exp_r_Jupiter(3, 1));
+        _assert(m_equals(r_Jupiter, exp_r_Jupiter, 1e-6));
+
+        printf("r_Saturn: [%.6f, %.6f, %.6f]\n", r_Saturn(1, 1), r_Saturn(2, 1), r_Saturn(3, 1));
+        printf("exp_r_Saturn: [%.6f, %.6f, %.6f]\n", exp_r_Saturn(1, 1), exp_r_Saturn(2, 1), exp_r_Saturn(3, 1));
+        _assert(m_equals(r_Saturn, exp_r_Saturn, 1e-6));
+
+        printf("r_Uranus: [%.6f, %.6f, %.6f]\n", r_Uranus(1, 1), r_Uranus(2, 1), r_Uranus(3, 1));
+        printf("exp_r_Uranus: [%.6f, %.6f, %.6f]\n", exp_r_Uranus(1, 1), exp_r_Uranus(2, 1), exp_r_Uranus(3, 1));
+        _assert(m_equals(r_Uranus, exp_r_Uranus, 1e-6));
+
+        printf("r_Neptune: [%.6f, %.6f, %.6f]\n", r_Neptune(1, 1), r_Neptune(2, 1), r_Neptune(3, 1));
+        printf("exp_r_Neptune: [%.6f, %.6f, %.6f]\n", exp_r_Neptune(1, 1), exp_r_Neptune(2, 1), exp_r_Neptune(3, 1));
+        _assert(m_equals(r_Neptune, exp_r_Neptune, 1e-6));
+
+        printf("r_Pluto: [%.6f, %.6f, %.6f]\n", r_Pluto(1, 1), r_Pluto(2, 1), r_Pluto(3, 1));
+        printf("exp_r_Pluto: [%.6f, %.6f, %.6f]\n", exp_r_Pluto(1, 1), exp_r_Pluto(2, 1), exp_r_Pluto(3, 1));
+        _assert(m_equals(r_Pluto, exp_r_Pluto, 1e-6));
+    }
+
+    return 0;
+}
 
 
 
@@ -835,12 +1020,26 @@ int all_tests() {
 	_verify(m_legendre_01);          //42
 	_verify(m_nutangles_01);
 	_verify(m_timeupdate_01);         //44+1
-	_verify(m_accel_harmonic_01);
+	_verify(m_accel_harmonic_01);     //46
+	_verify(m_eqn_equinox_01);        //47
+	_verify(m_jpl_eph_de430_01);
+	
+	
+	
+	
 
     return 0;
 }
 
 int main() {
+	
+	
+    eop19620101(21413);
+    GGM03S(181);
+    DE430Coeff(2285, 1020);
+	
+	
+	
     int result = all_tests();
 
     if (result == 0)
