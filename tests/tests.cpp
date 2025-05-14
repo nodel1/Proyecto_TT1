@@ -823,143 +823,119 @@ int m_eqn_equinox_01() {
 
 // Test for JPL_Eph_DE430
 int m_jpl_eph_de430_01() {
-    // Initialize global PC matrix
-    DE430Coeff(1, 1020); // Initialize PC with 1 row, 1020 columns
-    PC(1, 1) = 2451545.0; // JD_start
-    PC(1, 2) = 2451577.0; // JD_end
+    double Mjd_TDB = 60348.0;
 
-    // Earth coefficients (231:308)
-    for (int i = 0; i < 13; ++i) {
-        PC(1, 231 + i) = i + 1; // Cx_Earth, subinterval 1
-        PC(1, 244 + i) = 14 + i; // Cy_Earth
-        PC(1, 257 + i) = 27 + i; // Cz_Earth
-        PC(1, 270 + i) = 40 + i; // Cx_Earth, subinterval 2
-        PC(1, 283 + i) = 53 + i; // Cy_Earth
-        PC(1, 296 + i) = 66 + i; // Cz_Earth
-    }
+    // Initialize output matrices
+    Matrix r_Mercury(1, 3), r_Venus(1, 3), r_Earth(1, 3), r_Mars(1, 3),
+           r_Jupiter(1, 3), r_Saturn(1, 3), r_Uranus(1, 3), r_Neptune(1, 3),
+           r_Pluto(1, 3), r_Moon(1, 3), r_Sun(1, 3);
 
-    // Sun coefficients (753:818)
-    for (int i = 0; i < 11; ++i) {
-        PC(1, 753 + i) = i + 1; // Cx_Sun, subinterval 1
-        PC(1, 764 + i) = 12 + i; // Cy_Sun
-        PC(1, 775 + i) = 23 + i; // Cz_Sun
-        PC(1, 786 + i) = 34 + i; // Cx_Sun, subinterval 2
-        PC(1, 797 + i) = 45 + i; // Cy_Sun
-        PC(1, 808 + i) = 56 + i; // Cz_Sun
-    }
+    // Call JPL_Eph_DE430
+    JPL_Eph_DE430(Mjd_TDB, r_Mercury, r_Venus, r_Earth, r_Mars, r_Jupiter,
+                  r_Saturn, r_Uranus, r_Neptune, r_Pluto, r_Moon, r_Sun);
 
-    // Moon coefficients (441:752, 8 subintervals)
-    for (int s = 0; s < 8; ++s) {
-        int base = 441 + s * 39;
-        for (int i = 0; i < 13; ++i) {
-            PC(1, base + i) = i + 1; // Cx_Moon
-            PC(1, base + 13 + i) = 14 + i; // Cy_Moon
-            PC(1, base + 26 + i) = 27 + i; // Cz_Moon
-        }
-    }
+    // Expected values
+    Matrix expected_r_Mercury(1, 3);
+    expected_r_Mercury(1, 1) = 112623958311.779;
+    expected_r_Mercury(1, 2) = -150868623524.381;
+    expected_r_Mercury(1, 3) = -71779751443.9542;
+    _assert(m_equals(r_Mercury, expected_r_Mercury, 1e-3));
+    std::cout << "Test passed: r_Mercury\n";
 
-    // Mercury coefficients (3:45, subinterval 1 only)
-    for (int i = 0; i < 14; ++i) {
-        PC(1, 3 + i) = i + 1; // Cx_Mercury
-        PC(1, 17 + i) = 15 + i; // Cy_Mercury
-        PC(1, 31 + i) = 29 + i; // Cz_Mercury
-    }
+    Matrix expected_r_Venus(1, 3);
+    expected_r_Venus(1, 1) = 67979665801.0159;
+    expected_r_Venus(1, 2) = -182040469650.972;
+    expected_r_Venus(1, 3) = -77754531631.0774;
+    _assert(m_equals(r_Venus, expected_r_Venus, 1e-3));
+    std::cout << "Test passed: r_Venus\n";
 
-    // Test Mjd_TDB values
-    double Mjd_TDB_values[] = {51544.5, 51560.5, 51548.5};
-    for (int idx = 0; idx < 3; ++idx) {
-        double Mjd_TDB = Mjd_TDB_values[idx];
+    Matrix expected_r_Earth(1, 3);
+    expected_r_Earth(1, 1) = -111448106096.032;
+    expected_r_Earth(1, 2) = 89490608943.6678;
+    expected_r_Earth(1, 3) = 38828100871.8833;
+    _assert(m_equals(r_Earth, expected_r_Earth, 1e-3));
+    std::cout << "Test passed: r_Earth\n";
 
-        // Initialize output matrices
-        Matrix r_Mercury(3, 1), r_Venus(3, 1), r_Earth(3, 1), r_Mars(3, 1),
-               r_Jupiter(3, 1), r_Saturn(3, 1), r_Uranus(3, 1), r_Neptune(3, 1),
-               r_Pluto(3, 1), r_Moon(3, 1), r_Sun(3, 1);
+    Matrix expected_r_Mars(1, 3);
+    expected_r_Mars(1, 1) = 148466860011.68;
+    expected_r_Mars(1, 2) = -281603620116.961;
+    expected_r_Mars(1, 3) = -127931017643.326;
+    _assert(m_equals(r_Mars, expected_r_Mars, 1e-3));
+    std::cout << "Test passed: r_Mars\n";
 
-        // Call JPL_Eph_DE430
-        JPL_Eph_DE430(Mjd_TDB, r_Mercury, r_Venus, r_Earth, r_Mars, r_Jupiter,
-                      r_Saturn, r_Uranus, r_Neptune, r_Pluto, r_Moon, r_Sun);
+    Matrix expected_r_Jupiter(1, 3);
+    expected_r_Jupiter(1, 1) = 600849652579.016;
+    expected_r_Jupiter(1, 2) = 431907465367.823;
+    expected_r_Jupiter(1, 3) = 172747882009.303;
+    _assert(m_equals(r_Jupiter, expected_r_Jupiter, 1e-2));
+    std::cout << "Test passed: r_Jupiter\n";
 
-        // Expected values
-        Matrix exp_r_Moon(3, 1), exp_r_Earth(3, 1), exp_r_Sun(3, 1), exp_r_Mercury(3, 1),
-               exp_r_Venus(3, 1), exp_r_Mars(3, 1), exp_r_Jupiter(3, 1), exp_r_Saturn(3, 1),
-               exp_r_Uranus(3, 1), exp_r_Neptune(3, 1), exp_r_Pluto(3, 1);
-        double EMRAT1 = 1.0 / (1.0 + 81.30056907419062);
-        if (idx == 0 || idx == 2) { // dt=0 or dt=4
-            exp_r_Moon(1, 1) = 1000; exp_r_Moon(2, 1) = 14000; exp_r_Moon(3, 1) = 27000;
-            exp_r_Earth = exp_r_Moon - exp_r_Moon * EMRAT1;
-            exp_r_Sun(1, 1) = 1000 - exp_r_Earth(1, 1);
-            exp_r_Sun(2, 1) = 12000 - exp_r_Earth(2, 1);
-            exp_r_Sun(3, 1) = 23000 - exp_r_Earth(3, 1);
-            exp_r_Mercury(1, 1) = 1000 - exp_r_Earth(1, 1);
-            exp_r_Mercury(2, 1) = 15000 - exp_r_Earth(2, 1);
-            exp_r_Mercury(3, 1) = 29000 - exp_r_Earth(3, 1);
-            // Others are zero
-        } else { // dt=16
-            exp_r_Moon(1, 1) = 1000; exp_r_Moon(2, 1) = 14000; exp_r_Moon(3, 1) = 27000;
-            exp_r_Earth(1, 1) = 40000; exp_r_Earth(2, 1) = 53000; exp_r_Earth(3, 1) = 66000;
-            exp_r_Earth = exp_r_Earth - exp_r_Moon * EMRAT1;
-            exp_r_Sun(1, 1) = 34000 - exp_r_Earth(1, 1);
-            exp_r_Sun(2, 1) = 45000 - exp_r_Earth(2, 1);
-            exp_r_Sun(3, 1) = 56000 - exp_r_Earth(3, 1);
-            exp_r_Mercury(1, 1) = 0 - exp_r_Earth(1, 1);
-            exp_r_Mercury(2, 1) = 0 - exp_r_Earth(2, 1);
-            exp_r_Mercury(3, 1) = 0 - exp_r_Earth(3, 1);
-            // Others are zero
-        }
-		
-			        std::cout << "AQUI LLEGAStest";
+    Matrix expected_r_Saturn(1, 3);
+    expected_r_Saturn(1, 1) = 1466091955279.12;
+    expected_r_Saturn(1, 2) = -555189637093.051;
+    expected_r_Saturn(1, 3) = -289531886725.713;
+    _assert(m_equals(r_Saturn, expected_r_Saturn, 1e-3));
+    std::cout << "Test passed: r_Saturn\n";
 
-        // Verify results with print statements
-        printf("Mjd_TDB = %.1f\n", Mjd_TDB);
-        printf("r_Moon: [%.6f, %.6f, %.6f]\n", r_Moon(1, 1), r_Moon(2, 1), r_Moon(3, 1));
-        printf("exp_r_Moon: [%.6f, %.6f, %.6f]\n", exp_r_Moon(1, 1), exp_r_Moon(2, 1), exp_r_Moon(3, 1));
-        _assert(m_equals(r_Moon, exp_r_Moon, 1e-6));
+    Matrix expected_r_Uranus(1, 3);
+    expected_r_Uranus(1, 1) = 1928309175333.92;
+    expected_r_Uranus(1, 2) = 2027905259796.94;
+    expected_r_Uranus(1, 3) = 862836636210.81;
+    _assert(m_equals(r_Uranus, expected_r_Uranus, 1e-2));
+    std::cout << "Test passed: r_Uranus\n";
 
-        printf("r_Earth: [%.6f, %.6f, %.6f]\n", r_Earth(1, 1), r_Earth(2, 1), r_Earth(3, 1));
-        printf("exp_r_Earth: [%.6f, %.6f, %.6f]\n", exp_r_Earth(1, 1), exp_r_Earth(2, 1), exp_r_Earth(3, 1));
-        _assert(m_equals(r_Earth, exp_r_Earth, 1e-6));
+    Matrix expected_r_Neptune(1, 3);
+    expected_r_Neptune(1, 1) = 4575619355154.4;
+    expected_r_Neptune(1, 2) = -280382588638.193;
+    expected_r_Neptune(1, 3) = -228103255917.356;
+    _assert(m_equals(r_Neptune, expected_r_Neptune, 1e-2));
+    std::cout << "Test passed: r_Neptune\n";
 
-        printf("r_Sun: [%.6f, %.6f, %.6f]\n", r_Sun(1, 1), r_Sun(2, 1), r_Sun(3, 1));
-        printf("exp_r_Sun: [%.6f, %.6f, %.6f]\n", exp_r_Sun(1, 1), exp_r_Sun(2, 1), exp_r_Sun(3, 1));
-        _assert(m_equals(r_Sun, exp_r_Sun, 1e-6));
+    Matrix expected_r_Pluto(1, 3);
+    expected_r_Pluto(1, 1) = 2700803532076.77;
+    expected_r_Pluto(1, 2) = -4144525986799.46;
+    expected_r_Pluto(1, 3) = -2084446068792.87;
+    _assert(m_equals(r_Pluto, expected_r_Pluto, 1e-1));
+    std::cout << "Test passed: r_Pluto\n";
 
-        printf("r_Mercury: [%.6f, %.6f, %.6f]\n", r_Mercury(1, 1), r_Mercury(2, 1), r_Mercury(3, 1));
-        printf("exp_r_Mercury: [%.6f, %.6f, %.6f]\n", exp_r_Mercury(1, 1), exp_r_Mercury(2, 1), exp_r_Mercury(3, 1));
-        _assert(m_equals(r_Mercury, exp_r_Mercury, 1e-6));
+    Matrix expected_r_Moon(1, 3);
+    expected_r_Moon(1, 1) = 130639413.73261;
+    expected_r_Moon(1, 2) = -298652884.800457;
+    expected_r_Moon(1, 3) = -164607636.963072;
+    _assert(m_equals(r_Moon, expected_r_Moon, 1e-4));
+    std::cout << "Test passed: r_Moon\n";
 
-        printf("r_Venus: [%.6f, %.6f, %.6f]\n", r_Venus(1, 1), r_Venus(2, 1), r_Venus(3, 1));
-        printf("exp_r_Venus: [%.6f, %.6f, %.6f]\n", exp_r_Venus(1, 1), exp_r_Venus(2, 1), exp_r_Venus(3, 1));
-        _assert(m_equals(r_Venus, exp_r_Venus, 1e-6));
+    Matrix expected_r_Sun(1, 3);
+    expected_r_Sun(1, 1) = 110284675128.512;
+    expected_r_Sun(1, 2) = -89937859346.5398;
+    expected_r_Sun(1, 3) = -38988031316.0913;
+    _assert(m_equals(r_Sun, expected_r_Sun, 1e-3));
+    std::cout << "Test passed: r_Sun\n";
 
-        printf("r_Mars: [%.6f, %.6f, %.6f]\n", r_Mars(1, 1), r_Mars(2, 1), r_Mars(3, 1));
-        printf("exp_r_Mars: [%.6f, %.6f, %.6f]\n", exp_r_Mars(1, 1), exp_r_Mars(2, 1), exp_r_Mars(3, 1));
-        _assert(m_equals(r_Mars, exp_r_Mars, 1e-6));
-
-        printf("r_Jupiter: [%.6f, %.6f, %.6f]\n", r_Jupiter(1, 1), r_Jupiter(2, 1), r_Jupiter(3, 1));
-        printf("exp_r_Jupiter: [%.6f, %.6f, %.6f]\n", exp_r_Jupiter(1, 1), exp_r_Jupiter(2, 1), exp_r_Jupiter(3, 1));
-        _assert(m_equals(r_Jupiter, exp_r_Jupiter, 1e-6));
-
-        printf("r_Saturn: [%.6f, %.6f, %.6f]\n", r_Saturn(1, 1), r_Saturn(2, 1), r_Saturn(3, 1));
-        printf("exp_r_Saturn: [%.6f, %.6f, %.6f]\n", exp_r_Saturn(1, 1), exp_r_Saturn(2, 1), exp_r_Saturn(3, 1));
-        _assert(m_equals(r_Saturn, exp_r_Saturn, 1e-6));
-
-        printf("r_Uranus: [%.6f, %.6f, %.6f]\n", r_Uranus(1, 1), r_Uranus(2, 1), r_Uranus(3, 1));
-        printf("exp_r_Uranus: [%.6f, %.6f, %.6f]\n", exp_r_Uranus(1, 1), exp_r_Uranus(2, 1), exp_r_Uranus(3, 1));
-        _assert(m_equals(r_Uranus, exp_r_Uranus, 1e-6));
-
-        printf("r_Neptune: [%.6f, %.6f, %.6f]\n", r_Neptune(1, 1), r_Neptune(2, 1), r_Neptune(3, 1));
-        printf("exp_r_Neptune: [%.6f, %.6f, %.6f]\n", exp_r_Neptune(1, 1), exp_r_Neptune(2, 1), exp_r_Neptune(3, 1));
-        _assert(m_equals(r_Neptune, exp_r_Neptune, 1e-6));
-
-        printf("r_Pluto: [%.6f, %.6f, %.6f]\n", r_Pluto(1, 1), r_Pluto(2, 1), r_Pluto(3, 1));
-        printf("exp_r_Pluto: [%.6f, %.6f, %.6f]\n", exp_r_Pluto(1, 1), exp_r_Pluto(2, 1), exp_r_Pluto(3, 1));
-        _assert(m_equals(r_Pluto, exp_r_Pluto, 1e-6));
-    }
-
+    std::cout << "All tests passed successfully!\n";
     return 0;
 }
 
+// Test para EqnEquinox
+int m_LTC_01() {
+    // Test inputs
+    double lon = Const::pi / 4.0; // 45 degrees
+    double lat = Const::pi / 6.0; // 30 degrees
 
+    // Call LTC
+    Matrix M = LTC(lon, lat);
+
+    // Expected transformation matrix
+    Matrix expected_M(3, 3);
+    expected_M(1, 1) = -0.7071067811865475;  expected_M(1, 2) = 0.7071067811865475;  expected_M(1, 3) = 0.0;
+    expected_M(2, 1) = -0.3535533905932737;  expected_M(2, 2) = -0.3535533905932737; expected_M(2, 3) = 0.8660254037844386;
+    expected_M(3, 1) = 0.6123724356957945;  expected_M(3, 2) = 0.6123724356957945; expected_M(3, 3) = 0.5;
+
+    // Verify result
+    _assert(m_equals(M, expected_M, 1e-6));
+
+    return 0;
+}
 
 
 
@@ -1022,7 +998,9 @@ int all_tests() {
 	_verify(m_timeupdate_01);         //44+1
 	_verify(m_accel_harmonic_01);     //46
 	_verify(m_eqn_equinox_01);        //47
-	_verify(m_jpl_eph_de430_01);
+	_verify(m_jpl_eph_de430_01);          //48
+	_verify(m_LTC_01);                           //  49 por si da error revisar este test
+	
 	
 	
 	

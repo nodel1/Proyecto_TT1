@@ -324,7 +324,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     Matrix Cz_Mercury_sub(1, 14);
     for (int k = 1; k <= 14; k++) {
         Cx_Mercury_sub(1, k) = Cx_Mercury_full(14 * j + k, 1);
-        Cy_Mercury_sub(1, k) = Cx_Mercury_full(14 * j + k, 1);
+        Cy_Mercury_sub(1, k) = Cy_Mercury_full(14 * j + k, 1);
         Cz_Mercury_sub(1, k) = Cz_Mercury_full(14 * j + k, 1);
     }
     r_Mercury = Cheb3D(Mjd_TDB, 14, Mjd0, Mjd0 + 8, Cx_Mercury_sub, Cy_Mercury_sub, Cz_Mercury_sub) * 1e3;
@@ -744,6 +744,23 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     r_Sun = r_Sun - r_Earth;
 	
 		        std::cout << "AQUI LLEGASFINALCPP";
+				
+				
+				transpose(r_Mercury);
+				transpose(r_Venus);
+				transpose(r_Earth);
+				transpose(r_Mars);
+				transpose(r_Jupiter);
+				transpose(r_Saturn);
+				transpose(r_Uranus);
+				transpose(r_Neptune);
+				transpose(r_Pluto);
+				transpose(r_Moon);
+				transpose(r_Sun);
+				
+	
+	
+		
 }
 
 
