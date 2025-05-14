@@ -999,7 +999,7 @@ int all_tests() {
 	_verify(m_accel_harmonic_01);     //46
 	_verify(m_eqn_equinox_01);        //47
 	_verify(m_jpl_eph_de430_01);          //48
-	_verify(m_LTC_01);                           //  49 por si da error revisar este test
+	_verify(m_LTC_01);                           //  49
 	
 	
 	
