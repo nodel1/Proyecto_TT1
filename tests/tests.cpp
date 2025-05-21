@@ -31,6 +31,11 @@
 #include "..\include\AccelHarmonic.hpp"
 #include "..\include\EqnEquinox.hpp"
 #include "..\include\JPL_Eph_DE430.hpp"
+#include "..\include\NutMatrix.hpp"
+#include "..\include\PrecMatrix.hpp"
+#include "..\include\GMST.hpp"
+#include "..\include\gast.hpp"
+#include "..\include\MeasUpdate.hpp"
 
 
 using namespace std;
@@ -937,10 +942,153 @@ int m_LTC_01() {
     return 0;
 }
 
+int m_NutMatrix_01() {
+    // Test input
+    double Mjd_TT = 1.5;
+
+    // Call NutMatrix
+    Matrix R = NutMatrix(Mjd_TT);
+
+    // Expected nutation matrix
+    Matrix expected(3, 3);
+    expected(1,1) = 0.999999999628101; expected(1,2) = -2.50186988643789e-05; expected(1,3) = -1.08564532657801e-05;
+    expected(2,1) = 2.50182715720118e-05; expected(2,2) = 0.999999998912567; expected(2,3) = -3.93567267966133e-05;
+    expected(3,1) = 1.08574379080704e-05; expected(3,2) = 3.93564551722236e-05; expected(3,3) = 0.999999999166593;
+
+    // Verify result
+    _assert(m_equals(R, expected, 1e-10));
+
+    return 0;
+}
+
+int m_PoleMatrix_01() {
+    // Test input
+    double xp = 3.0;
+    double yp = 3.0;
 
 
+    Matrix R = PoleMatrix(xp, yp);
 
 
+    Matrix expected(3, 3);
+    expected(1,1) = -0.989992496600445; expected(1,2) = 0.019914856674817; expected(1,3) = -0.139707749099463;
+    expected(2,1) = 0.0;                expected(2,2) = -0.989992496600445; expected(2,3) = -0.141120008059867;
+    expected(3,1) = -0.141120008059867; expected(3,2) = -0.139707749099463; expected(3,3) = 0.980085143325183;
+
+    _assert(m_equals(R, expected, 1e-10));
+
+    return 0;
+}
+
+
+int m_PrecMatrix_01() {
+    // Test input
+    double xp = 2.0;
+    double yp = 3.0;
+
+
+    Matrix R = PrecMatrix(xp, yp);
+
+
+    Matrix expected(3, 3);
+    expected(1,1)= 0.999999999999778; expected(1,2)= -6.11707327974946e-07; expected(1,3)= -2.66201482252295e-07;
+    expected(2,1)= 6.11707327974946e-07; expected(2,2)= 0.999999999999813; expected(2,3)= -8.14186990889656e-14; 
+    expected(3,1)= 2.66201482252295e-07; expected(3,2)= -8.1418698322574e-14; expected(3,3)= 0.999999999999965; 
+	
+    _assert(m_equals(R, expected, 1e-9));
+
+    return 0;
+}
+
+
+int m_GMST_01() {
+    double Mjd_UT1 = 3.0;
+    double expected = 1.0248165220;
+
+    double result = GMST(Mjd_UT1);
+
+    _assert(fabs(result - expected < 1e-10));
+
+    return 0;
+}
+
+int m_GAST_01() {
+    // Test input
+    double Mjd_UT1 = 3.0;
+    
+
+    double expected = 1.0248414976;
+    
+
+    double result = GAST(Mjd_UT1);
+    
+    // Assertion with tolerance
+    _assert(fabs(result - expected) < 1e-10);
+    
+    return 0;
+}
+
+
+int m_MeasUpdate_01() {
+    // Estado inicial (3x1)
+    Matrix x = zeros(3);
+    x(1,1) = 1.1;
+    x(2,1) = 2.1;
+    x(3,1) = 2.9;
+
+    // Medidas
+    double z = 1.0;
+    double g = 1.1;
+    double s = 0.1;
+
+    // Matriz de sensibilidad G (1x3)
+    Matrix G = zeros(1,3);
+    G(1,1) = 1.0;
+    G(1,2) = 0.0;
+    G(1,3) = 0.0;
+
+    // Covarianza inicial (3x3)
+    Matrix P = zeros(3,3);
+    P(1,1) = 0.47; P(1,2) = 0.01; P(1,3) = 0.00;
+    P(2,1) = 0.01; P(2,2) = 0.04; P(2,3) = 0.00;
+    P(3,1) = 0.00; P(3,2) = 0.00; P(3,3) = 0.40;
+
+    Matrix K = zeros(3,1);
+    int n = 3;
+
+    // Llamar a la función MeasUpdate
+    MeasUpdate(x, z, g, s, G, P, n, K);
+
+    // Valores esperados desde MATLAB
+    Matrix expected_K = zeros(3,1);
+    expected_K(1,1) = 0.979772439949431;
+    expected_K(2,1) = 0.0126422250316056;
+    expected_K(3,1) = 0.0;
+
+    _assert(m_equals(K, expected_K, 1e-10));
+
+    Matrix expected_x = zeros(3,1);
+    expected_x(1,1) = 1.09829329962073;
+    expected_x(2,1) = 2.09481668773704;
+    expected_x(3,1) = 2.90243902439024;
+
+    _assert(m_equals(x, expected_x, 1e-10));
+
+    Matrix expected_P = zeros(3,3);
+    expected_P(1,1) = 0.00979772439949437;
+    expected_P(1,2) = 0.000126422250316061;
+    expected_P(1,3) = 0.0;
+    expected_P(2,1) = 0.000126422250316067;
+    expected_P(2,2) = 0.0374209860935525;
+    expected_P(2,3) = 0.0;
+    expected_P(3,1) = 0.0;
+    expected_P(3,2) = 0.0;
+    expected_P(3,3) = 0.00975609756097562;
+
+    _assert(m_equals(P, expected_P, 1e-10));
+
+    return 0;
+}
 
 
 
@@ -995,13 +1143,17 @@ int all_tests() {
 	_verify(m_iers_01);
 	_verify(m_legendre_01);          //42
 	_verify(m_nutangles_01);
-	_verify(m_timeupdate_01);         //44+1
+	_verify(m_timeupdate_01);         //45
 	_verify(m_accel_harmonic_01);     //46
 	_verify(m_eqn_equinox_01);        //47
 	_verify(m_jpl_eph_de430_01);          //48
 	_verify(m_LTC_01);                           //  49
-	
-	
+	_verify(m_NutMatrix_01);          //50
+	_verify(m_PoleMatrix_01);            //51
+	_verify(m_PrecMatrix_01);               //52
+	_verify(m_GMST_01);             //53
+	_verify(m_GAST_01);             //54
+	_verify(m_MeasUpdate_01);         //55
 	
 	
 	
