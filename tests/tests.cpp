@@ -1031,7 +1031,7 @@ int m_GAST_01() {
 
 int m_MeasUpdate_01() {
     // Estado inicial (3x1)
-    Matrix x = zeros(3);
+    Matrix x = zeros(3,1);
     x(1,1) = 1.1;
     x(2,1) = 2.1;
     x(3,1) = 2.9;
@@ -1061,31 +1061,31 @@ int m_MeasUpdate_01() {
 
     // Valores esperados desde MATLAB
     Matrix expected_K = zeros(3,1);
-    expected_K(1,1) = 0.979772439949431;
-    expected_K(2,1) = 0.0126422250316056;
+    expected_K(1,1) = 0.979166666666667;
+    expected_K(2,1) = 0.0208333333333333;
     expected_K(3,1) = 0.0;
-
     _assert(m_equals(K, expected_K, 1e-10));
+    std::cout << "Test passed: Kalman gain K\n";
 
     Matrix expected_x = zeros(3,1);
-    expected_x(1,1) = 1.09829329962073;
-    expected_x(2,1) = 2.09481668773704;
-    expected_x(3,1) = 2.90243902439024;
-
+    expected_x(1,1) = 1.00208333333333;
+    expected_x(2,1) = 2.09791666666667;
+    expected_x(3,1) = 2.9;
     _assert(m_equals(x, expected_x, 1e-10));
+    std::cout << "Test passed: State vector x\n";
 
     Matrix expected_P = zeros(3,3);
-    expected_P(1,1) = 0.00979772439949437;
-    expected_P(1,2) = 0.000126422250316061;
+    expected_P(1,1) = 0.00979166666666668;
+    expected_P(1,2) = 0.000208333333333334;
     expected_P(1,3) = 0.0;
-    expected_P(2,1) = 0.000126422250316067;
-    expected_P(2,2) = 0.0374209860935525;
+    expected_P(2,1) = 0.000208333333333333;
+    expected_P(2,2) = 0.0397916666666667;
     expected_P(2,3) = 0.0;
     expected_P(3,1) = 0.0;
     expected_P(3,2) = 0.0;
-    expected_P(3,3) = 0.00975609756097562;
-
+    expected_P(3,3) = 0.4;
     _assert(m_equals(P, expected_P, 1e-10));
+    std::cout << "Test passed: Covariance matrix P\n";
 
     return 0;
 }

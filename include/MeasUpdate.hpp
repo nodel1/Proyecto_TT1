@@ -39,6 +39,6 @@ using namespace std;
  * @param[out] K Kalman gain matrix (n x 1)
  */
 void MeasUpdate(Matrix& x, double z, double g, double s, 
-                const Matrix& G, Matrix& P, int n, Matrix& K);
+                 Matrix& G, Matrix& P, int n, Matrix& K);
 
 #endif
