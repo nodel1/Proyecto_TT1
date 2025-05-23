@@ -67,3 +67,15 @@ void DE430Coeff(int f, int c){
     fclose(fid);
 }
 
+Param AuxParam;
+
+void AuxParamInitialize() {
+    AuxParam.Mjd_UTC = 49746.1163541665;
+    AuxParam.Mjd_TT = 49746.1170623147;
+    AuxParam.n = 20;
+    AuxParam.m = 20;
+    AuxParam.sun = 1;
+    AuxParam.moon = 1;
+    AuxParam.planets = 1;
+}
+

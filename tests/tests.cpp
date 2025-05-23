@@ -5,6 +5,8 @@
 #include "..\include\SAT_Const.hpp"
 #include "..\include\global.hpp"
 
+#include <iomanip>
+
 #include "..\include\AccelPointMass.hpp"
 #include "..\include\Cheb3D.hpp"
 #include "..\include\EccAnom.hpp"
@@ -36,6 +38,11 @@
 #include "..\include\GMST.hpp"
 #include "..\include\gast.hpp"
 #include "..\include\MeasUpdate.hpp"
+#include "..\include\G_AccelHarmonic.hpp"
+#include "..\include\GHAMatrix.hpp"
+#include "..\include\Accel.hpp"
+#include "..\include\VarEqn.hpp"
+
 
 
 using namespace std;
@@ -1090,6 +1097,64 @@ int m_MeasUpdate_01() {
     return 0;
 }
 
+int m_G_AccelHarmonic_01() {
+    int n_max = 2;
+    int m_max = 2;
+    Cnm = zeros(n_max + 1, m_max + 1);
+    Snm = zeros(n_max + 1, m_max + 1);
+    Cnm(3, 1) = -4.84165371736e-4; // C20 (J2)
+
+
+    Matrix r = zeros(3, 1);
+    r(1, 1) = 7078000; 
+    Matrix U = eye(3); 
+    n_max = 2;        
+    m_max = 2;        
+
+    Matrix G = G_AccelHarmonic(r, U, n_max, m_max);
+
+    // Valores esperados desde MATLAB
+    Matrix expected_G = zeros(3, 3);
+    expected_G(1, 1) = 5.92928810043414e-09;
+    expected_G(1, 2) = 0.0;
+    expected_G(1, 3) = 0.0;
+    expected_G(2, 1) = 0.0;
+    expected_G(2, 2) = -1.48232202489253e-09;
+    expected_G(2, 3) = 0.0;
+    expected_G(3, 1) = 0.0;
+    expected_G(3, 2) = 0.0;
+    expected_G(3, 3) = -4.44696607467754e-09;
+
+    // Verificar resultado
+    _assert(m_equals(G, expected_G, 1e-10));
+
+
+    return 0;
+}
+
+
+int m_GHAMatrix_01() {              //revisar luego por error 
+
+    
+    Matrix GHAmat = GHAMatrix(15);
+
+    
+    Matrix expected_GHAmat(3, 3);
+    expected_GHAmat(1,1) = 0.333032768300857;
+    expected_GHAmat(1,2) = 0.942915253476084;
+    expected_GHAmat(1,3) = 0.0;
+    expected_GHAmat(2,1) = -0.942915253476084;
+    expected_GHAmat(2,2) =  0.333032768300857;
+    expected_GHAmat(2,3) = 0.0;
+    expected_GHAmat(3,1) = 0.0;
+    expected_GHAmat(3,2) = 0.0;
+    expected_GHAmat(3,3) = 1.0;
+    
+    _assert(m_equals(GHAmat, expected_GHAmat, 1e-6));
+    
+
+    return 0;
+}
 
 
 
@@ -1154,8 +1219,8 @@ int all_tests() {
 	_verify(m_GMST_01);             //53
 	_verify(m_GAST_01);             //54
 	_verify(m_MeasUpdate_01);         //55
-	
-	
+	_verify(m_G_AccelHarmonic_01);   //56
+	_verify(m_GHAMatrix_01);      //57
 	
 
     return 0;
