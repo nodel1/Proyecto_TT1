@@ -46,8 +46,48 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
     std::cout << "Calculating Legendre functions..." << std::endl;
     Matrix pnm(n_max + 1, m_max + 1);
     Matrix dpnm(n_max + 1, m_max + 1);
+	
+	
+	    std::cout << "Printing pnm matrix (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
+    for (int i = 0; i <= n_max; i++) {
+        for (int j = 0; j <= m_max; j++) {
+            std::cout << "pnm(" << i << "," << j << ") = " << pnm(i+1, j+1) << "  ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "Printing dpnm matrix (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
+    for (int i = 0; i <= n_max; i++) {
+        for (int j = 0; j <= m_max; j++) {
+            std::cout << "dpnm(" << i << "," << j << ") = " << dpnm(i+1, j+1) << "  ";
+        }
+        std::cout << std::endl;
+    }
+	
+	
+	
+	
     Legendre(n_max, m_max, latgc, pnm, dpnm);
     std::cout << "Legendre functions calculated (pnm and dpnm matrices)" << std::endl;
+	
+	
+	
+	    std::cout << "Printing pnm matrix after Legendre (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
+    for (int i = 0; i <= n_max; i++) {
+        for (int j = 0; j <= m_max; j++) {
+            std::cout << "pnm(" << i << "," << j << ") = " << pnm(i+1, j+1) << "  ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "Printing dpnm matrix after Legendre (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
+    for (int i = 0; i <= n_max; i++) {
+        for (int j = 0; j <= m_max; j++) {
+            std::cout << "dpnm(" << i << "," << j << ") = " << dpnm(i+1, j+1) << "  ";
+        }
+        std::cout << std::endl;
+    }
+	
+	
+	
 
     // Inicializar acumuladores
     std::cout << "Initializing accumulators for potential derivatives..." << std::endl;
@@ -55,6 +95,28 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
     double dUdlatgc = 0.0;
     double dUdlon = 0.0;
     double q1 = 0.0, q2 = 0.0, q3 = 0.0;
+	
+	
+	if (n_max > 10){
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	}
 	
 	
 
@@ -67,10 +129,13 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
         q1 = 0.0; q2 = 0.0; q3 = 0.0;
         std::cout << "AQUI LLEGAS "<< std::endl;
         for (int m = 0; m <= m_max; m++) {
-			        std::cout << "AQUI LLEGASss "<< std::endl;
+				std::cout << "pnm(" << n << "," << m << ") = " << pnm(n+1,m+1) << ", dpnm(" << n << "," << m << ") = " << dpnm(n+1,m+1) << std::endl;
+			        std::cout << "AQUI LLEGASss "<< std::endl;	
             q1 += pnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
                                      Snm(n + 1, m + 1) * std::sin(m * lon));
-									         std::cout << "AQUI LLEGAS2 "<< std::endl;
+			
+			std::cout << "AQUI LLEGAS2 ademas con una m,n con valor" << std::endl;
+			
             q2 += dpnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
                                       Snm(n + 1, m + 1) * std::sin(m * lon));
             q3 += m * pnm(n + 1, m + 1) * (Snm(n + 1, m + 1) * std::cos(m * lon) -

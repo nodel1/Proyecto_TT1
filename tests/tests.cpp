@@ -710,7 +710,7 @@ int m_azelpa_01() {
 
 int m_iers_01() {
 	
-    double Mjd_UTC = 49746.1163541665;      //tengo que cambiar por variable
+    double Mjd_UTC = AuxParam.Mjd_UTC;      //tengo que cambiar por variable
     char interp = 'l';
 
 
@@ -1158,6 +1158,55 @@ int m_GHAMatrix_01() {              //revisar luego por error
 
 
 
+int m_Accel_01() {
+	
+	    std::cout << "ENTRAS AL ACCEL";
+	
+	    int n_max = 20;
+    int m_max = 20;
+	
+	
+    double x = 7200;
+    Matrix Y = zeros(6, 1);
+    Y(1) = 7000000;
+    Y(2) = 1000000;
+    Y(3) = 0;
+    Y(4) = 0;
+    Y(5) = 7500;
+    Y(6) = 0;
+    
+	
+	    std::cout << "LE PONER LOS VALORES; JUSTO ANTES DE ENTRAR A ACCEL";
+	
+	
+    Matrix R = Accel(x, Y);
+	
+
+		    std::cout << "UNA VEZ SALES DE ACCEL";
+
+    Matrix expected = zeros(6, 1);
+    expected(1) = 0;
+    expected(2) = 7500;
+    expected(3) = 0;
+    expected(4) = -7.902128;
+    expected(5) = -1.128976;
+    expected(6) = -0.000042;
+
+    _assert(m_equals(R, expected, 1e-6));
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1221,7 +1270,7 @@ int all_tests() {
 	_verify(m_MeasUpdate_01);         //55
 	_verify(m_G_AccelHarmonic_01);   //56
 	_verify(m_GHAMatrix_01);      //57
-	
+	_verify(m_Accel_01);               //58
 
     return 0;
 }
@@ -1232,6 +1281,7 @@ int main() {
     eop19620101(21413);
     GGM03S(181);
     DE430Coeff(2285, 1020);
+	AuxParamInitialize();
 	
 	
 	
