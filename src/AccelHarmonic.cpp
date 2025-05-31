@@ -20,9 +20,14 @@
 #include "..\include\global.hpp"
 #include <cmath>
 
-
 Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
-    std::cout << "Starting AccelHarmonic computation..." << std::endl;
+    std::cout << "Starting AccelHarmonic computation..." << std::endl;    
+
+
+
+
+
+
     
     // Constantes
     const double r_ref = 6378.1363e3;   // Earth's radius [m]; GGM03S
@@ -46,9 +51,8 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
     std::cout << "Calculating Legendre functions..." << std::endl;
     Matrix pnm(n_max + 1, m_max + 1);
     Matrix dpnm(n_max + 1, m_max + 1);
-	
-	
-	    std::cout << "Printing pnm matrix (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
+    
+    std::cout << "Printing pnm matrix (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
     for (int i = 0; i <= n_max; i++) {
         for (int j = 0; j <= m_max; j++) {
             std::cout << "pnm(" << i << "," << j << ") = " << pnm(i+1, j+1) << "  ";
@@ -62,16 +66,11 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
         }
         std::cout << std::endl;
     }
-	
-	
-	
-	
+    
     Legendre(n_max, m_max, latgc, pnm, dpnm);
     std::cout << "Legendre functions calculated (pnm and dpnm matrices)" << std::endl;
-	
-	
-	
-	    std::cout << "Printing pnm matrix after Legendre (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
+    
+    std::cout << "Printing pnm matrix after Legendre (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
     for (int i = 0; i <= n_max; i++) {
         for (int j = 0; j <= m_max; j++) {
             std::cout << "pnm(" << i << "," << j << ") = " << pnm(i+1, j+1) << "  ";
@@ -85,66 +84,58 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
         }
         std::cout << std::endl;
     }
-	
-	
-	
-
+    
     // Inicializar acumuladores
     std::cout << "Initializing accumulators for potential derivatives..." << std::endl;
     double dUdr = 0.0;
     double dUdlatgc = 0.0;
     double dUdlon = 0.0;
     double q1 = 0.0, q2 = 0.0, q3 = 0.0;
-	
-	
-	if (n_max > 10){
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(0,3) = " << pnm(0,3) << ", dpnm(0,3) = " << dpnm(0,3) << std::endl;
-	std::cout << "pnm(0,4) = " << pnm(0,4) << ", dpnm(0,4) = " << dpnm(0,4) << std::endl;
-	}
-	
-	
-
+    
+    if (n_max > 10) {
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+    }
+    
     // Bucle para calcular dUdr, dUdlatgc, dUdlon
     std::cout << "Starting harmonic summation (n_max = " << n_max << ", m_max = " << m_max << ")..." << std::endl;
     for (int n = 0; n <= n_max; n++) {
         double b1 = (-gm / (d * d)) * std::pow(r_ref / d, n) * (n + 1);
         double b2 = (gm / d) * std::pow(r_ref / d, n);
         double b3 = (gm / d) * std::pow(r_ref / d, n);
-        q1 = 0.0; q2 = 0.0; q3 = 0.0;
-        std::cout << "AQUI LLEGAS "<< std::endl;
         for (int m = 0; m <= m_max; m++) {
-				std::cout << "pnm(" << n << "," << m << ") = " << pnm(n+1,m+1) << ", dpnm(" << n << "," << m << ") = " << dpnm(n+1,m+1) << std::endl;
-			        std::cout << "AQUI LLEGASss "<< std::endl;	
-            q1 += pnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
-                                     Snm(n + 1, m + 1) * std::sin(m * lon));
-			
-			std::cout << "AQUI LLEGAS2 ademas con una m,n con valor" << std::endl;
-			
-            q2 += dpnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
-                                      Snm(n + 1, m + 1) * std::sin(m * lon));
-            q3 += m * pnm(n + 1, m + 1) * (Snm(n + 1, m + 1) * std::cos(m * lon) -
-                                         Cnm(n + 1, m + 1) * std::sin(m * lon));
+            std::cout << "pnm(" << n << "," << m << ") = " << pnm(n+1,m+1) << ", dpnm(" << n << "," << m << ") = " << dpnm(n+1,m+1) << std::endl;
+            std::cout << "AQUI LLEGASss " << std::endl;    
+            q1 = q1 + pnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
+                                           Snm(n + 1, m + 1) * std::sin(m * lon));
+            
+            std::cout << "AQUI LLEGAS2 ademas con una m,n con valor" << std::endl;
+            
+            q2 = q2 + dpnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
+                                            Snm(n + 1, m + 1) * std::sin(m * lon));
+            q3 = q3 + m * pnm(n + 1, m + 1) * (Snm(n + 1, m + 1) * std::cos(m * lon) -
+                                               Cnm(n + 1, m + 1) * std::sin(m * lon));
         }
-
-        dUdr += q1 * b1;
-        dUdlatgc += q2 * b2;
-        dUdlon += q3 * b3;
+        dUdr = dUdr + q1 * b1;
+        dUdlatgc = dUdlatgc + q2 * b2;
+        dUdlon = dUdlon + q3 * b3;
+        q3 = 0.0; q2 = q3; q1 = q2;
         
         if (n % 5 == 0) {  // Progress report every 5 degrees
             std::cout << "  Completed degree " << n << "/" << n_max 
@@ -160,9 +151,9 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
     std::cout << "Calculating body-fixed acceleration..." << std::endl;
     double r2xy = r_bf(1, 1) * r_bf(1, 1) + r_bf(2, 1) * r_bf(2, 1);
     double ax = (1.0 / d * dUdr - r_bf(3, 1) / (d * d * std::sqrt(r2xy)) * dUdlatgc) * r_bf(1, 1) -
-              (1.0 / r2xy * dUdlon) * r_bf(2, 1);
+                (1.0 / r2xy * dUdlon) * r_bf(2, 1);
     double ay = (1.0 / d * dUdr - r_bf(3, 1) / (d * d * std::sqrt(r2xy)) * dUdlatgc) * r_bf(2, 1) +
-              (1.0 / r2xy * dUdlon) * r_bf(1, 1);
+                (1.0 / r2xy * dUdlon) * r_bf(1, 1);
     double az = 1.0 / d * dUdr * r_bf(3, 1) + std::sqrt(r2xy) / (d * d) * dUdlatgc;
 
     Matrix a_bf(3, 1);
