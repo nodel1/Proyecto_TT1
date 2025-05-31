@@ -114,8 +114,8 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
 	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
 	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
 	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-	std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
+	std::cout << "pnm(0,3) = " << pnm(0,3) << ", dpnm(0,3) = " << dpnm(0,3) << std::endl;
+	std::cout << "pnm(0,4) = " << pnm(0,4) << ", dpnm(0,4) = " << dpnm(0,4) << std::endl;
 	}
 	
 	
