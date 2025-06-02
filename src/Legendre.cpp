@@ -26,10 +26,10 @@ void Legendre(int n, int m, double fi, Matrix& pnm, Matrix& dpnm) {
     // Initial values
     pnm(1,1) = 1.0;
     dpnm(1,1) = 0.0;
-    if (n >= 1 && m >= 1) {
-        pnm(2,2) = std::sqrt(3.0) * std::cos(fi);
-        dpnm(2,2) = -std::sqrt(3.0) * std::sin(fi);
-    }
+
+    pnm(2,2) = std::sqrt(3.0) * std::cos(fi);
+    dpnm(2,2) = -std::sqrt(3.0) * std::sin(fi);
+
 
     // Diagonal coefficients
     for (int i = 2; i <= n; i++) {

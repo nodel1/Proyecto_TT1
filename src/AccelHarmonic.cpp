@@ -51,39 +51,16 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
     std::cout << "Calculating Legendre functions..." << std::endl;
     Matrix pnm(n_max + 1, m_max + 1);
     Matrix dpnm(n_max + 1, m_max + 1);
-    
-    std::cout << "Printing pnm matrix (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
-    for (int i = 0; i <= n_max; i++) {
-        for (int j = 0; j <= m_max; j++) {
-            std::cout << "pnm(" << i << "," << j << ") = " << pnm(i+1, j+1) << "  ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "Printing dpnm matrix (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
-    for (int i = 0; i <= n_max; i++) {
-        for (int j = 0; j <= m_max; j++) {
-            std::cout << "dpnm(" << i << "," << j << ") = " << dpnm(i+1, j+1) << "  ";
-        }
-        std::cout << std::endl;
-    }
+
+	
+	
+	
+	
+	
     
     Legendre(n_max, m_max, latgc, pnm, dpnm);
     std::cout << "Legendre functions calculated (pnm and dpnm matrices)" << std::endl;
     
-    std::cout << "Printing pnm matrix after Legendre (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
-    for (int i = 0; i <= n_max; i++) {
-        for (int j = 0; j <= m_max; j++) {
-            std::cout << "pnm(" << i << "," << j << ") = " << pnm(i+1, j+1) << "  ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "Printing dpnm matrix after Legendre (" << n_max + 1 << " x " << m_max + 1 << "):" << std::endl;
-    for (int i = 0; i <= n_max; i++) {
-        for (int j = 0; j <= m_max; j++) {
-            std::cout << "dpnm(" << i << "," << j << ") = " << dpnm(i+1, j+1) << "  ";
-        }
-        std::cout << std::endl;
-    }
     
     // Inicializar acumuladores
     std::cout << "Initializing accumulators for potential derivatives..." << std::endl;
@@ -92,40 +69,20 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
     double dUdlon = 0.0;
     double q1 = 0.0, q2 = 0.0, q3 = 0.0;
     
-    if (n_max > 10) {
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-        std::cout << "pnm(4,4) = " << pnm(4,4) << ", dpnm(4,4) = " << dpnm(4,4) << std::endl;
-    }
+
     
     // Bucle para calcular dUdr, dUdlatgc, dUdlon
     std::cout << "Starting harmonic summation (n_max = " << n_max << ", m_max = " << m_max << ")..." << std::endl;
-    for (int n = 0; n <= n_max; n++) {
+    std::cout << Cnm.n_row << " " << Cnm.n_column << " "  << Snm.n_row << " " << Snm.n_column << endl;
+	for (int n = 0; n <= n_max; n++) {
         double b1 = (-gm / (d * d)) * std::pow(r_ref / d, n) * (n + 1);
         double b2 = (gm / d) * std::pow(r_ref / d, n);
         double b3 = (gm / d) * std::pow(r_ref / d, n);
         for (int m = 0; m <= m_max; m++) {
-            std::cout << "pnm(" << n << "," << m << ") = " << pnm(n+1,m+1) << ", dpnm(" << n << "," << m << ") = " << dpnm(n+1,m+1) << std::endl;
-            std::cout << "AQUI LLEGASss " << std::endl;    
+   
             q1 = q1 + pnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
                                            Snm(n + 1, m + 1) * std::sin(m * lon));
             
-            std::cout << "AQUI LLEGAS2 ademas con una m,n con valor" << std::endl;
             
             q2 = q2 + dpnm(n + 1, m + 1) * (Cnm(n + 1, m + 1) * std::cos(m * lon) +
                                             Snm(n + 1, m + 1) * std::sin(m * lon));
@@ -136,12 +93,9 @@ Matrix AccelHarmonic(Matrix& r, Matrix& E, int n_max, int m_max) {
         dUdlatgc = dUdlatgc + q2 * b2;
         dUdlon = dUdlon + q3 * b3;
         q3 = 0.0; q2 = q3; q1 = q2;
-        
-        if (n % 5 == 0) {  // Progress report every 5 degrees
-            std::cout << "  Completed degree " << n << "/" << n_max 
-                      << " (dUdr = " << dUdr << ", dUdlatgc = " << dUdlatgc 
-                      << ", dUdlon = " << dUdlon << ")" << std::endl;
-        }
+		
+
+       
     }
     std::cout << "Harmonic summation completed" << std::endl;
     std::cout << "Final potential derivatives: dUdr = " << dUdr 

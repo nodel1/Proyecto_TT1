@@ -30,6 +30,7 @@ void eop19620101(int c) {
 void GGM03S(int n){ 
     Cnm = zeros(n,n);
     Snm = zeros(n,n);
+	std::cout << Cnm.n_row << " " << Cnm.n_column << " "  << Snm.n_row << " " << Snm.n_column << endl;
 	
     FILE *fid = fopen("../DATA/GGM03S.txt","r");
 	

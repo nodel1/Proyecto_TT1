@@ -71,33 +71,61 @@ Matrix Accel(double x, Matrix Y) {
     std::cout << "Calling AccelHarmonic with n = " << AuxParam.n << ", m = " << AuxParam.m << std::endl;
     Matrix a = AccelHarmonic(r, E, AuxParam.n, AuxParam.m);
 
+
+    std::cout << "MATRIZ a" << std::endl;
+		std::cout << a;
+		
+		
+    std::cout << "MATRIZ r" << std::endl;
+		std::cout << r;
+	
+	
+	    std::cout << "Matriz r_sun" << std::endl;
+			std::cout << r_Sun;
+
+
     std::cout << "Adding luni-solar perturbations..." << std::endl;
     if (AuxParam.sun) {
-        a = a + AccelPointMass(r, r_Sun, Const::GM_Sun);
+        a = a + AccelPointMass(r, transpose(r_Sun), Const::GM_Sun);
     }
     if (AuxParam.moon) {
-        a = a + AccelPointMass(r, r_Moon, Const::GM_Moon);
+        a = a + AccelPointMass(r, transpose(r_Moon), Const::GM_Moon);
     }
 
     if (AuxParam.planets) {
         std::cout << "Adding planetary perturbations..." << std::endl;
-        a = a + AccelPointMass(r, r_Mercury, Const::GM_Mercury);
-        a = a + AccelPointMass(r, r_Venus, Const::GM_Venus);
-        a = a + AccelPointMass(r, r_Mars, Const::GM_Mars);
-        a = a + AccelPointMass(r, r_Jupiter, Const::GM_Jupiter);
-        a = a + AccelPointMass(r, r_Saturn, Const::GM_Saturn);
-        a = a + AccelPointMass(r, r_Uranus, Const::GM_Uranus);
-        a = a + AccelPointMass(r, r_Neptune, Const::GM_Neptune);
-        a = a + AccelPointMass(r, r_Pluto, Const::GM_Pluto);
+        a = a + AccelPointMass(r, transpose(r_Mercury), Const::GM_Mercury);
+        a = a + AccelPointMass(r, transpose(r_Venus), Const::GM_Venus);
+        a = a + AccelPointMass(r, transpose(r_Mars), Const::GM_Mars);
+        a = a + AccelPointMass(r, transpose(r_Jupiter), Const::GM_Jupiter);
+        a = a + AccelPointMass(r, transpose(r_Saturn), Const::GM_Saturn);
+        a = a + AccelPointMass(r, transpose(r_Uranus), Const::GM_Uranus);
+        a = a + AccelPointMass(r, transpose(r_Neptune), Const::GM_Neptune);
+        a = a + AccelPointMass(r, transpose(r_Pluto), Const::GM_Pluto);
     }
 
+
+    std::cout << "MATRIZ a" << std::endl;
+		std::cout << a;
+		
+		    std::cout << "MATRIZ Y" << std::endl;
+		std::cout << Y;
+		
+		
+		
+		
     std::cout << "Constructing dY..." << std::endl;
     Matrix dY = zeros(6, 1);
-    for (int i = 1; i <= 3; ++i) {
-        dY(i, 1) = Y(i + 3, 1); // Velocity components
-        dY(i + 3, 1) = a(i, 1); // Acceleration components
-    }
+	dY(1,1) = Y(4,1);
+	dY(2,1) = Y(5,1);
+	dY(3,1) = Y(6,1);
+	dY(4,1) = a(1,1);
+	dY(5,1) = a(2,1);
+	dY(6,1) = a(3,1);
+	
+	
 
     std::cout << "Returning dY from Accel..." << std::endl;
     return dY;
+
 }
