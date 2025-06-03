@@ -28,6 +28,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
     if (y.n_row < y.n_column) {
         y = transpose(y);
     }
+	
+	cout << "primero del dei" << endl;
 
     // Constantes de precisión de máquina
     const double twou = 2.0 * std::numeric_limits<double>::epsilon();     //no viene en satconst pero lo mismo lo suyo era meterel epsilon ahi revisar luego
@@ -46,6 +48,11 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
     int State_ = DE_STATE.DE_INIT;
     bool PermitTOUT = true; 
     double told = 0.0;
+
+
+
+	cout << "segundo del dei" << endl;
+
 
     // Inicializar vectores constantes
     Matrix two(14, 1);
@@ -86,6 +93,13 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
         State_ = DE_STATE.DE_INVPARAM;
         throw std::invalid_argument("Parámetros inválidos en DEInteg");
     }
+	
+	
+	
+		cout << "tercero del dei" << endl;
+		
+		
+		
 
     // Configurar intervalo de integración
     double del = tout - t;
@@ -114,6 +128,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
     int ifail = 0;
 
     yy = y;
+	
+		cout << "cuarto del dei" << endl;
+		
+		
 
     while (true) { // Bucle principal de pasos
         // Interpolación si se pasa el punto de salida
@@ -129,6 +147,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             for (int i = 1; i <= ki; ++i) {
                 w(i+1,1) = 1.0 / i;
             }
+			
+				cout << "quinto del dei" << endl;
 
             // Calcular g y rho
             double term = 0.0;
@@ -152,6 +172,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                     ypout(l,1) += rho(i+1,1) * phi(l,i+1);
                 }
             }
+			
+				cout << "sexto del dei" << endl;
+				
+				
             yout = y + yout * hi;
             y = yout;
             State_ = DE_STATE.DE_DONE;
@@ -161,6 +185,12 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             return y;
         }
 
+
+
+	cout << "septimo del dei" << endl;
+	
+	
+	
         // Extrapolación si está cerca de tout
 		if (!PermitTOUT && std::abs(tout - x) < fouru * std::abs(x)) {
 			h = tout - x;
@@ -173,6 +203,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
 			OldPermit = PermitTOUT;
 			return y;
 		}
+		
+			cout << "octavo del dei" << endl;
 
         // Limitar tamaño del paso y calcular pesos
         h = sign_(std::min(std::abs(h), std::abs(tend - x)), h);
@@ -183,6 +215,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                 throw std::runtime_error("Peso cero detectado en la estimación de error");
             }
         }
+		
+			cout << "noveno del dei" << endl;
 
         // Bloque 0: Verificar tamaño del paso y tolerancia
         bool crash = false;
@@ -191,6 +225,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             crash = true;
         }
 
+
+	cout << "decinmo del dei" << endl;
+	
+	
         double p5eps = 0.5 * epsilon;
         g(2,1) = 1.0;
         g(3,1) = 0.5;
@@ -216,6 +254,9 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             OldPermit = true;
             return y;
         }
+		
+		
+			cout << "onceavo del dei" << endl;
 
         // Inicialización para el primer paso
         double absh;
@@ -246,6 +287,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                 }
             }
         }
+		
+			cout << "doceavo del dei" << endl;
 
         // Bucle para pasos exitosos
         int kp1, kp2, km1, km2;
@@ -320,6 +363,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                     }
                 }
             }
+			
+				cout << "trece del dei" << endl;
 
             // Bloque 2: Predecir solución y estimar error
             for (int i = nsp1; i <= k; i++) {
@@ -354,6 +399,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                     phi(l,17) = (p(l,1) - y(l,1)) - tau;
                 }
             }
+			
+				cout << "14 del dei" << endl;
 
             double xold = x;
             x += h;
@@ -396,6 +443,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                 knew = km1;
             }
 
+
+			cout << "15 del dei" << endl;
+	
+	
             bool success = (err <= epsilon);
 
             // Bloque 3: Manejar paso fallido
@@ -441,6 +492,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                 break; // Paso exitoso, salir del bucle interno
             }
         }
+		
+		cout << "16 del dei" << endl;
+			
+			
 
         // Bloque 4: Corregir solución y actualizar diferencias
         kold = k;
@@ -469,6 +524,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                 phi(l,i+1) += phi(l,kp1+1);
             }
         }
+		
+			cout << "17 del dei" << endl;
+			
+			
 
         // Estimar error en orden k+1
         erkp1 = 0.0;
@@ -501,26 +560,38 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             }
         }
 
+
+		cout << "18 del dei" << endl;
+	
+	
+	
         // Determinar nuevo tamaño de paso
         if (phase1 || p5eps >= erk * two(k+2,1)) {
+				cout << "entras en 18.1 del dei" << endl;
             hnew = 2.0 * h;
         } else if (p5eps < erk) {
+			cout << "entras en 18.2 del dei" << endl;
             double temp2 = k + 1;
             double r = std::pow(p5eps / erk, 1.0 / temp2);
             hnew = absh * std::max(0.5, std::min(0.9, r));
             hnew = sign_(std::max(hnew, fouru * std::abs(x)), h);
         } else {
+							cout << "entras en 18.3 del dei" << endl;
             hnew = h;
         }
+						cout << "entras en 18.4 del dei" << endl;
         h = hnew;
 
         // Verificar rigidez
         nostep++;
         kle4++;
+		
         if (kold > 4) {
+							cout << "entras en 18.5 del dei" << endl;
             kle4 = 0;
         }
         if (kle4 >= 50) {
+							cout << "entras en 18.6 del dei" << endl;
             stiff = true;
             std::cerr << "PROBELMA DE kle4, kle4=" << kle4 << std::endl;
             State_ = DE_STATE.DE_STIFF;
@@ -531,6 +602,8 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             return y;
         }
     }
+	
+	cout << "19 del dei, justo antes de return y" << endl;
 
     return y;
 }

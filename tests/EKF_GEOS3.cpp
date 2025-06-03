@@ -40,43 +40,27 @@
 #include "..\include\MeasUpdate.hpp"
 #include "..\include\G_AccelHarmonic.hpp"
 #include "..\include\GHAMatrix.hpp"
+
+
 #include "..\include\Accel.hpp"
 #include "..\include\VarEqn.hpp"
 #include "..\include\DEInteg.hpp"
 
-static Matrix obs; // Declaración global estática
-static const double Rad = 0.01745329251994329576923690768489; // Definición de Rad
 
-Matrix AccelAdapter(double t, Matrix& Y) {
-    return Accel(t, Y);  // Llama a Accel pasando Y (se hace una copia implícita)
-}
+static const double Rad = 0.01745329251994329576923690768489; // Definición de Rad    lo mismo lo suyo era declararlo en satconst
 
-void readGEOS3(int nobs) {
-    obs = zeros(nobs, 4);
-    
-    FILE *fid = fopen("../data/GEOS3.txt", "r");
-    if (fid == NULL) {
-        printf("Error al abrir GEOS3.txt\n");
-        exit(EXIT_FAILURE);
-    }
-
-    int year, month, day, hour, min;
-    double sec, az, el, dist;
-    
-    for (int i = 1; i <= nobs; i++) {
-        if (fscanf(fid, "%4d %2d %2d %2d %2d %6lf %8lf %7lf %10lf", 
-                  &year, &month, &day, &hour, &min, &sec, 
-                  &az, &el, &dist) != 9) {
-            break;  // Error o fin de archivo
+Matrix AccelAdapter2(double t, Matrix& Y) {
+Matrix result = Accel(t, Y);  // Llama a Accel y almacena el resultado
+    // Imprimir la matriz result
+    cout << "Matriz devuelta por Accel en AccelAdapter2:\n";
+    cout << "  Dimensiones: " << result.n_row << " x " << result.n_column << "\n";
+    cout << "  Valores:\n";
+    for (int i = 1; i <= result.n_row; i++) {
+        for (int j = 1; j <= result.n_column; j++) {
+            cout << "    result(" << i << ", " << j << ") = " << result(i, j) << "\n";
         }
-        
-        obs(i, 1) = Mjday(year, month, day, hour, min, sec);
-        obs(i, 2) = Rad * az;
-        obs(i, 3) = Rad * el;
-        obs(i, 4) = 1e3 * dist;
     }
-
-    fclose(fid);
+    return result;  // Devolver el resultado
 }
 
 Matrix& getObservations() {
@@ -84,6 +68,9 @@ Matrix& getObservations() {
 }
 
 int main() {
+	
+				cout <<"EKF PRIMERO" << "\n";
+				
     // Cargar datos iniciales
     eop19620101(21413);  // Cargar parámetros de orientación terrestre
     GGM03S(181);         // Cargar coeficientes de gravedad (181x181)
@@ -94,6 +81,17 @@ int main() {
     readGEOS3(num_observations);
 	
     Matrix& observations = getObservations();
+	
+	// Verificar obs(9, 1)
+    double obs_9_1 = obs(9, 1);
+    printf("obs(9, 1) = %.5f\n", obs_9_1);
+    if (obs_9_1 < 40000.0) { // Un MJD válido para 1995 debería ser alrededor de 49749
+        printf("Error: obs(9, 1) tiene un valor no válido (%.5f). Se esperaba un MJD mayor a 40000.\n", obs_9_1);
+        exit(EXIT_FAILURE);
+    }
+			cout <<"EKF SEGUNDO "<< "\n";
+	
+	
 	
     // Parámetros de incertidumbre
     double sigma_range = 92.5;          
@@ -143,10 +141,62 @@ int main() {
     AuxParam.moon = true;
     AuxParam.planets = true;
     int n_eqn = 6;
+	
+				cout <<"EKF TERCERO "<< "\n";
+				
+				// Antes de la llamada a DEInteg
+cout << "Antes de llamar a DEInteg:\n";
+
+// Imprimir el primer argumento: AccelAdapter2 (es una función, no imprimible directamente)
+// Lo estamos imprimiendo dentro de AccelAdapter2, así que solo mencionamos aquí
+cout << "Argumento 1: AccelAdapter2 (puntero a función, se imprimirá su resultado dentro de la función)\n";
+
+// Imprimir el segundo argumento: t0 (double)
+double t0 = 0;
+cout << "Argumento 2: t0 (double) = " << t0 << "\n";
+
+// Imprimir el tercer argumento: tf (double)
+double tf = -(Mjd_UTC - Mjd0) * 86400.0;
+cout << "Argumento 3: tf (double) = " << tf << "\n";
+cout << "  (Mjd_UTC = " << Mjd_UTC << ", Mjd0 = " << Mjd0 << ")\n";
+
+// Imprimir el cuarto argumento: relerr (double)
+double relerr = 1e-13;
+cout << "Argumento 4: relerr (double) = " << relerr << "\n";
+
+// Imprimir el quinto argumento: abserr (double)
+double abserr = 1e-6;
+cout << "Argumento 5: abserr (double) = " << abserr << "\n";
+
+// Imprimir el sexto argumento: n_eqn (int)
+cout << "Argumento 6: n_eqn (int) = " << n_eqn << "\n";
+
+// Imprimir el séptimo argumento: Y0_apr (Matrix)
+cout << "Argumento 7: Y0_apr (Matrix)\n";
+cout << "  Dimensiones de Y0_apr: " << Y0_apr.n_row << " x " << Y0_apr.n_column << "\n";
+cout << "  Valores de Y0_apr:\n";
+for (int i = 1; i <= Y0_apr.n_row; i++) {
+    for (int j = 1; j <= Y0_apr.n_column; j++) {
+        cout << "    Y0_apr(" << i << ", " << j << ") = " << Y0_apr(i, j) << "\n";
+    }
+}
+
+
 
     // Integrar hacia atrás desde Mjd_UTC hasta Mjd0
-    Matrix temp = DEInteg(AccelAdapter, 0, -(Mjd_UTC - Mjd0) * 86400.0, 1e-13, 1e-6, 6, Y0_apr);
+		cout <<"antes del primer deinteg" << "\n";
+    Matrix temp = DEInteg(AccelAdapter2, 0, -(Mjd_UTC - Mjd0) * 86400.0, 1e-13, 1e-6, 6, Y0_apr);
     Matrix Y = temp;
+	
+	
+	
+	
+	
+			cout <<"despues del primer deinteg "<< "\n";
+
+
+			cout <<"EKF CUARTO "<< "\n";
+
 
     Matrix P = zeros(6, 6);
     for (int i = 1; i <= 3; ++i) {
@@ -229,9 +279,11 @@ int main() {
         }
 
         // Integrar ecuaciones variacionales
-        Matrix temp_variacional = DEInteg(AccelAdapter, 0, t - t_old, 1e-13, 1e-6, 42, yPhi);
+				cout <<"antes del segundo deinteg" << "\n";
+        Matrix temp_variacional = DEInteg(AccelAdapter2, 0, t - t_old, 1e-13, 1e-6, 42, yPhi);
         temporal2 = temp_variacional;
         yPhi = temporal2;
+				cout <<"despues del segundo deinteg" << "\n";
 
         // Extraer matriz de transición (sin assign_column, usando asignación manual)
         for (int j = 1; j <= 6; ++j) {
@@ -241,8 +293,11 @@ int main() {
         }
 
         // Propagar estado
-        Matrix temp_propagacion = DEInteg(AccelAdapter, 0, t - t_old, 1e-13, 1e-6, 6, Y_old);
+				cout <<"antes del tercer deinteg "<< "\n";
+        Matrix temp_propagacion = DEInteg(AccelAdapter2, 0, t - t_old, 1e-13, 1e-6, 6, Y_old);
         Y = temp_propagacion;
+				cout <<"despues del tercer deinteg "<< "\n";
+				
 
         // Coordenadas topocéntricas
         theta = GMST(Mjd_UT1);
@@ -295,8 +350,10 @@ int main() {
     AuxParam.Mjd_UTC = Mjd_UTC;
     AuxParam.Mjd_TT = Mjd_TT;
 
-    Matrix temp_Y0 = DEInteg(AccelAdapter, 0, -(obs(46, 1) - obs(1, 1)) * 86400.0, 1e-13, 1e-6, 6, Y);
+		cout <<"antes del cuarto deinteg" << "\n";
+    Matrix temp_Y0 = DEInteg(AccelAdapter2, 0, -(obs(46, 1) - obs(1, 1)) * 86400.0, 1e-13, 1e-6, 6, Y);
     Matrix Y0 = temp_Y0;
+			cout <<"despues del cuarto deinteg" << "\n";
 
     // Estado verdadero para comparación
     Matrix Y_true(6, 1);

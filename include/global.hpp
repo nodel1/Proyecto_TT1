@@ -9,6 +9,7 @@ extern Matrix eopdata;
 extern Matrix Cnm;
 extern Matrix Snm;
 extern Matrix PC;
+extern Matrix obs; 
 
 typedef struct {
     double Mjd_UTC, Mjd_TT;
@@ -21,5 +22,6 @@ void eop19620101(int c);
 void GGM03S(int n);
 void DE430Coeff(int f, int c);
 void AuxParamInitialize();
+void readGEOS3(int n);
 
 #endif

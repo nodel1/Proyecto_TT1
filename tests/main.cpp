@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int main() {
+int main2() {
 	
 	eop19620101(4);   //c =214123
 	cout <<"eopdata\n" << eopdata << "\n";

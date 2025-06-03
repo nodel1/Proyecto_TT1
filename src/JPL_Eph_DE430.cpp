@@ -11,8 +11,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     // Julian Date
     double JD = Mjd_TDB + 2400000.5;
 
-        std::cout << "AQUI LLEGAS1";
-		
+
     // Find interval in PC
     int i = 0;
     for (int j = 1; j <= PC.n_row; j++) {
@@ -27,7 +26,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     }
 
 
-        std::cout << "AQUI LLEGAS2";
+
 		
 		
     // Extract row from PC
@@ -57,7 +56,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     }
 	
 	
-	        std::cout << "AQUI LLEGAS3";
+
 	
     temp = temp + 39;
     Matrix Cx(temp(2, 1) - temp(1, 1), 1);
@@ -87,7 +86,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     }
 	
 	
-	        std::cout << "AQUI LLEGAS4";
+
 	
 	
 	
@@ -112,7 +111,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-        std::cout << "AQUI LLEGAS5";
+
 
     // Moon
     temp_aux = (480 - 441) / 13 + 1;
@@ -136,7 +135,6 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     Matrix Cy_Moon_full = Cy_Moon;
     Matrix Cz_Moon_full = Cz_Moon;
 	
-	        std::cout << "AQUI LLEGAS6";
 	
 	
     for (int k = 1; k <= 7; k++) {
@@ -172,7 +170,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     }
 	
 	
-	        std::cout << "AQUI LLEGAS7";
+
 	
 	
     if (0 <= dt && dt <= 4) j = 0;
@@ -196,7 +194,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-        std::cout << "AQUI LLEGAS8";
+
 
     // Sun
     temp_aux = (786 - 753) / 11 + 1;
@@ -260,7 +258,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     r_Sun = Cheb3D(Mjd_TDB, 11, Mjd0, Mjd0 + 16, Cx_Sun_sub, Cy_Sun_sub, Cz_Sun_sub) * 1e3;
 
 
-	        std::cout << "AQUI LLEGAS sol";
+
 
     // Mercury
     temp_aux = (45 - 3) / 14 + 1;
@@ -331,7 +329,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-	        std::cout << "AQUI LLEGASmercurio";
+
 			
 			
     // Venus
@@ -398,7 +396,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-	        std::cout << "AQUI LLEGASvenus";
+
 			
 			
 			
@@ -435,7 +433,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-	        std::cout << "AQUI LLEGASmarte";
+
 			
 			
 			
@@ -472,7 +470,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-	        std::cout << "AQUI LLEGASjupiter";
+
 			
 			
 			
@@ -598,7 +596,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-	        std::cout << "AQUI LLEGASpluto";
+
 			
 			
 			
@@ -656,7 +654,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
 
 
 
-	        std::cout << "AQUI LLEGASnutations";
+
 			
 			
     // Librations
@@ -727,7 +725,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     Matrix Librations = Cheb3D(Mjd_TDB, 10, Mjd0, Mjd0 + 8, Cx_Librations_sub, Cy_Librations_sub, Cz_Librations_sub);
 
 
-	        std::cout << "AQUI LLEGASlibrations";
+
 
     // Position corrections
     const double EMRAT = 81.30056907419062; // DE430
@@ -743,7 +741,7 @@ void JPL_Eph_DE430(double Mjd_TDB, Matrix& r_Mercury, Matrix& r_Venus, Matrix& r
     r_Pluto = r_Pluto - r_Earth;
     r_Sun = r_Sun - r_Earth;
 	
-		        std::cout << "AQUI LLEGASFINALCPP";
+
 				
 				
 				transpose(r_Mercury);
