@@ -143,6 +143,10 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             rho(2,1) = 1.0;
             hi = tout - x;
             ki = kold + 1;
+			
+			cout << "kold vale: "<<kold << endl;
+			cout << "ki vale: "<<ki << endl;
+			
 
             // Inicializar w para calcular g
             for (i = 1; i <= ki; i++) {
@@ -458,6 +462,7 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
                     knew = 1;
                 }
                 h *= temp2;
+				cout << "knew vale: " << knew;
                 k = knew;
 
                 if (std::abs(h) < fouru * std::abs(x)) {
@@ -522,13 +527,16 @@ Matrix DEInteg(Matrix (*f)(double, Matrix&), double t, double tout, double reler
             erkp1 = absh * gstr(kp1+1,1) * std::sqrt(erkp1);
             if (k > 1) {
                 if (erkm1 <= std::min(erk, erkp1)) {
+
                     k = km1;
                     erk = erkm1;
                 } else if (erkp1 < erk && k != 12) {
+
                     k = kp1;
                     erk = erkp1;
                 }
             } else if (erkp1 < 0.5 * erk) {
+
                 k = kp1;
                 erk = erkp1;
             }
