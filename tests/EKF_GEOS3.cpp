@@ -238,6 +238,7 @@ for (int i = 1; i <= Y0_apr.n_row; i++) {
     double theta;                // Ángulo de rotación terrestre [rad]
     double Azim;                 // Azimut [rad]
     double Elev;                 // Elevación [rad]
+	double Dist;
 
     // Matrices para el cálculo EKF
     Matrix Y_old(6, 1);          // Estado anterior (posición y velocidad), 6x1
@@ -334,7 +335,7 @@ for (int i = 1; i <= Y0_apr.n_row; i++) {
         for (int j = 1; j <= 3; ++j) r(j, 1) = Y(j, 1);
         Ur = U * r;
         s = LT * (Ur - Rs);
-        double Dist = norm(s);
+        Dist = norm(s);
         dDds = transpose(s) / Dist;
         dDdY = dDds * LT * U;
         dDdY = union_vector(dDdY, 1, 6); // Ajuste a union_vector
