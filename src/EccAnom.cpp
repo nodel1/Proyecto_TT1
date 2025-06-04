@@ -27,8 +27,8 @@ double EccAnom(double M, double e) {
     double E, f;
 
     // Starting value
-    M = std::fmod(M, 2.0 * std::numbers::pi);
-    E = (e < 0.8) ? M : std::numbers::pi;
+    M = std::fmod(M, 2.0 * Const::pi);
+    E = (e < 0.8) ? M : Const::pi;
 
     // Initial calculation
     f = E - e * std::sin(E) - M;
