@@ -1370,25 +1370,27 @@ int m_DEInteg_01() {
 
     // Configurar parámetros
     double t = 0.0;         // Tiempo inicial
-    double tout = -100.0;   // Tiempo final
+    double tout = -134.99991953373; // Tiempo final (ajustado según MATLAB)
     double relerr = 1e-13;  // Tolerancia de error relativo
     double abserr = 1e-6;   // Tolerancia de error absoluto
     int n_eqn = 6;          // Número de ecuaciones
 
-    // Vector de estado inicial
+    // Vector de estado inicial (ajustado según MATLAB)
     Matrix y = zeros(6, 1);
-    y(1, 1) = 6200000;
-    y(2, 1) = 2800000;
-    y(3, 1) = 3000000;
-    y(4, 1) = 400;
-    y(5, 1) = -2000;
-    y(6, 1) = -7000;
+    y(1, 1) = 6221397.62857869;
+    y(2, 1) = 2867713.77965738;
+    y(3, 1) = 3006155.98509949;
+    y(4, 1) = 4645.04725161806;
+    y(5, 1) = -2752.2159158204;
+    y(6, 1) = -7507.99940987031;
 
     // Inicializar variables globales necesarias para Accel (si no están inicializadas)
-    AuxParam.Mjd_UTC = 51544.5;
-    AuxParam.Mjd_TT = 51544.5 + 32.184 / 86400.0;
+    AuxParam.Mjd_UTC = 49746.1112847221;
     AuxParam.n = 20;
     AuxParam.m = 20;
+    AuxParam.sun = 1;
+    AuxParam.moon = 1;
+    AuxParam.planets = 1;
 
     std::cout << "LE PONER LOS VALORES; JUSTO ANTES DE ENTRAR A DEInteg" << std::endl;
 
@@ -1399,15 +1401,15 @@ int m_DEInteg_01() {
 
     // Valores esperados (de MATLAB)
     Matrix expected = zeros(6, 1);
-    expected(1, 1) = 6131259.28412366;
-    expected(2, 1) = 2986689.3088899;
-    expected(3, 1) = 3684967.24393923;
-    expected(4, 1) = 962.012236067756;
-    expected(5, 1) = -1736.46721580542;
-    expected(6, 1) = -6695.3116324238;
+    expected(1, 1) = 5542555.93722861;
+    expected(2, 1) = 3213514.8673492;
+    expected(3, 1) = 3990892.97587685;
+    expected(4, 1) = 5394.06842166351;
+    expected(5, 1) = -2365.21337882342;
+    expected(6, 1) = -7061.84554200295;
 
     // Verificar que los resultados coincidan dentro de un margen de error
-    _assert(m_equals(R, expected, 1e1));
+    _assert(m_equals(R, expected, 1e-6));
 
     return 0;
 }
