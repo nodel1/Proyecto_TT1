@@ -6,6 +6,7 @@
 #include "..\include\global.hpp"
 
 #include <iomanip>
+#include <chrono>
 
 #include "..\include\AccelPointMass.hpp"
 #include "..\include\Cheb3D.hpp"
@@ -53,15 +54,6 @@ static const double Rad = 0.01745329251994329576923690768489; // Definición de 
 
 Matrix AccelAdapter2(double t, Matrix& Y) {
 Matrix result = Accel(t, Y);  // Llama a Accel y almacena el resultado
-    // Imprimir la matriz result
-    cout << "Matriz devuelta por Accel en AccelAdapter2:\n";
-    cout << "  Dimensiones: " << result.n_row << " x " << result.n_column << "\n";
-    cout << "  Valores:\n";
-    for (int i = 1; i < result.n_row; i++) {
-        for (int j = 1; j < result.n_column; j++) {
-            cout << "    result(" << i << ", " << j << ") = " << result(i, j) << "\n";
-        }
-    }
     return result;  // Devolver el resultado
 }
 
@@ -79,7 +71,9 @@ Matrix& getObservations() {
 
 int main() {
 	
-	cout <<"EKF PRIMERO" << "\n";
+	    auto start = std::chrono::high_resolution_clock::now();
+	
+
 				
 				
 	cout << std::fixed << std::setprecision(15);
@@ -106,7 +100,7 @@ int main() {
         printf("Error: obs(9, 1) tiene un valor no válido (%.5f). Se esperaba un MJD mayor a 40000.\n", obs_9_1);
         exit(EXIT_FAILURE);
     }
-			cout <<"EKF SEGUNDO "<< "\n";
+
 	
 	
 	
@@ -160,67 +154,42 @@ int main() {
     AuxParam.planets = true;
     int n_eqn = 6;
 	
-				cout <<"EKF TERCERO "<< "\n";
-				
-				// Antes de la llamada a DEInteg
-cout << "Antes de llamar a DEInteg:\n";
 
-// Imprimir el primer argumento: AccelAdapter2 (es una función, no imprimible directamente)
-// Lo estamos imprimiendo dentro de AccelAdapter2, así que solo mencionamos aquí
-cout << "Argumento 1: AccelAdapter2 (puntero a función, se imprimirá su resultado dentro de la función)\n";
+				
+
+
+
 
 // Imprimir el segundo argumento: t0 (double)
 double t0 = 0;
-cout << "Argumento 2: t0 (double) = " << t0 << "\n";
+
 
 // Imprimir el tercer argumento: tf (double)
 double tf = -(Mjd_UTC - Mjd0) * 86400.0;                         //parece que esta aqui el error? en la resta del dei
-cout << "Argumento 3: tf (double) = " << tf << "\n";
-cout << "  (Mjd_UTC = " << Mjd_UTC << ", Mjd0 = " << Mjd0 << ", obs(9, 1) = " << obs(9, 1) << ")\n";
+
+
 
 // Imprimir el cuarto argumento: relerr (double)
 double relerr = 1e-13;
-cout << "Argumento 4: relerr (double) = " << relerr << "\n";
+
 
 // Imprimir el quinto argumento: abserr (double)
 double abserr = 1e-6;
-cout << "Argumento 5: abserr (double) = " << abserr << "\n";
 
-// Imprimir el sexto argumento: n_eqn (int)
-cout << "Argumento 6: n_eqn (int) = " << n_eqn << "\n";
 
-// Imprimir el séptimo argumento: Y0_apr (Matrix)
-cout << "Argumento 7: Y0_apr (Matrix)\n";
-cout << "  Dimensiones de Y0_apr: " << Y0_apr.n_row << " x " << Y0_apr.n_column << "\n";
-cout << "  Valores de Y0_apr:\n";
-for (int i = 1; i <= Y0_apr.n_row; i++) {
-    for (int j = 1; j <= Y0_apr.n_column; j++) {
-        cout << "    Y0_apr(" << i << ", " << j << ") = " << Y0_apr(i, j) << "\n";
-    }
-}
 
 
 
     // Integrar hacia atrás desde Mjd_UTC hasta Mjd0
-		cout <<"antes del primer deinteg" << "\n";
+
     Matrix temp = DEInteg(AccelAdapter2, 0, tf, 1e-13, 1e-6, 6, Y0_apr); //parece que esta aqui el error? en la resta del dei del tf
     Matrix Y = temp;
 	
 	
-	cout << "  Valores de Y(con tf):\n";
-for (int i = 1; i <= Y.n_row; i++) {
-    for (int j = 1; j <= Y.n_column; j++) {
-        cout << "    Y(" << i << ", " << j << ") = " << Y(i, j) << "\n";
-    }
-}
+
 	
 
 	
-	
-			cout <<"despues del primer deinteg "<< "\n";
-
-
-			cout <<"EKF CUARTO "<< "\n";
 
 
     Matrix P = zeros(6, 6);
@@ -305,11 +274,11 @@ for (int i = 1; i <= Y.n_row; i++) {
         }
 
         // Integrar ecuaciones variacionales
-				cout <<"antes del segundo deinteg" << "\n";
+
         Matrix temp_variacional = DEInteg(&VarEqnImpl, 0, t - t_old, 1e-13, 1e-6, 42, yPhi);
         temporal2 = temp_variacional;
         yPhi = temporal2;
-				cout <<"despues del segundo deinteg" << "\n";
+
 
         // Extraer matriz de transición (sin assign_column, usando asignación manual)
         for (int j = 1; j <= 6; ++j) {
@@ -319,17 +288,17 @@ for (int i = 1; i <= Y.n_row; i++) {
         }
 
         // Propagar estado
-				cout <<"antes del tercer deinteg "<< "\n";
+
         Matrix temp_propagacion = DEInteg(AccelAdapter2, 0, t - t_old, 1e-13, 1e-6, 6, Y_old);
         Y = temp_propagacion;
-				cout <<"despues del tercer deinteg "<< "\n";
+
 				
 
         // Coordenadas topocéntricas
         theta = GMST(Mjd_UT1);
         Matrix temp_U = R_z(theta);
 		
-						cout <<"debug 1 "<< "\n";
+
 						
 						
         U = temp_U;
@@ -337,13 +306,13 @@ for (int i = 1; i <= Y.n_row; i++) {
         Ur = U * r;
         s = LT * (Ur - Rs);
 		
-								cout <<"debug 2 "<< "\n";
+
 
         // Actualización de tiempo (propagación de covarianza)
         Matrix temp_P = TimeUpdate(P, Phi);
         P = temp_P;
 		
-								cout <<"debug 3 "<< "\n";
+
 								
 
 AzElPa(s, Azim, Elev, dAds, dEds);
@@ -465,6 +434,14 @@ MeasUpdate(Y, obs(i, 4), Dist, sigma_range, dDdY, P, 6, K);
     std::cout << "dVx " << std::setw(8) << Y0(4, 1) - Y_true(4, 1) << " [m/s]\n";
     std::cout << "dVy " << std::setw(8) << Y0(5, 1) - Y_true(5, 1) << " [m/s]\n";
     std::cout << "dVz " << std::setw(8) << Y0(6, 1) - Y_true(6, 1) << " [m/s]\n";
+	
+	
+	auto end = std::chrono::high_resolution_clock::now(); // Fin
+
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "Tiempo de ejecución (con impresiones por pantalla, revisar): " << duration.count() << " segundos" << std::endl;
+	
+	
 
     return 0;
 }
