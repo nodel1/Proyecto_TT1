@@ -46,6 +46,8 @@
 #include "..\include\VarEqn.hpp"
 #include "..\include\DEInteg.hpp"
 
+#include <iomanip>
+
 
 static const double Rad = 0.01745329251994329576923690768489; // Definición de Rad    lo mismo lo suyo era declararlo en satconst
 
@@ -55,13 +57,21 @@ Matrix result = Accel(t, Y);  // Llama a Accel y almacena el resultado
     cout << "Matriz devuelta por Accel en AccelAdapter2:\n";
     cout << "  Dimensiones: " << result.n_row << " x " << result.n_column << "\n";
     cout << "  Valores:\n";
-    for (int i = 1; i <= result.n_row; i++) {
-        for (int j = 1; j <= result.n_column; j++) {
+    for (int i = 1; i < result.n_row; i++) {
+        for (int j = 1; j < result.n_column; j++) {
             cout << "    result(" << i << ", " << j << ") = " << result(i, j) << "\n";
         }
     }
     return result;  // Devolver el resultado
 }
+
+
+Matrix VarEqnImpl(double t, Matrix& yPhi) {
+    Matrix result = VarEqn(t, yPhi);  // Llama a la implementación interna y almacena el resultado
+    return result;  // Devolver el resultado
+}
+
+
 
 Matrix& getObservations() {
     return obs;
@@ -69,13 +79,20 @@ Matrix& getObservations() {
 
 int main() {
 	
-				cout <<"EKF PRIMERO" << "\n";
+	cout <<"EKF PRIMERO" << "\n";
+				
+				
+	cout << std::fixed << std::setprecision(15);
+					
 				
     // Cargar datos iniciales
     eop19620101(21413);  // Cargar parámetros de orientación terrestre
     GGM03S(181);         // Cargar coeficientes de gravedad (181x181)
     DE430Coeff(2285, 1020);  // Cargar coeficientes DE430
     AuxParamInitialize();  // Inicializar parámetros auxiliares
+
+
+	
 	
     int num_observations = 46;
     readGEOS3(num_observations);
@@ -112,8 +129,9 @@ int main() {
     double Mjd2 = obs(9, 1);
     double Mjd3 = obs(18, 1);
 
-    Matrix r2(3, 1);
-    Matrix v2(3, 1);
+    Matrix r2= zeros(3, 1);
+    Matrix v2= zeros(3, 1);
+	Matrix aaaaaa= zeros(3, 1);
     r2(1, 1) = 6221397.62857869;
     r2(2, 1) = 2867713.77965738;
     r2(3, 1) = 3006155.98509949;
@@ -121,7 +139,7 @@ int main() {
     v2(2, 1) = -2752.21591588204;
     v2(3, 1) = -7507.99940987031;
 
-    Matrix Y0_apr(6, 1);
+    Matrix Y0_apr = zeros(6, 1);
     Y0_apr(1, 1) = r2(1, 1);  // X
     Y0_apr(2, 1) = r2(2, 1);  // Y
     Y0_apr(3, 1) = r2(3, 1);  // Z
@@ -130,11 +148,11 @@ int main() {
     Y0_apr(6, 1) = v2(3, 1);  // Vz
 
     // Época inicial
-    double Mjd0 = Mjday(1995, 1, 29, 2, 38, 0);
+    double Mjd0 = Mjday(1995, 1, 29, 02, 38, 0);
 
     // Configurar parámetros para integración
     double Mjd_UTC = obs(9, 1);
-    AuxParam.Mjd_UTC = Mjd_UTC;
+    AuxParam.Mjd_UTC = Mjd_UTC;          
     AuxParam.n = 20;
     AuxParam.m = 20;
     AuxParam.sun = true;
@@ -156,9 +174,9 @@ double t0 = 0;
 cout << "Argumento 2: t0 (double) = " << t0 << "\n";
 
 // Imprimir el tercer argumento: tf (double)
-double tf = -(Mjd_UTC - Mjd0) * 86400.0;
+double tf = -(Mjd_UTC - Mjd0) * 86400.0;                         //parece que esta aqui el error? en la resta del dei
 cout << "Argumento 3: tf (double) = " << tf << "\n";
-cout << "  (Mjd_UTC = " << Mjd_UTC << ", Mjd0 = " << Mjd0 << ")\n";
+cout << "  (Mjd_UTC = " << Mjd_UTC << ", Mjd0 = " << Mjd0 << ", obs(9, 1) = " << obs(9, 1) << ")\n";
 
 // Imprimir el cuarto argumento: relerr (double)
 double relerr = 1e-13;
@@ -185,11 +203,18 @@ for (int i = 1; i <= Y0_apr.n_row; i++) {
 
     // Integrar hacia atrás desde Mjd_UTC hasta Mjd0
 		cout <<"antes del primer deinteg" << "\n";
-    Matrix temp = DEInteg(AccelAdapter2, 0, -(Mjd_UTC - Mjd0) * 86400.0, 1e-13, 1e-6, 6, Y0_apr);
+    Matrix temp = DEInteg(AccelAdapter2, 0, tf, 1e-13, 1e-6, 6, Y0_apr); //parece que esta aqui el error? en la resta del dei del tf
     Matrix Y = temp;
 	
 	
+	cout << "  Valores de Y(con tf):\n";
+for (int i = 1; i <= Y.n_row; i++) {
+    for (int j = 1; j <= Y.n_column; j++) {
+        cout << "    Y(" << i << ", " << j << ") = " << Y(i, j) << "\n";
+    }
+}
 	
+
 	
 	
 			cout <<"despues del primer deinteg "<< "\n";
@@ -281,7 +306,7 @@ for (int i = 1; i <= Y0_apr.n_row; i++) {
 
         // Integrar ecuaciones variacionales
 				cout <<"antes del segundo deinteg" << "\n";
-        Matrix temp_variacional = DEInteg(AccelAdapter2, 0, t - t_old, 1e-13, 1e-6, 42, yPhi);
+        Matrix temp_variacional = DEInteg(&VarEqnImpl, 0, t - t_old, 1e-13, 1e-6, 42, yPhi);
         temporal2 = temp_variacional;
         yPhi = temporal2;
 				cout <<"despues del segundo deinteg" << "\n";
@@ -303,46 +328,108 @@ for (int i = 1; i <= Y0_apr.n_row; i++) {
         // Coordenadas topocéntricas
         theta = GMST(Mjd_UT1);
         Matrix temp_U = R_z(theta);
+		
+						cout <<"debug 1 "<< "\n";
+						
+						
         U = temp_U;
         for (int j = 1; j <= 3; ++j) r(j, 1) = Y(j, 1);
         Ur = U * r;
         s = LT * (Ur - Rs);
+		
+								cout <<"debug 2 "<< "\n";
 
         // Actualización de tiempo (propagación de covarianza)
         Matrix temp_P = TimeUpdate(P, Phi);
         P = temp_P;
+		
+								cout <<"debug 3 "<< "\n";
+								
 
-        // Azimut y derivadas parciales
-        AzElPa(s, Azim, Elev, dAds, dEds);
-        dAdY = dAds * LT * U;
-        dAdY = union_vector(dAdY, 1, 6); // Ajuste a union_vector
+AzElPa(s, Azim, Elev, dAds, dEds);
 
-        // Actualización de medición (azimut)
-        MeasUpdate(Y, obs(i, 2), Azim, sigma_az, dAdY, P, 6, K);
+
+
+
+dAdY = dAds * LT * U;
+
+
+// Extend dAdY to 1x6 with zero velocity derivatives
+Matrix full_dAdY(1, 6);
+for (int j = 1; j <= 3; j++) {
+    full_dAdY(1, j) = dAdY(1, j); // Copy position derivatives
+}
+for (int j = 4; j <= 6; j++) {
+    full_dAdY(1, j) = 0.0; // Velocity derivatives are zero
+}
+dAdY = full_dAdY;
+
+
+// Remove union_vector since we manually reshaped to 1x6
+
+
+
+
+// Actualización de medición (azimut)
+MeasUpdate(Y, obs(i, 2), Azim, sigma_az, dAdY, P, 6, K);
+
 
         // Elevación y derivadas parciales
-        for (int j = 1; j <= 3; ++j) r(j, 1) = Y(j, 1);
-        Ur = U * r;
-        s = LT * (Ur - Rs);
-        AzElPa(s, Azim, Elev, dAds, dEds);
-        dEdY = dEds * LT * U;
-        dEdY = union_vector(dEdY, 1, 6); // Ajuste a union_vector
+for (int j = 1; j <= 3; ++j) r(j, 1) = Y(j, 1);
+Ur = U * r;
+s = LT * (Ur - Rs);
+AzElPa(s, Azim, Elev, dAds, dEds);
+dEdY = dEds * LT * U;
 
-        // Actualización de medición (elevación)
-        MeasUpdate(Y, obs(i, 3), Elev, sigma_el, dEdY, P, 6, K);
 
-        // Distancia y derivadas parciales
-        for (int j = 1; j <= 3; ++j) r(j, 1) = Y(j, 1);
-        Ur = U * r;
-        s = LT * (Ur - Rs);
-        Dist = norm(s);
-        dDds = transpose(s) / Dist;
-        dDdY = dDds * LT * U;
-        dDdY = union_vector(dDdY, 1, 6); // Ajuste a union_vector
+// Extend dEdY to 1x6 with zero velocity derivatives
+Matrix full_dEdY(1, 6);
+for (int j = 1; j <= 3; j++) {
+    full_dEdY(1, j) = dEdY(1, j); // Copy position derivatives
+}
+for (int j = 4; j <= 6; j++) {
+    full_dEdY(1, j) = 0.0; // Velocity derivatives are zero
+}
+dEdY = full_dEdY;
 
-        // Actualización de medición (distancia)
-        MeasUpdate(Y, obs(i, 4), Dist, sigma_range, dDdY, P, 6, K);
+
+
+
+
+
+// Actualización de medición (elevación)
+MeasUpdate(Y, obs(i, 3), Elev, sigma_el, dEdY, P, 6, K);
+
+
+// Distancia y derivadas parciales
+for (int j = 1; j <= 3; ++j) r(j, 1) = Y(j, 1);
+Ur = U * r;
+s = LT * (Ur - Rs);
+Dist = norm(s);
+dDds = transpose(s) / Dist;
+dDdY = dDds * LT * U;
+
+
+// Extend dDdY to 1x6 with zero velocity derivatives
+Matrix full_dDdY(1, 6);
+for (int j = 1; j <= 3; j++) {
+    full_dDdY(1, j) = dDdY(1, j); // Copy position derivatives
+}
+for (int j = 4; j <= 6; j++) {
+    full_dDdY(1, j) = 0.0; // Velocity derivatives are zero
+}
+dDdY = full_dDdY;
+
+
+
+
+
+// Actualización de medición (distancia)
+MeasUpdate(Y, obs(i, 4), Dist, sigma_range, dDdY, P, 6, K);
+
     }
+
+
 
     // Integrar hacia atrás desde la última observación hasta la primera
     IERS(obs(46, 1), x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC);
@@ -351,10 +438,13 @@ for (int i = 1; i <= Y0_apr.n_row; i++) {
     AuxParam.Mjd_UTC = Mjd_UTC;
     AuxParam.Mjd_TT = Mjd_TT;
 
-		cout <<"antes del cuarto deinteg" << "\n";
+
+
     Matrix temp_Y0 = DEInteg(AccelAdapter2, 0, -(obs(46, 1) - obs(1, 1)) * 86400.0, 1e-13, 1e-6, 6, Y);
     Matrix Y0 = temp_Y0;
-			cout <<"despues del cuarto deinteg" << "\n";
+
+
+
 
     // Estado verdadero para comparación
     Matrix Y_true(6, 1);

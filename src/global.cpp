@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <cmath>
+#include <iomanip>
+
+
 
 Matrix eopdata;
 Matrix Cnm;
@@ -87,9 +90,12 @@ void AuxParamInitialize() {
     AuxParam.planets = 1;
 }
 
+	
+
 
 
 void readGEOS3(int nobs) {
+    std::cout << std::fixed << std::setprecision(15);  // Para otras salidas con cout
     obs = zeros(nobs, 4);
     
     FILE *fid = fopen("../data/GEOS3.txt", "r");
@@ -99,55 +105,47 @@ void readGEOS3(int nobs) {
     }
 
     char tline[256];
-    char sub[11]; // Buffer para subcadenas (máximo 10 caracteres + '\0')
     int rows_read = 0;
 
     for (int i = 1; i <= nobs; i++) {
         if (!fgets(tline, sizeof(tline), fid) || strlen(tline) < 4) {
-            break; // Fin de archivo o línea vacía
+            break;
         }
 
-        // Extraer año (posiciones 0-3)
-        strncpy(sub, &tline[0], 4); sub[4] = '\0';
-        int year = atoi(sub);
+        int year, month, day, hour, min;
+        double sec, az, el, dist;
 
-        // Extraer mes (posiciones 5-6)
-        strncpy(sub, &tline[5], 2); sub[2] = '\0';
-        int month = atoi(sub);
+        // Parsear la línea con sscanf para el formato YYYY/MM/DD HH:MM:SS.SS
+        int fields = sscanf(tline, "%d/%d/%d %d:%d:%lf %lf %lf %lf",
+                            &year, &month, &day, &hour, &min, &sec, &az, &el, &dist);
 
-        // Extraer día (posiciones 8-9)
-        strncpy(sub, &tline[8], 2); sub[2] = '\0';
-        int day = atoi(sub);
+        if (fields != 9) {
+            printf("Error al parsear la fila %d: se leyeron %d campos, se esperaban 9.\n", i, fields);
+            printf("Linea: %s", tline);
+            fclose(fid);
+            exit(EXIT_FAILURE);
+        }
 
-        // Extraer hora (posiciones 11-12)
-        strncpy(sub, &tline[11], 2); sub[2] = '\0';
-        int hour = atoi(sub);
+        // Debug para la fila 9
+        if (i == 9) {
+            printf("Fila 9 antes de Mjday:\n");
+            printf("  Linea leida: %s", tline);
+            printf("  Year: %d\n", year);
+            printf("  Month: %d\n", month);
+            printf("  Day: %d\n", day);
+            printf("  Hour: %d\n", hour);
+            printf("  Min: %d\n", min);
+            printf("  Sec: %.10f\n", sec);
+            printf("  Az: %.10f\n", az);
+            printf("  El: %.10f\n", el);
+            printf("  Dist: %.10f\n", dist);
+        }
 
-        // Extraer minuto (posiciones 14-15)
-        strncpy(sub, &tline[14], 2); sub[2] = '\0';
-        int min = atoi(sub);
-
-        // Extraer segundo (posiciones 17-22, incluyendo decimales)
-        strncpy(sub, &tline[17], 6); sub[6] = '\0';
-        double sec = atof(sub);
-
-        // Extraer azimut (posiciones 25-31)
-        strncpy(sub, &tline[25], 7); sub[7] = '\0'; // Ajustado a 7 caracteres
-        double az = atof(sub);
-
-        // Extraer elevación (posiciones 34-40)
-        strncpy(sub, &tline[34], 7); sub[7] = '\0'; // Ajustado a 7 caracteres
-        double el = atof(sub);
-
-        // Extraer distancia (posiciones 43-52)
-        strncpy(sub, &tline[43], 9); sub[9] = '\0'; // Ajustado a 9 caracteres
-        double dist = atof(sub);
-
-        // Convertir a formato requerido
+        // Guardar en matriz
         obs(i, 1) = Mjday(year, month, day, hour, min, sec);
-        obs(i, 2) = Rad * az; // Convertir a radianes
-        obs(i, 3) = Rad * el; // Convertir a radianes
-        obs(i, 4) = 1e3 * dist; // Convertir de km a m
+        obs(i, 2) = Rad * az;
+        obs(i, 3) = Rad * el;
+        obs(i, 4) = 1e3 * dist;
 
         rows_read++;
     }
@@ -160,10 +158,10 @@ void readGEOS3(int nobs) {
         exit(EXIT_FAILURE);
     }
 
-    // Imprimir algunas observaciones para depuración
+    // Mostrar con 10 decimales todas las columnas
     printf("Datos cargados de GEOS3.txt:\n");
     for (int i = 1; i <= std::min(5, rows_read); i++) {
-        printf("Obs %d: MJD = %.5f, Az = %.5f, El = %.5f, Dist = %.5f\n", 
+        printf("Obs %2d: MJD = %.10f, Az = %.10f, El = %.10f, Dist = %.10f\n", 
                i, obs(i, 1), obs(i, 2), obs(i, 3), obs(i, 4));
     }
 }
