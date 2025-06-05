@@ -1,0 +1,1006 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 12.76      0.74     0.74                             __sinl_internal
+ 12.59      1.47     0.73                             _mcount_private
+ 11.55      2.14     0.67                             __cosl_internal
+ 10.60      2.75     0.61 301069936     0.00     0.00  Matrix::operator()(int, int)
+  7.76      3.21     0.45                             __fentry__
+  4.31      3.46     0.25                             __strtodg
+  3.45      3.65     0.20    19182     0.01     0.03  AccelHarmonic(Matrix&, Matrix&, int, int)
+  2.93      3.83     0.17                             sin
+  2.41      3.96     0.14     4985     0.03     0.05  IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&)
+  2.41      4.11     0.14                             sqrt
+  2.24      4.24     0.13                             __mingw_sformat
+  2.24      4.37     0.13                             cos
+  2.07      4.49     0.12                             __mingw_vfscanf
+  1.98      4.60     0.12                             __Balloc_D2A
+  1.90      4.71     0.11                             dtoa_lock
+  1.72      4.81     0.10                             __lshift_D2A
+  1.38      4.89     0.08  1233521     0.00     0.00  Matrix::operator=(Matrix&)
+  1.38      4.97     0.08     2564     0.03     0.16  JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&)
+  1.29      5.04     0.07                             __Bfree_D2A
+  1.03      5.11     0.06                             in_ch
+  0.86      5.16     0.05    19182     0.00     0.01  Legendre(int, int, double, Matrix&, Matrix&)
+  0.86      5.21     0.05                             dtoa_unlock
+  0.78      5.25     0.04                             __diff_D2A
+  0.78      5.29     0.04                             __mult_D2A
+  0.69      5.33     0.04                             __s2b_D2A
+  0.69      5.38     0.04                             __sum_D2A
+  0.69      5.42     0.04                             cleanup_return
+  0.60      5.45     0.04                             __pow5mult_D2A
+  0.52      5.48     0.03     9876     0.00     0.00  NutAngles(double, double&, double&)
+  0.52      5.51     0.03                             __d2b_D2A
+  0.34      5.53     0.02  2527086     0.00     0.00  Matrix::Matrix(int, int)
+  0.34      5.55     0.02                             operator new(unsigned long long)
+  0.34      5.57     0.02                             __powi
+  0.34      5.59     0.02                             __ratio_D2A
+  0.34      5.61     0.02                             resize_wbuf
+  0.34      5.63     0.02                             strtold
+  0.26      5.64     0.01                             __cmp_D2A
+  0.17      5.66     0.01  2368584     0.00     0.00  fscanf(_iobuf*, char const*, ...)
+  0.17      5.67     0.01   558671     0.00     0.00  zeros(int, int)
+  0.17      5.67     0.01    33332     0.00     0.01  Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&)
+  0.17      5.68     0.01     2564     0.00     0.01  extract_row(Matrix&, int)
+  0.17      5.70     0.01       94     0.11    13.26  DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&)
+  0.17      5.71     0.01                             __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::sync()
+  0.17      5.71     0.01                             std::ostream::operator<<(std::ostream& (*)(std::ostream&))
+  0.17      5.72     0.01                             std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long long)
+  0.17      5.74     0.01                             __b2d_D2A
+  0.17      5.75     0.01                             __i2b_D2A
+  0.17      5.75     0.01                             __multadd_D2A
+  0.17      5.76     0.01                             __pformat_putc
+  0.17      5.78     0.01                             __rshift_D2A
+  0.17      5.79     0.01                             do_powi_iter
+  0.17      5.79     0.01                             internal_modf
+  0.09      5.80     0.01     1196     0.00     0.00  Matrix::operator()(int, int) const
+  0.00      5.80     0.00  1424728     0.00     0.00  __gnu_cxx::__promote_2<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0))), std::__is_integer<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0)))>::__value>::__type std::pow<double, int>(double, int)
+  0.00      5.80     0.00   391660     0.00     0.00  Matrix::operator*(double)
+  0.00      5.80     0.00   386300     0.00     0.00  Matrix::operator-(Matrix&)
+  0.00      5.80     0.00   379318     0.00     0.00  Matrix::operator+(Matrix&)
+  0.00      5.80     0.00    81853     0.00     0.00  Matrix::operator*(Matrix&)
+  0.00      5.80     0.00    74142     0.00     0.00  std::abs(double)
+  0.00      5.80     0.00    73532     0.00     0.00  transpose(Matrix&)
+  0.00      5.80     0.00    70508     0.00     0.00  norm(Matrix&)
+  0.00      5.80     0.00    51326     0.00     0.00  Matrix::operator/(double)
+  0.00      5.80     0.00    48716     0.00     0.00  Matrix::operator+(double)
+  0.00      5.80     0.00    37700     0.00     0.00  Matrix::Matrix()
+  0.00      5.80     0.00    25640     0.00     0.00  AccelPointMass(Matrix&, Matrix&, double)
+  0.00      5.80     0.00    19799     0.00     0.00  R_z(double)
+  0.00      5.80     0.00    14814     0.00     0.00  R_x(double)
+  0.00      5.80     0.00     9877     0.00     0.00  R_y(double)
+  0.00      5.80     0.00     9876     0.00     0.00  MeanObliquity(double)
+  0.00      5.80     0.00     9876     0.00     0.00  extract_column(Matrix&, int)
+  0.00      5.80     0.00     4985     0.00     0.00  timediff(double, double, double&, double&, double&, double&, double&)
+  0.00      5.80     0.00     4984     0.00     0.00  GMST(double)
+  0.00      5.80     0.00     4938     0.00     0.00  EqnEquinox(double)
+  0.00      5.80     0.00     4938     0.00     0.00  PoleMatrix(double, double)
+  0.00      5.80     0.00     4938     0.00     0.00  PrecMatrix(double, double)
+  0.00      5.80     0.00     4938     0.00     0.00  GAST(double)
+  0.00      5.80     0.00     4938     0.00     0.00  GHAMatrix(double)
+  0.00      5.80     0.00     4938     0.00     0.00  NutMatrix(double)
+  0.00      5.80     0.00     3872     0.00     0.00  printf(char const*, ...)
+  0.00      5.80     0.00     2610     0.00     0.00  sign_(double, double)
+  0.00      5.80     0.00     2564     0.00     0.26  AccelAdapter2(double, Matrix&)
+  0.00      5.80     0.00     2564     0.00     0.26  Accel(double, Matrix)
+  0.00      5.80     0.00     2564     0.00     0.00  Mjday_TDB(double)
+  0.00      5.80     0.00     2529     0.00     0.00  double const& std::min<double>(double const&, double const&)
+  0.00      5.80     0.00     2516     0.00     0.00  double const& std::max<double>(double const&, double const&)
+  0.00      5.80     0.00     2374     0.00     0.24  VarEqnImpl(double, Matrix&)
+  0.00      5.80     0.00     2374     0.00     0.15  G_AccelHarmonic(Matrix&, Matrix&, int, int)
+  0.00      5.80     0.00     2374     0.00     0.24  VarEqn(double, Matrix)
+  0.00      5.80     0.00      552     0.00     0.00  Matrix::operator()(int)
+  0.00      5.80     0.00      282     0.00     0.00  operator<<(std::ostream&, Matrix&)
+  0.00      5.80     0.00      138     0.00     0.00  MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&)
+  0.00      5.80     0.00      138     0.00     0.00  eye(int)
+  0.00      5.80     0.00       92     0.00     0.00  dot(Matrix&, Matrix&)
+  0.00      5.80     0.00       92     0.00     0.05  AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&)
+  0.00      5.80     0.00       47     0.00     0.05  IERS(double, double&, double&, double&, double&, double&, double&, double&, double&, double&)
+  0.00      5.80     0.00       47     0.00     0.00  Mjday(int, int, int, int, int, double)
+  0.00      5.80     0.00       46     0.00     0.00  TimeUpdate(Matrix&, Matrix&)
+  0.00      5.80     0.00       46     0.00     0.00  sscanf(char const*, char const*, ...)
+  0.00      5.80     0.00        6     0.00     0.00  int const& std::min<int>(int const&, int const&)
+  0.00      5.80     0.00        6     0.00     0.00  std::setw(int)
+  0.00      5.80     0.00        6     0.00     0.00  std::operator&(std::_Ios_Fmtflags, std::_Ios_Fmtflags)
+  0.00      5.80     0.00        3     0.00     0.00  std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags)
+  0.00      5.80     0.00        3     0.00     0.00  std::setprecision(int)
+  0.00      5.80     0.00        3     0.00     0.00  std::fixed(std::ios_base&)
+  0.00      5.80     0.00        3     0.00     0.00  std::operator&=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags)
+  0.00      5.80     0.00        3     0.00     0.00  std::operator~(std::_Ios_Fmtflags)
+  0.00      5.80     0.00        3     0.00     0.00  std::operator|=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags)
+  0.00      5.80     0.00        3     0.00     0.00  std::operator|(std::_Ios_Fmtflags, std::_Ios_Fmtflags)
+  0.00      5.80     0.00        1     0.00    14.60  DE430Coeff(int, int)
+  0.00      5.80     0.00        1     0.00     0.66  eop19620101(int)
+  0.00      5.80     0.00        1     0.00     0.00  getObservations()
+  0.00      5.80     0.00        1     0.00     0.00  AuxParamInitialize()
+  0.00      5.80     0.00        1     0.00     0.00  LTC(double, double)
+  0.00      5.80     0.00        1     0.00     0.14  GGM03S(int)
+  0.00      5.80     0.00        1     0.00     0.00  Position(double, double, double)
+  0.00      5.80     0.00        1     0.00     0.00  readGEOS3(int)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2024 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.17% of 5.80 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     21.9    0.00    1.27                 main [1]
+                0.01    1.24      94/94          DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.01       1/1           DE430Coeff(int, int) [52]
+                0.00    0.01      92/92          AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+                0.00    0.00      47/47          IERS(double, double&, double&, double&, double&, double&, double&, double&, double&, double&) [72]
+                0.00    0.00       1/1           eop19620101(int) [81]
+                0.00    0.00     138/138         MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00     874/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00       1/1           GGM03S(int) [84]
+                0.00    0.00     552/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00      46/46          TimeUpdate(Matrix&, Matrix&) [85]
+                0.00    0.00    7837/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00      46/19799       R_z(double) [73]
+                0.00    0.00     138/386300      Matrix::operator-(Matrix&) [53]
+                0.00    0.00      46/73532       transpose(Matrix&) [74]
+                0.00    0.00     151/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00      46/51326       Matrix::operator/(double) [79]
+                0.00    0.00       8/558671      zeros(int, int) [30]
+                0.00    0.00       1/1           readGEOS3(int) [88]
+                0.00    0.00      46/70508       norm(Matrix&) [80]
+                0.00    0.00       1/1           LTC(double, double) [89]
+                0.00    0.00       1/1           Position(double, double, double) [90]
+                0.00    0.00      47/4985        timediff(double, double, double&, double&, double&, double&, double&) [553]
+                0.00    0.00      46/4984        GMST(double) [554]
+                0.00    0.00       6/6           std::setw(int) [565]
+                0.00    0.00       2/3           std::setprecision(int) [568]
+                0.00    0.00       1/1           AuxParamInitialize() [575]
+                0.00    0.00       1/1           getObservations() [574]
+                0.00    0.00       1/3872        printf(char const*, ...) [555]
+                0.00    0.00       1/47          Mjday(int, int, int, int, int, double) [562]
+-----------------------------------------------
+                0.01    1.24      94/94          main [1]
+[2]     21.5    0.01    1.24      94         DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.65    2564/2564        AccelAdapter2(double, Matrix&) [6]
+                0.00    0.57    2374/2374        VarEqnImpl(double, Matrix&) [9]
+                0.01    0.00 3504185/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    5220/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00    1598/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00     282/282         operator<<(std::ostream&, Matrix&) [87]
+                0.00    0.00      94/379318      Matrix::operator+(Matrix&) [55]
+                0.00    0.00      94/391660      Matrix::operator*(double) [67]
+                0.00    0.00  164982/1424728     __gnu_cxx::__promote_2<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0))), std::__is_integer<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0)))>::__value>::__type std::pow<double, int>(double, int) [549]
+                0.00    0.00   71532/74142       std::abs(double) [550]
+                0.00    0.00    2610/2610        sign_(double, double) [556]
+                0.00    0.00    2529/2529        double const& std::min<double>(double const&, double const&) [558]
+                0.00    0.00    2516/2516        double const& std::max<double>(double const&, double const&) [559]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     12.8    0.74    0.00                 __sinl_internal [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     12.6    0.73    0.00                 _mcount_private [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]     11.6    0.67    0.00                 __cosl_internal [5]
+-----------------------------------------------
+                0.00    0.65    2564/2564        DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[6]     11.3    0.00    0.65    2564         AccelAdapter2(double, Matrix&) [6]
+                0.00    0.65    2564/2564        Accel(double, Matrix) [7]
+-----------------------------------------------
+                0.00    0.65    2564/2564        AccelAdapter2(double, Matrix&) [6]
+[7]     11.3    0.00    0.65    2564         Accel(double, Matrix) [7]
+                0.08    0.34    2564/2564        JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.07    0.06    2564/4985        IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [15]
+                0.03    0.04    2564/19182       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.00    0.01    2564/4938        NutMatrix(double) [47]
+                0.00    0.01    2564/4938        GHAMatrix(double) [48]
+                0.00    0.00   25640/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00   25640/25640       AccelPointMass(Matrix&, Matrix&, double) [71]
+                0.00    0.00    2564/4938        PrecMatrix(double, double) [70]
+                0.00    0.00    7692/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00    2564/4938        PoleMatrix(double, double) [75]
+                0.00    0.00   25640/73532       transpose(Matrix&) [74]
+                0.00    0.00   25640/379318      Matrix::operator+(Matrix&) [55]
+                0.00    0.00    2564/558671      zeros(int, int) [30]
+                0.00    0.00   46152/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    2564/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00   28204/37700       Matrix::Matrix() [551]
+                0.00    0.00    2564/4985        timediff(double, double, double&, double&, double&, double&, double&) [553]
+                0.00    0.00    2564/2564        Mjday_TDB(double) [557]
+-----------------------------------------------
+                0.00    0.00       3/301069936     Position(double, double, double) [90]
+                0.00    0.00      18/301069936     LTC(double, double) [89]
+                0.00    0.00     138/301069936     MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00     204/301069936     readGEOS3(int) [88]
+                0.00    0.00     552/301069936     AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+                0.00    0.00    3854/301069936     operator<<(std::ostream&, Matrix&) [87]
+                0.00    0.00    4968/301069936     eye(int) [86]
+                0.00    0.00    7837/301069936     main [1]
+                0.00    0.00   32942/301069936     GGM03S(int) [84]
+                0.00    0.00   46152/301069936     Accel(double, Matrix) [7]
+                0.00    0.00   49854/301069936     G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.00    0.00   88893/301069936     R_y(double) [77]
+                0.00    0.00  133326/301069936     R_x(double) [76]
+                0.00    0.00  178191/301069936     R_z(double) [73]
+                0.00    0.00  256776/301069936     extract_column(Matrix&, int) [82]
+                0.00    0.00  278369/301069936     eop19620101(int) [81]
+                0.00    0.00  307956/301069936     Matrix::operator/(double) [79]
+                0.00    0.00  374344/301069936     Matrix::operator+(double) [78]
+                0.00    0.00  423048/301069936     norm(Matrix&) [80]
+                0.00    0.00  462930/301069936     VarEqn(double, Matrix) [10]
+                0.00    0.00  685176/301069936     transpose(Matrix&) [74]
+                0.00    0.00 1923000/301069936     Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+                0.00    0.00 2330700/301069936     DE430Coeff(int, int) [52]
+                0.00    0.00 2356320/301069936     Matrix::operator*(double) [67]
+                0.01    0.00 3439134/301069936     Matrix::operator+(Matrix&) [55]
+                0.01    0.00 3490362/301069936     Matrix::operator-(Matrix&) [53]
+                0.01    0.00 3504185/301069936     DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.01    0.00 4642437/301069936     Matrix::operator*(Matrix&) [54]
+                0.01    0.00 5230560/301069936     extract_row(Matrix&, int) [40]
+                0.04    0.00 21571804/301069936     zeros(int, int) [30]
+                0.05    0.00 25701536/301069936     JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.06    0.00 29329278/301069936     Legendre(int, int, double, Matrix&, Matrix&) [23]
+                0.12    0.00 57402994/301069936     Matrix::operator=(Matrix&) [18]
+                0.12    0.00 60352643/301069936     IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [15]
+                0.16    0.00 76459452/301069936     AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+[8]     10.6    0.61    0.00 301069936         Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.57    2374/2374        DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[9]      9.9    0.00    0.57    2374         VarEqnImpl(double, Matrix&) [9]
+                0.00    0.57    2374/2374        VarEqn(double, Matrix) [10]
+-----------------------------------------------
+                0.00    0.57    2374/2374        VarEqnImpl(double, Matrix&) [9]
+[10]     9.9    0.00    0.57    2374         VarEqn(double, Matrix) [10]
+                0.00    0.37    2374/2374        G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.07    0.06    2374/4985        IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [15]
+                0.02    0.03    2374/19182       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.00    0.01    2374/4938        NutMatrix(double) [47]
+                0.00    0.01    2374/4938        GHAMatrix(double) [48]
+                0.00    0.00    2374/4938        PrecMatrix(double, double) [70]
+                0.00    0.00    9496/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00  462930/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    2374/4938        PoleMatrix(double, double) [75]
+                0.00    0.00    2374/558671      zeros(int, int) [30]
+                0.00    0.00    9496/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00    2374/4985        timediff(double, double, double&, double&, double&, double&, double&) [553]
+-----------------------------------------------
+                0.02    0.03    2374/19182       VarEqn(double, Matrix) [10]
+                0.03    0.04    2564/19182       Accel(double, Matrix) [7]
+                0.15    0.21   14244/19182       G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+[11]     8.3    0.20    0.28   19182         AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.16    0.00 76459452/301069936     Matrix::operator()(int, int) [8]
+                0.05    0.07   19182/19182       Legendre(int, int, double, Matrix&, Matrix&) [23]
+                0.00    0.00   38364/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00   19182/73532       transpose(Matrix&) [74]
+                0.00    0.00   57546/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00   19182/70508       norm(Matrix&) [80]
+                0.00    0.00 1208466/1424728     __gnu_cxx::__promote_2<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0))), std::__is_integer<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0)))>::__value>::__type std::pow<double, int>(double, int) [549]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     7.8    0.45    0.00                 __fentry__ [12]
+-----------------------------------------------
+                0.08    0.34    2564/2564        Accel(double, Matrix) [7]
+[13]     7.3    0.08    0.34    2564         JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.01    0.21   33332/33332       Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+                0.05    0.00 25701536/301069936     Matrix::operator()(int, int) [8]
+                0.02    0.02  248708/1233521     Matrix::operator=(Matrix&) [18]
+                0.01    0.01    2564/2564        extract_row(Matrix&, int) [40]
+                0.00    0.00   35896/558671      zeros(int, int) [30]
+                0.00    0.00  471776/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00   48716/48716       Matrix::operator+(double) [78]
+                0.00    0.00   28204/73532       transpose(Matrix&) [74]
+                0.00    0.00   25640/386300      Matrix::operator-(Matrix&) [53]
+                0.00    0.00   30768/391660      Matrix::operator*(double) [67]
+-----------------------------------------------
+                0.00    0.37    2374/2374        VarEqn(double, Matrix) [10]
+[14]     6.3    0.00    0.37    2374         G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.15    0.21   14244/19182       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.00    0.00   42732/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00   14244/558671      zeros(int, int) [30]
+                0.00    0.00   14244/386300      Matrix::operator-(Matrix&) [53]
+                0.00    0.00   14244/391660      Matrix::operator*(double) [67]
+                0.00    0.00    7122/379318      Matrix::operator+(Matrix&) [55]
+                0.00    0.00   49854/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    9496/37700       Matrix::Matrix() [551]
+-----------------------------------------------
+                0.00    0.00      47/4985        IERS(double, double&, double&, double&, double&, double&, double&, double&, double&, double&) [72]
+                0.07    0.06    2374/4985        VarEqn(double, Matrix) [10]
+                0.07    0.06    2564/4985        Accel(double, Matrix) [7]
+[15]     4.5    0.14    0.12    4985         IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [15]
+                0.12    0.00 60352643/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    9876/9876        extract_column(Matrix&, int) [82]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     4.3    0.25    0.00                 __strtodg [16]
+-----------------------------------------------
+                0.01    0.21   33332/33332       JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+[17]     3.8    0.01    0.21   33332         Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+                0.06    0.08  861504/1233521     Matrix::operator=(Matrix&) [18]
+                0.01    0.04  420496/558671      zeros(int, int) [30]
+                0.00    0.01  320500/379318      Matrix::operator+(Matrix&) [55]
+                0.00    0.01  320500/386300      Matrix::operator-(Matrix&) [53]
+                0.00    0.01  320500/391660      Matrix::operator*(double) [67]
+                0.00    0.00 1923000/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00       1/1233521     eop19620101(int) [81]
+                0.00    0.00       1/1233521     DE430Coeff(int, int) [52]
+                0.00    0.00       1/1233521     readGEOS3(int) [88]
+                0.00    0.00       2/1233521     GGM03S(int) [84]
+                0.00    0.00     184/1233521     AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+                0.00    0.00     414/1233521     MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00     874/1233521     main [1]
+                0.00    0.00    4938/1233521     NutMatrix(double) [47]
+                0.00    0.00    4938/1233521     PrecMatrix(double, double) [70]
+                0.00    0.00    5220/1233521     DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.00   25640/1233521     Accel(double, Matrix) [7]
+                0.00    0.00   38364/1233521     Legendre(int, int, double, Matrix&, Matrix&) [23]
+                0.00    0.00   42732/1233521     G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.02    0.02  248708/1233521     JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.06    0.08  861504/1233521     Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+[18]     3.4    0.08    0.12 1233521         Matrix::operator=(Matrix&) [18]
+                0.12    0.00 57402994/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[19]     2.9    0.17    0.00                 sin [19]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     2.4    0.14    0.00                 sqrt [20]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     2.2    0.13    0.00                 cos [21]
+-----------------------------------------------
+                                                 <spontaneous>
+[22]     2.2    0.13    0.00                 __mingw_sformat [22]
+-----------------------------------------------
+                0.05    0.07   19182/19182       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+[23]     2.1    0.05    0.07   19182         Legendre(int, int, double, Matrix&, Matrix&) [23]
+                0.06    0.00 29329278/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00   38364/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00   38364/558671      zeros(int, int) [30]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     2.1    0.12    0.00                 __mingw_vfscanf [24]
+-----------------------------------------------
+                                                 <spontaneous>
+[25]     2.0    0.12    0.00                 __Balloc_D2A [25]
+-----------------------------------------------
+                                                 <spontaneous>
+[26]     1.9    0.11    0.00                 dtoa_lock [26]
+-----------------------------------------------
+                                                 <spontaneous>
+[27]     1.7    0.10    0.00                 __lshift_D2A [27]
+-----------------------------------------------
+                                                 <spontaneous>
+[28]     1.3    0.07    0.00                 __Bfree_D2A [28]
+-----------------------------------------------
+                                                 <spontaneous>
+[29]     1.0    0.06    0.00                 in_ch [29]
+-----------------------------------------------
+                0.00    0.00       1/558671      eop19620101(int) [81]
+                0.00    0.00       1/558671      DE430Coeff(int, int) [52]
+                0.00    0.00       1/558671      readGEOS3(int) [88]
+                0.00    0.00       2/558671      GGM03S(int) [84]
+                0.00    0.00       8/558671      main [1]
+                0.00    0.00      46/558671      TimeUpdate(Matrix&, Matrix&) [85]
+                0.00    0.00     184/558671      AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+                0.00    0.00    2374/558671      VarEqn(double, Matrix) [10]
+                0.00    0.00    2564/558671      Accel(double, Matrix) [7]
+                0.00    0.00    9877/558671      R_y(double) [77]
+                0.00    0.00   14244/558671      G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.00    0.00   14814/558671      R_x(double) [76]
+                0.00    0.00   19799/558671      R_z(double) [73]
+                0.00    0.00   35896/558671      JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.00    0.00   38364/558671      Legendre(int, int, double, Matrix&, Matrix&) [23]
+                0.01    0.04  420496/558671      Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+[30]     1.0    0.01    0.05  558671         zeros(int, int) [30]
+                0.04    0.00 21571804/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00  558671/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[31]     0.9    0.05    0.00                 dtoa_unlock [31]
+-----------------------------------------------
+                                                 <spontaneous>
+[32]     0.8    0.04    0.00                 __diff_D2A [32]
+-----------------------------------------------
+                                                 <spontaneous>
+[33]     0.8    0.04    0.00                 __mult_D2A [33]
+-----------------------------------------------
+                                                 <spontaneous>
+[34]     0.7    0.04    0.00                 cleanup_return [34]
+-----------------------------------------------
+                                                 <spontaneous>
+[35]     0.7    0.04    0.00                 __s2b_D2A [35]
+-----------------------------------------------
+                                                 <spontaneous>
+[36]     0.7    0.04    0.00                 __sum_D2A [36]
+-----------------------------------------------
+                                                 <spontaneous>
+[37]     0.6    0.04    0.00                 __pow5mult_D2A [37]
+-----------------------------------------------
+                0.01    0.00    4938/9876        EqnEquinox(double) [49]
+                0.01    0.00    4938/9876        NutMatrix(double) [47]
+[38]     0.5    0.03    0.00    9876         NutAngles(double, double&, double&) [38]
+-----------------------------------------------
+                                                 <spontaneous>
+[39]     0.5    0.03    0.00                 __d2b_D2A [39]
+-----------------------------------------------
+                0.01    0.01    2564/2564        JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+[40]     0.4    0.01    0.01    2564         extract_row(Matrix&, int) [40]
+                0.01    0.00 5230560/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    2564/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[41]     0.3    0.02    0.00                 resize_wbuf [41]
+-----------------------------------------------
+                                                 <spontaneous>
+[42]     0.3    0.02    0.00                 strtold [42]
+-----------------------------------------------
+                0.00    0.00       1/2527086     Position(double, double, double) [90]
+                0.00    0.00     138/2527086     eye(int) [86]
+                0.00    0.00     151/2527086     main [1]
+                0.00    0.00    1598/2527086     DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.00    2564/2527086     Accel(double, Matrix) [7]
+                0.00    0.00    2564/2527086     extract_row(Matrix&, int) [40]
+                0.00    0.00    9496/2527086     VarEqn(double, Matrix) [10]
+                0.00    0.00    9876/2527086     extract_column(Matrix&, int) [82]
+                0.00    0.00   48716/2527086     Matrix::operator+(double) [78]
+                0.00    0.00   51326/2527086     Matrix::operator/(double) [79]
+                0.00    0.00   57546/2527086     AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.00    0.00   73532/2527086     transpose(Matrix&) [74]
+                0.00    0.00   81853/2527086     Matrix::operator*(Matrix&) [54]
+                0.00    0.00  379318/2527086     Matrix::operator+(Matrix&) [55]
+                0.00    0.00  386300/2527086     Matrix::operator-(Matrix&) [53]
+                0.00    0.00  391660/2527086     Matrix::operator*(double) [67]
+                0.00    0.00  471776/2527086     JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.00    0.00  558671/2527086     zeros(int, int) [30]
+[43]     0.3    0.02    0.00 2527086         Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[44]     0.3    0.02    0.00                 operator new(unsigned long long) [44]
+-----------------------------------------------
+                                                 <spontaneous>
+[45]     0.3    0.02    0.00                 __powi [45]
+-----------------------------------------------
+                                                 <spontaneous>
+[46]     0.3    0.02    0.00                 __ratio_D2A [46]
+-----------------------------------------------
+                0.00    0.01    2374/4938        VarEqn(double, Matrix) [10]
+                0.00    0.01    2564/4938        Accel(double, Matrix) [7]
+[47]     0.3    0.00    0.02    4938         NutMatrix(double) [47]
+                0.01    0.00    4938/9876        NutAngles(double, double&, double&) [38]
+                0.00    0.00    9876/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00    9876/14814       R_x(double) [76]
+                0.00    0.00    4938/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00    4938/19799       R_z(double) [73]
+                0.00    0.00    4938/9876        MeanObliquity(double) [552]
+-----------------------------------------------
+                0.00    0.01    2374/4938        VarEqn(double, Matrix) [10]
+                0.00    0.01    2564/4938        Accel(double, Matrix) [7]
+[48]     0.3    0.00    0.02    4938         GHAMatrix(double) [48]
+                0.00    0.01    4938/4938        GAST(double) [50]
+                0.00    0.00    4938/19799       R_z(double) [73]
+-----------------------------------------------
+                0.00    0.01    4938/4938        GAST(double) [50]
+[49]     0.3    0.00    0.01    4938         EqnEquinox(double) [49]
+                0.01    0.00    4938/9876        NutAngles(double, double&, double&) [38]
+                0.00    0.00    4938/9876        MeanObliquity(double) [552]
+-----------------------------------------------
+                0.00    0.01    4938/4938        GHAMatrix(double) [48]
+[50]     0.3    0.00    0.01    4938         GAST(double) [50]
+                0.00    0.01    4938/4938        EqnEquinox(double) [49]
+                0.00    0.00    4938/4984        GMST(double) [554]
+-----------------------------------------------
+                                                 <spontaneous>
+[51]     0.3    0.01    0.00                 __cmp_D2A [51]
+-----------------------------------------------
+                0.00    0.01       1/1           main [1]
+[52]     0.3    0.00    0.01       1         DE430Coeff(int, int) [52]
+                0.01    0.00 2330700/2368584     fscanf(_iobuf*, char const*, ...) [58]
+                0.00    0.00 2330700/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00       1/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00       1/558671      zeros(int, int) [30]
+-----------------------------------------------
+                0.00    0.00     138/386300      main [1]
+                0.00    0.00     138/386300      MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00   14244/386300      G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.00    0.00   25640/386300      AccelPointMass(Matrix&, Matrix&, double) [71]
+                0.00    0.00   25640/386300      JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.00    0.01  320500/386300      Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+[53]     0.2    0.00    0.01  386300         Matrix::operator-(Matrix&) [53]
+                0.01    0.00 3490362/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00  386300/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00       1/81853       LTC(double, double) [89]
+                0.00    0.00      92/81853       TimeUpdate(Matrix&, Matrix&) [85]
+                0.00    0.00     552/81853       main [1]
+                0.00    0.00     966/81853       MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00    4938/81853       PoleMatrix(double, double) [75]
+                0.00    0.00    7692/81853       Accel(double, Matrix) [7]
+                0.00    0.00    9496/81853       VarEqn(double, Matrix) [10]
+                0.00    0.00    9876/81853       NutMatrix(double) [47]
+                0.00    0.00    9876/81853       PrecMatrix(double, double) [70]
+                0.00    0.00   38364/81853       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+[54]     0.2    0.00    0.01   81853         Matrix::operator*(Matrix&) [54]
+                0.01    0.00 4642437/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00   81853/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00      46/379318      TimeUpdate(Matrix&, Matrix&) [85]
+                0.00    0.00      94/379318      DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.00     276/379318      MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00    7122/379318      G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.00    0.00   25640/379318      Accel(double, Matrix) [7]
+                0.00    0.00   25640/379318      AccelPointMass(Matrix&, Matrix&, double) [71]
+                0.00    0.01  320500/379318      Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+[55]     0.2    0.00    0.01  379318         Matrix::operator+(Matrix&) [55]
+                0.01    0.00 3439134/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00  379318/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[56]     0.2    0.01    0.00                 do_powi_iter [56]
+-----------------------------------------------
+                                                 <spontaneous>
+[57]     0.2    0.01    0.00                 internal_modf [57]
+-----------------------------------------------
+                0.00    0.00   16471/2368584     GGM03S(int) [84]
+                0.00    0.00   21413/2368584     eop19620101(int) [81]
+                0.01    0.00 2330700/2368584     DE430Coeff(int, int) [52]
+[58]     0.2    0.01    0.00 2368584         fscanf(_iobuf*, char const*, ...) [58]
+-----------------------------------------------
+                                                 <spontaneous>
+[59]     0.2    0.01    0.00                 __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::sync() [59]
+-----------------------------------------------
+                                                 <spontaneous>
+[60]     0.2    0.01    0.00                 std::ostream::operator<<(std::ostream& (*)(std::ostream&)) [60]
+-----------------------------------------------
+                                                 <spontaneous>
+[61]     0.2    0.01    0.00                 std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long long) [61]
+-----------------------------------------------
+                                                 <spontaneous>
+[62]     0.2    0.01    0.00                 __b2d_D2A [62]
+-----------------------------------------------
+                                                 <spontaneous>
+[63]     0.2    0.01    0.00                 __i2b_D2A [63]
+-----------------------------------------------
+                                                 <spontaneous>
+[64]     0.2    0.01    0.00                 __multadd_D2A [64]
+-----------------------------------------------
+                                                 <spontaneous>
+[65]     0.2    0.01    0.00                 __pformat_putc [65]
+-----------------------------------------------
+                                                 <spontaneous>
+[66]     0.2    0.01    0.00                 __rshift_D2A [66]
+-----------------------------------------------
+                0.00    0.00      94/391660      DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.00     414/391660      MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00   14244/391660      G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.00    0.00   25640/391660      AccelPointMass(Matrix&, Matrix&, double) [71]
+                0.00    0.00   30768/391660      JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+                0.00    0.01  320500/391660      Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [17]
+[67]     0.1    0.00    0.01  391660         Matrix::operator*(double) [67]
+                0.00    0.00 2356320/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00  391660/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.01      92/92          main [1]
+[68]     0.1    0.00    0.01      92         AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+                0.01    0.00    1196/1196        Matrix::operator()(int, int) const [69]
+                0.00    0.00     184/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00     184/558671      zeros(int, int) [30]
+                0.00    0.00     552/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00      92/92          dot(Matrix&, Matrix&) [561]
+-----------------------------------------------
+                0.01    0.00    1196/1196        AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+[69]     0.1    0.01    0.00    1196         Matrix::operator()(int, int) const [69]
+-----------------------------------------------
+                0.00    0.00    2374/4938        VarEqn(double, Matrix) [10]
+                0.00    0.00    2564/4938        Accel(double, Matrix) [7]
+[70]     0.1    0.00    0.00    4938         PrecMatrix(double, double) [70]
+                0.00    0.00    9876/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00    9876/19799       R_z(double) [73]
+                0.00    0.00    4938/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00    4938/9877        R_y(double) [77]
+-----------------------------------------------
+                0.00    0.00   25640/25640       Accel(double, Matrix) [7]
+[71]     0.1    0.00    0.00   25640         AccelPointMass(Matrix&, Matrix&, double) [71]
+                0.00    0.00   51280/51326       Matrix::operator/(double) [79]
+                0.00    0.00   25640/379318      Matrix::operator+(Matrix&) [55]
+                0.00    0.00   25640/386300      Matrix::operator-(Matrix&) [53]
+                0.00    0.00   51280/70508       norm(Matrix&) [80]
+                0.00    0.00   25640/391660      Matrix::operator*(double) [67]
+                0.00    0.00   51280/1424728     __gnu_cxx::__promote_2<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0))), std::__is_integer<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0)))>::__value>::__type std::pow<double, int>(double, int) [549]
+-----------------------------------------------
+                0.00    0.00      47/47          main [1]
+[72]     0.0    0.00    0.00      47         IERS(double, double&, double&, double&, double&, double&, double&, double&, double&, double&) [72]
+                0.00    0.00      47/4985        IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [15]
+-----------------------------------------------
+                0.00    0.00       1/19799       LTC(double, double) [89]
+                0.00    0.00      46/19799       main [1]
+                0.00    0.00    4938/19799       GHAMatrix(double) [48]
+                0.00    0.00    4938/19799       NutMatrix(double) [47]
+                0.00    0.00    9876/19799       PrecMatrix(double, double) [70]
+[73]     0.0    0.00    0.00   19799         R_z(double) [73]
+                0.00    0.00   19799/558671      zeros(int, int) [30]
+                0.00    0.00  178191/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00      46/73532       main [1]
+                0.00    0.00      46/73532       TimeUpdate(Matrix&, Matrix&) [85]
+                0.00    0.00     414/73532       MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00   19182/73532       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.00    0.00   25640/73532       Accel(double, Matrix) [7]
+                0.00    0.00   28204/73532       JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+[74]     0.0    0.00    0.00   73532         transpose(Matrix&) [74]
+                0.00    0.00  685176/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00   73532/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00    2374/4938        VarEqn(double, Matrix) [10]
+                0.00    0.00    2564/4938        Accel(double, Matrix) [7]
+[75]     0.0    0.00    0.00    4938         PoleMatrix(double, double) [75]
+                0.00    0.00    4938/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00    4938/14814       R_x(double) [76]
+                0.00    0.00    4938/9877        R_y(double) [77]
+-----------------------------------------------
+                0.00    0.00    4938/14814       PoleMatrix(double, double) [75]
+                0.00    0.00    9876/14814       NutMatrix(double) [47]
+[76]     0.0    0.00    0.00   14814         R_x(double) [76]
+                0.00    0.00   14814/558671      zeros(int, int) [30]
+                0.00    0.00  133326/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00       1/9877        LTC(double, double) [89]
+                0.00    0.00    4938/9877        PoleMatrix(double, double) [75]
+                0.00    0.00    4938/9877        PrecMatrix(double, double) [70]
+[77]     0.0    0.00    0.00    9877         R_y(double) [77]
+                0.00    0.00    9877/558671      zeros(int, int) [30]
+                0.00    0.00   88893/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00   48716/48716       JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [13]
+[78]     0.0    0.00    0.00   48716         Matrix::operator+(double) [78]
+                0.00    0.00  374344/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00   48716/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00      46/51326       main [1]
+                0.00    0.00   51280/51326       AccelPointMass(Matrix&, Matrix&, double) [71]
+[79]     0.0    0.00    0.00   51326         Matrix::operator/(double) [79]
+                0.00    0.00  307956/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00   51326/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00      46/70508       main [1]
+                0.00    0.00   19182/70508       AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+                0.00    0.00   51280/70508       AccelPointMass(Matrix&, Matrix&, double) [71]
+[80]     0.0    0.00    0.00   70508         norm(Matrix&) [80]
+                0.00    0.00  423048/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[81]     0.0    0.00    0.00       1         eop19620101(int) [81]
+                0.00    0.00  278369/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00   21413/2368584     fscanf(_iobuf*, char const*, ...) [58]
+                0.00    0.00       1/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00       1/558671      zeros(int, int) [30]
+-----------------------------------------------
+                0.00    0.00    9876/9876        IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [15]
+[82]     0.0    0.00    0.00    9876         extract_column(Matrix&, int) [82]
+                0.00    0.00  256776/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    9876/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00     138/138         main [1]
+[83]     0.0    0.00    0.00     138         MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+                0.00    0.00     966/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00     414/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00     138/138         eye(int) [86]
+                0.00    0.00     414/73532       transpose(Matrix&) [74]
+                0.00    0.00     414/391660      Matrix::operator*(double) [67]
+                0.00    0.00     276/379318      Matrix::operator+(Matrix&) [55]
+                0.00    0.00     138/386300      Matrix::operator-(Matrix&) [53]
+                0.00    0.00     138/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[84]     0.0    0.00    0.00       1         GGM03S(int) [84]
+                0.00    0.00   16471/2368584     fscanf(_iobuf*, char const*, ...) [58]
+                0.00    0.00   32942/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00       2/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00       2/558671      zeros(int, int) [30]
+-----------------------------------------------
+                0.00    0.00      46/46          main [1]
+[85]     0.0    0.00    0.00      46         TimeUpdate(Matrix&, Matrix&) [85]
+                0.00    0.00      92/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00      46/558671      zeros(int, int) [30]
+                0.00    0.00      46/73532       transpose(Matrix&) [74]
+                0.00    0.00      46/379318      Matrix::operator+(Matrix&) [55]
+-----------------------------------------------
+                0.00    0.00     138/138         MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [83]
+[86]     0.0    0.00    0.00     138         eye(int) [86]
+                0.00    0.00    4968/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00     138/2527086     Matrix::Matrix(int, int) [43]
+-----------------------------------------------
+                0.00    0.00     282/282         DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[87]     0.0    0.00    0.00     282         operator<<(std::ostream&, Matrix&) [87]
+                0.00    0.00    3854/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00    3854/3872        printf(char const*, ...) [555]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[88]     0.0    0.00    0.00       1         readGEOS3(int) [88]
+                0.00    0.00     204/301069936     Matrix::operator()(int, int) [8]
+                0.00    0.00       1/1233521     Matrix::operator=(Matrix&) [18]
+                0.00    0.00       1/558671      zeros(int, int) [30]
+                0.00    0.00      46/46          sscanf(char const*, char const*, ...) [563]
+                0.00    0.00      46/47          Mjday(int, int, int, int, int, double) [562]
+                0.00    0.00      17/3872        printf(char const*, ...) [555]
+                0.00    0.00       6/6           int const& std::min<int>(int const&, int const&) [564]
+                0.00    0.00       1/3           std::setprecision(int) [568]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[89]     0.0    0.00    0.00       1         LTC(double, double) [89]
+                0.00    0.00       1/81853       Matrix::operator*(Matrix&) [54]
+                0.00    0.00       1/19799       R_z(double) [73]
+                0.00    0.00       1/9877        R_y(double) [77]
+                0.00    0.00      18/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[90]     0.0    0.00    0.00       1         Position(double, double, double) [90]
+                0.00    0.00       1/2527086     Matrix::Matrix(int, int) [43]
+                0.00    0.00       3/301069936     Matrix::operator()(int, int) [8]
+-----------------------------------------------
+                0.00    0.00   51280/1424728     AccelPointMass(Matrix&, Matrix&, double) [71]
+                0.00    0.00  164982/1424728     DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+                0.00    0.00 1208466/1424728     AccelHarmonic(Matrix&, Matrix&, int, int) [11]
+[549]    0.0    0.00    0.00 1424728         __gnu_cxx::__promote_2<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0))), std::__is_integer<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0)))>::__value>::__type std::pow<double, int>(double, int) [549]
+-----------------------------------------------
+                0.00    0.00    2610/74142       sign_(double, double) [556]
+                0.00    0.00   71532/74142       DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[550]    0.0    0.00    0.00   74142         std::abs(double) [550]
+-----------------------------------------------
+                0.00    0.00    9496/37700       G_AccelHarmonic(Matrix&, Matrix&, int, int) [14]
+                0.00    0.00   28204/37700       Accel(double, Matrix) [7]
+[551]    0.0    0.00    0.00   37700         Matrix::Matrix() [551]
+-----------------------------------------------
+                0.00    0.00    4938/9876        EqnEquinox(double) [49]
+                0.00    0.00    4938/9876        NutMatrix(double) [47]
+[552]    0.0    0.00    0.00    9876         MeanObliquity(double) [552]
+-----------------------------------------------
+                0.00    0.00      47/4985        main [1]
+                0.00    0.00    2374/4985        VarEqn(double, Matrix) [10]
+                0.00    0.00    2564/4985        Accel(double, Matrix) [7]
+[553]    0.0    0.00    0.00    4985         timediff(double, double, double&, double&, double&, double&, double&) [553]
+-----------------------------------------------
+                0.00    0.00      46/4984        main [1]
+                0.00    0.00    4938/4984        GAST(double) [50]
+[554]    0.0    0.00    0.00    4984         GMST(double) [554]
+-----------------------------------------------
+                0.00    0.00       1/3872        main [1]
+                0.00    0.00      17/3872        readGEOS3(int) [88]
+                0.00    0.00    3854/3872        operator<<(std::ostream&, Matrix&) [87]
+[555]    0.0    0.00    0.00    3872         printf(char const*, ...) [555]
+-----------------------------------------------
+                0.00    0.00    2610/2610        DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[556]    0.0    0.00    0.00    2610         sign_(double, double) [556]
+                0.00    0.00    2610/74142       std::abs(double) [550]
+-----------------------------------------------
+                0.00    0.00    2564/2564        Accel(double, Matrix) [7]
+[557]    0.0    0.00    0.00    2564         Mjday_TDB(double) [557]
+-----------------------------------------------
+                0.00    0.00    2529/2529        DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[558]    0.0    0.00    0.00    2529         double const& std::min<double>(double const&, double const&) [558]
+-----------------------------------------------
+                0.00    0.00    2516/2516        DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [2]
+[559]    0.0    0.00    0.00    2516         double const& std::max<double>(double const&, double const&) [559]
+-----------------------------------------------
+                0.00    0.00     552/552         dot(Matrix&, Matrix&) [561]
+[560]    0.0    0.00    0.00     552         Matrix::operator()(int) [560]
+-----------------------------------------------
+                0.00    0.00      92/92          AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [68]
+[561]    0.0    0.00    0.00      92         dot(Matrix&, Matrix&) [561]
+                0.00    0.00     552/552         Matrix::operator()(int) [560]
+-----------------------------------------------
+                0.00    0.00       1/47          main [1]
+                0.00    0.00      46/47          readGEOS3(int) [88]
+[562]    0.0    0.00    0.00      47         Mjday(int, int, int, int, int, double) [562]
+-----------------------------------------------
+                0.00    0.00      46/46          readGEOS3(int) [88]
+[563]    0.0    0.00    0.00      46         sscanf(char const*, char const*, ...) [563]
+-----------------------------------------------
+                0.00    0.00       6/6           readGEOS3(int) [88]
+[564]    0.0    0.00    0.00       6         int const& std::min<int>(int const&, int const&) [564]
+-----------------------------------------------
+                0.00    0.00       6/6           main [1]
+[565]    0.0    0.00    0.00       6         std::setw(int) [565]
+-----------------------------------------------
+                0.00    0.00       3/6           std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [567]
+                0.00    0.00       3/6           std::operator&=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [570]
+[566]    0.0    0.00    0.00       6         std::operator&(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [566]
+-----------------------------------------------
+                0.00    0.00       3/3           std::fixed(std::ios_base&) [569]
+[567]    0.0    0.00    0.00       3         std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [567]
+                0.00    0.00       3/3           std::operator~(std::_Ios_Fmtflags) [571]
+                0.00    0.00       3/3           std::operator&=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [570]
+                0.00    0.00       3/6           std::operator&(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [566]
+                0.00    0.00       3/3           std::operator|=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [572]
+-----------------------------------------------
+                0.00    0.00       1/3           readGEOS3(int) [88]
+                0.00    0.00       2/3           main [1]
+[568]    0.0    0.00    0.00       3         std::setprecision(int) [568]
+-----------------------------------------------
+                0.00    0.00       3/3           std::ostream::operator<<(std::ios_base& (*)(std::ios_base&)) [2060]
+[569]    0.0    0.00    0.00       3         std::fixed(std::ios_base&) [569]
+                0.00    0.00       3/3           std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [567]
+-----------------------------------------------
+                0.00    0.00       3/3           std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [567]
+[570]    0.0    0.00    0.00       3         std::operator&=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [570]
+                0.00    0.00       3/6           std::operator&(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [566]
+-----------------------------------------------
+                0.00    0.00       3/3           std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [567]
+[571]    0.0    0.00    0.00       3         std::operator~(std::_Ios_Fmtflags) [571]
+-----------------------------------------------
+                0.00    0.00       3/3           std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [567]
+[572]    0.0    0.00    0.00       3         std::operator|=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [572]
+                0.00    0.00       3/3           std::operator|(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [573]
+-----------------------------------------------
+                0.00    0.00       3/3           std::operator|=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [572]
+[573]    0.0    0.00    0.00       3         std::operator|(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [573]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[574]    0.0    0.00    0.00       1         getObservations() [574]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[575]    0.0    0.00    0.00       1         AuxParamInitialize() [575]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2024 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [52] DE430Coeff(int, int)  [563] sscanf(char const*, char const*, ...) [573] std::operator|(std::_Ios_Fmtflags, std::_Ios_Fmtflags)
+  [49] EqnEquinox(double)      [2] DEInteg(Matrix (*)(double, Matrix&), double, double, double, double, int, Matrix&) [87] operator<<(std::ostream&, Matrix&)
+  [83] MeasUpdate(Matrix&, double, double, double, Matrix&, Matrix&, int, Matrix&) [23] Legendre(int, int, double, Matrix&, Matrix&) [44] operator new(unsigned long long)
+  [75] PoleMatrix(double, double) [90] Position(double, double, double) [25] __Balloc_D2A
+  [70] PrecMatrix(double, double) [553] timediff(double, double, double&, double&, double&, double&, double&) [28] __Bfree_D2A
+  [85] TimeUpdate(Matrix&, Matrix&) [48] GHAMatrix(double) [62] __b2d_D2A
+   [9] VarEqnImpl(double, Matrix&) [557] Mjday_TDB(double) [51] __cmp_D2A
+  [81] eop19620101(int)       [38] NutAngles(double, double&, double&) [5] __cosl_internal
+  [40] extract_row(Matrix&, int) [47] NutMatrix(double)   [39] __d2b_D2A
+   [6] AccelAdapter2(double, Matrix&) [88] readGEOS3(int) [32] __diff_D2A
+  [11] AccelHarmonic(Matrix&, Matrix&, int, int) [74] transpose(Matrix&) [12] __fentry__
+  [13] JPL_Eph_DE430(double, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&) [551] Matrix::Matrix() [63] __i2b_D2A
+ [552] MeanObliquity(double)  [43] Matrix::Matrix(int, int) [27] __lshift_D2A
+  [71] AccelPointMass(Matrix&, Matrix&, double) [18] Matrix::operator=(Matrix&) [22] __mingw_sformat
+  [82] extract_column(Matrix&, int) [560] Matrix::operator()(int) [24] __mingw_vfscanf
+  [14] G_AccelHarmonic(Matrix&, Matrix&, int, int) [8] Matrix::operator()(int, int) [33] __mult_D2A
+ [574] getObservations()      [79] Matrix::operator/(double) [64] __multadd_D2A
+ [575] AuxParamInitialize()   [53] Matrix::operator-(Matrix&) [65] __pformat_putc
+  [89] LTC(double, double)    [54] Matrix::operator*(Matrix&) [37] __pow5mult_D2A
+  [76] R_x(double)            [67] Matrix::operator*(double) [45] __powi
+  [77] R_y(double)            [55] Matrix::operator+(Matrix&) [46] __ratio_D2A
+  [73] R_z(double)            [78] Matrix::operator+(double) [66] __rshift_D2A
+ [561] dot(Matrix&, Matrix&)  [59] __gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::sync() [35] __s2b_D2A
+  [86] eye(int)               [69] Matrix::operator()(int, int) const [3] __sinl_internal
+  [50] GAST(double)           [60] std::ostream::operator<<(std::ostream& (*)(std::ostream&)) [16] __strtodg
+ [554] GMST(double)          [567] std::ios_base::setf(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [36] __sum_D2A
+  [72] IERS(double, double&, double&, double&, double&, double&, double&, double&, double&, double&) [568] std::setprecision(int) [4] _mcount_private
+  [15] IERS(double, char, double&, double&, double&, double&, double&, double&, double&, double&, double&) [61] std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long long) [34] cleanup_return
+  [80] norm(Matrix&)         [550] std::abs(double)       [21] cos
+   [7] Accel(double, Matrix) [559] double const& std::max<double>(double const&, double const&) [56] do_powi_iter
+ [562] Mjday(int, int, int, int, int, double) [558] double const& std::min<double>(double const&, double const&) [26] dtoa_lock
+ [556] sign_(double, double) [564] int const& std::min<int>(int const&, int const&) [31] dtoa_unlock
+  [30] zeros(int, int)       [549] __gnu_cxx::__promote_2<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0))), std::__is_integer<decltype (((__gnu_cxx::__promote_2<double, std::__is_integer<double>::__value>::__type)(0))+((__gnu_cxx::__promote_2<int, std::__is_integer<int>::__value>::__type)(0)))>::__value>::__type std::pow<double, int>(double, int) [29] in_ch
+  [68] AzElPa(Matrix const&, double&, double&, Matrix&, Matrix&) [565] std::setw(int) [57] internal_modf
+  [17] Cheb3D(double, int, double, double, Matrix&, Matrix&, Matrix&) [569] std::fixed(std::ios_base&) [41] resize_wbuf
+  [84] GGM03S(int)           [570] std::operator&=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags) [19] sin
+  [10] VarEqn(double, Matrix) [566] std::operator&(std::_Ios_Fmtflags, std::_Ios_Fmtflags) [20] sqrt
+  [58] fscanf(_iobuf*, char const*, ...) [571] std::operator~(std::_Ios_Fmtflags) [42] strtold
+ [555] printf(char const*, ...) [572] std::operator|=(std::_Ios_Fmtflags&, std::_Ios_Fmtflags)
